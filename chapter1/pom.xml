@@ -1,13 +1,13 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>greensnow25</groupId>
-    <artifactId>DataType</artifactId>
+    <artifactId>chapter1_1</artifactId>
     <packaging>pom</packaging>
      <version>1.0</version>
 
 	 <modules>
 		<module>DataType</module>
-		
+		<module>ConditionOperator</module>
   </modules>
          <properties>
                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
