@@ -1,4 +1,4 @@
- package treanglearea;
+ package greensnow25.trianglearea;
 
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
