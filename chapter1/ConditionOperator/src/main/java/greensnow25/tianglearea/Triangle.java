@@ -4,7 +4,7 @@
  * @ sinse 05.11.16
  * @version 1
  */
-package treanglearea;
+package greensnow25.tianglearea;
  
 public class Triangle {
    
