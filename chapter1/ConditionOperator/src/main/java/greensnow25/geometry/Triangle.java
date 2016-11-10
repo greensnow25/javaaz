@@ -4,7 +4,7 @@
  * @ sinse 05.11.16
  * @version 1
  */
-package greensnow25.tianglearea;
+package greensnow25.geometry;
  
 public class Triangle {
    
@@ -28,9 +28,7 @@ public class Triangle {
          @return - result
          */
 
-        double firstside = a.distanceTo(b);
-        double secondside = a.distanceTo(c);
-        double thirdside = b.distanceTo(c);
+       
 
           if (firstside + secondside < thirdside || firstside + thirdside < secondside ||
                   secondside + thirdside < firstside) {

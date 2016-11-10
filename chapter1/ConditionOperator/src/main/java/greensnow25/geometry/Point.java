@@ -5,7 +5,7 @@
  * @version 1
  * @ return - return distance between points
  */
-package greensnow25.tianglearea;
+package greensnow25.geometry;
  
 public class Point {
 
