@@ -21,11 +21,7 @@ public class Factorial {
         }
        return fac;
     }
-    public static void main(String[] args){
-Factorial fact = new Factorial();
-        int fa =fact.show(9);
-             System.out.println(fa);
-    }
+  
 
 }
 
