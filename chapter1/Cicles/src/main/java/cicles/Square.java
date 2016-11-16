@@ -12,8 +12,6 @@ public class Square {
     public int b;
     public int c;
 
-   int x;
-
     public Square (int a, int b, int c) {
             this.a = a;
             this.b = b;
