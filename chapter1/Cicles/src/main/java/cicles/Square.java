@@ -31,7 +31,7 @@ public class Square {
     void show(int start,int finish,int step){
         System.out.println("Значение фунции в промежутке от  "+start + "  до  "+finish+"  с шагом  " + step);
         for (start =start; start<finish; start= start+step) {
-            x = start;
+           int x = start;
             this.calculate(x);
            }
 
