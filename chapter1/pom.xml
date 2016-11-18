@@ -9,6 +9,7 @@
 		<module>DataType</module>
 		<module>ConditionOperator</module>
 		<module>Cicles</module>
+         <module>Array</module>
   </modules>
          <properties>
                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
