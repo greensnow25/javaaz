@@ -12,7 +12,7 @@ public class Counter {
          int sum=0;
 
         for (int i = start; i<= finish; i++){
-        sum= sum+ i;
+       if(i%2 == 0){ sum= sum+ i;}
 
         }
 
