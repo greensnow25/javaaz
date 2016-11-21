@@ -13,8 +13,8 @@ public class CounterTest {
     @Test
     public void whenEnterIntervalthenReturnSum() {
         Counter count = new Counter();
-        int coun = count.add(1,5);
-        assertThat(coun, is (15) );
+        int coun = count.add(1,9);
+        assertThat(coun, is (20) );
 
     }
 
