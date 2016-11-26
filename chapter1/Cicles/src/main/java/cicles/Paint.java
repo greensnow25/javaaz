@@ -12,24 +12,25 @@ public class Paint {
 
         for (int i=1;i<=h; i++){
             int  wieght = 2*h-1;
-            boolean flag = true;
-            for (int j = wieght;j >0; j--) {
+            boolean flag = true;                   // приравниваем логическое значение равное истине
+            for (int j = 1;j <=wieght; j++) {
 
-                if (j>wieght-i){
-                    if(flag=true ){
-                    sb.append("1");
-                    flag = false;
-                    }
-                    if (flag==false){
-                        sb.append("0");
-                    }
+                if (j<=i){                          // условие для постойки пирамиды
+                    sb.append("1");                 // если условие верно, вставляем "1"
+                //    flag= false;}      теперь для того , что бы выполнилось следующее условие приравниваем значение ложь
+              //  if (flag == false){    условие , при котором, если "1" была вставлена, то сделать промежуток
+                 //   sb.append("2");     между символами, в виде символа "2"
+                //    flag = true;        для того, что бы виполнилось условие , при котором мы
+                }                         //заполняем оставшуюся часть поля "0" приравниваем значение "истине"
 
 
-                } else
+                 else
                     sb.append("0");
+
             }
             sb.append("\r\n");
-        }
+
+       }
         return sb.toString();
 
 
