@@ -1,31 +1,36 @@
 package cicles;
+/** Class Paint, turn array;
+ * @author grensnow25;
+ * @since 29.11.16;
+ * @version 7;
+ */
 
 
 public class Paint {
 
 
-
+ /*
+   @ return зyramid of the symbols
+  */
     String piramid (int h){
 
-        StringBuilder sb = new StringBuilder(); // создаем обьект класса Stringbuilder
+        StringBuilder sb = new StringBuilder(); // creating objeck of class Stringbuilder
 
 
-        for (int i=1;i<=h; i++){
-            int  wieght = 2*h-1;
-            boolean flag = true;
-            for (int j =1;j <=wieght; j++) {
+        for (int i=1;i<=h; i++){                //create a loop to view column
+            int  wieght = 2*h-1;                // integer variable that is equal to the length of the pyramid
+            for (int j =1;j <=wieght; j++) {   //create a loop to view line
 
-                if (j>h-i &&j<h+i ){
-                    sb.append("1");
+                if (j==h-i+1 || j==h+i-1 ){    //a condition where the insert symbol
+                    sb.append("^");
 
                 }
 
-
                  else
-                    sb.append("0");
+                    sb.append(" ");
 
             }
-            sb.append("\r\n");
+            sb.append("\r\n");                 //when the deadline for a newline
 
        }
         return sb.toString();
@@ -37,9 +42,5 @@ public class Paint {
 
 
 
-    public static void main (String [] args){
-      Paint paint = new Paint ();
-        String piramid = paint.piramid(3);
-        System.out.println(piramid);
-    }
+
 }
