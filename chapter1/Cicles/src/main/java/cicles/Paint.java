@@ -13,10 +13,9 @@ public class Paint {
         for (int i=1;i<=h; i++){
             int  wieght = 2*h-1;
             boolean flag = true;
-            for (int j = wieght;j >0; j--) { //изменили внутренний цикл,теперь цыкл для длинн
-                                            // начинает считать с конца предпологаемой длинны
-                                            //с каждым счетом j уменьшаем на 1
-                if (j<=i){
+            for (int j =1;j <=wieght; j++) {
+
+                if (j>h-i &&j<h+i ){
                     sb.append("1");
 
                 }
