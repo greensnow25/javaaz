@@ -27,7 +27,9 @@ public class Triangle {
          @param thirdside - side from point b to point c
          @return - result
          */
-
+        double firstside = a.distanceTo(b);
+        double secondside = a.distanceTo(c);
+        double thirdside = b.distanceTo(c);
        
 
           if (firstside + secondside < thirdside || firstside + thirdside < secondside ||
