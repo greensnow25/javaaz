@@ -31,9 +31,5 @@ public class RotationArray {
    }
 
 
-    public static void main (String [] args){
-
-        RotationArray rotation = new RotationArray();
-
-    }
+   
 }
