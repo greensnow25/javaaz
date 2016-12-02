@@ -14,18 +14,13 @@ public class RotationArrayTest {
                         {4,5,6},
                         {7,8,9}};
 
+        int [][] expected = {{7,4,1},
+                             {8,5,2},
+                             {9,6,3 }};
+
         int [][]result = rotation.rotatian(test);
 
-        assertThat(result, is (result));
-
-        for(int i =0; i<=result.length-1;i++){
-            for (int j =0; j<=result.length -1;j++){
-                System.out.print(result [i][j] + " ");
-            }
-            System.out.println();
-        }
-
-
+        assertThat(result, is (expected));
 
     }
 
