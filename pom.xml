@@ -4,8 +4,10 @@
     <artifactId>chapter1</artifactId>
     <packaging>pom</packaging>
      <version>1.0</version>
+    <name>junior</name>
+    <url>http://job4j.ru/</url>
 
-	 <modules>
+	  <modules>
 		<module>chapter1</module>
 		
      </modules>
