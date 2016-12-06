@@ -7,28 +7,47 @@ public class RemovingDuplicates {
 
     private String [] removd (String [] words){
 
+        String [] result = new String[words.length ]; // array with out duplicats
 
-        String [] result = new String[words.length ]; // результирующий массив
+            for (int i=0; i<words.length-1;i++){
+                 result[i]= words [i];
+                 for(int j=i+1;j<words.length-1;j++){
+                     if(words [i].equals(words [j])  ) {
+                         result[i] = null;
+                     }
+                 }
+            }
+        String [] sort = new String [result.length];             //sort array
+                int count=0;
+            for(int i = 0; i<result.length-1;i++){
+                for(int j=i+1;j<result.length-1;j++){
+                    if(result[i]== null && result[j]!=null ){
+                        sort[i]=result[j];
+                        result[j]=null;
 
-        for (int i=0; i<words.length-1;i++){        //просматриваем массив с начала
-
-
-           for(int j=i+1;j<words.length-1;j++){
-
-               if(words [i].equals(words [j])  ) {  //eсли елементы равны
-
-                   result[i] = words[i];           // записуе элемент в результирующий массив
-
-
+                        break;
+                    }
 
                 }
+            }
 
+            for (int i =0;i<=sort.length-1;i++){                // counter
+                if(sort [i]!=null) {
 
-           }
+                    count++;
+                }
+            }
 
-       }
+            String [] small = new String[count];                 // array with out null
 
-        return result;
+                for(int i=0; i<=sort.length-1; i++){
+
+                        if(sort[i]!=null){
+                            small[i] = sort[i];
+
+                   }
+                }
+        return small;
     }
 
 
