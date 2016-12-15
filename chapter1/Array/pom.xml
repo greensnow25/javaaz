@@ -4,8 +4,6 @@
     <artifactId>array</artifactId>
     <packaging>jar</packaging>
      <version>1.0</version>
-
-
     <parent>
         <groupId>greensnow25</groupId>
         <artifactId>junior1</artifactId>
