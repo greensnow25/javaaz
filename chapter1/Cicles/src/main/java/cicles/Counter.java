@@ -8,10 +8,10 @@ package cicles;
 public class Counter {
    // method add return sum;
 
-    public int add(int start, int finish){
+    public int add(){
          int sum=0;
 
-        for (int i = start; i<= finish; i++){
+        for (int i = 1; i<= 9; i++){
        if(i%2 == 0){ sum= sum+ i;}
 
         }

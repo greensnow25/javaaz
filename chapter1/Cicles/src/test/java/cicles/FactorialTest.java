@@ -14,7 +14,7 @@ public class FactorialTest {
     @Test
     public void whenEnterParamInConstrthesShowFactorial(){
         Factorial fact = new Factorial();
-        int factorial = fact.show(9);
+        int factorial = fact.show();
         assertThat(factorial, is (362880));
 
     }

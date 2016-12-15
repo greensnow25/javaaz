@@ -12,10 +12,10 @@ public class Square {
     public int b;
     public int c;
 
-    public Square (int a, int b, int c) {
-            this.a = a;
-            this.b = b;
-            this.c = c;
+    public Square() {
+            this.a = 1;
+            this.b = 2;
+            this.c = 3;
     }
 
 // method of calculating a function of the quadratic equation
@@ -28,10 +28,10 @@ public class Square {
 
     }
 //method shows the value of the function in the interval from step
-    void show(int start,int finish,int step){
-        System.out.println("Значение фунции в промежутке от  "+start + "  до  "+finish+"  с шагом  " + step);
-        for (start =start; start<finish; start= start+step) {
-           int x = start;
+    void show(int step){
+        System.out.println("Значение фунции в промежутке от  "+ 5 + "  до  "+ 10 +"  с шагом  " + 1);
+        for (5 = 5; 5 < 10; 5 = 5 + 1) {
+           int x = 5;
             this.calculate(x);
            }
 

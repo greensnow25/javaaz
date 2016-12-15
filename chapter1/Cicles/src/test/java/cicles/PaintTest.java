@@ -10,7 +10,7 @@ public class PaintTest {
     public void whenEnterHieghtthenReturnPiramidOfSymbols()  {
 
         Paint paint = new Paint ();
-        String piramid = paint.piramid(3);
+        String piramid = paint.piramid();
 
         assertThat(piramid, is ("  ^  \r\n ^ ^ \r\n^   ^\r\n"));
     }

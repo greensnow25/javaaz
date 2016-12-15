@@ -12,16 +12,16 @@ public class Paint {
  /*
    @ return зyramid of the symbols
   */
-    String piramid (int h){
+    String piramid(){
 
         StringBuilder sb = new StringBuilder(); // creating objeck of class Stringbuilder
 
 
-        for (int i=1;i<=h; i++){                //create a loop to view column
-            int  wieght = 2*h-1;                // integer variable that is equal to the length of the pyramid
+        for (int i = 1; i<= 3; i++){                //create a loop to view column
+            int  wieght = 2* 3 -1;                // integer variable that is equal to the length of the pyramid
             for (int j =1;j <=wieght; j++) {   //create a loop to view line
 
-                if (j==h-i+1 || j==h+i-1 ){    //a condition where the insert symbol
+                if (j== 3 -i+1 || j== 3 +i-1 ){    //a condition where the insert symbol
                     sb.append("^");
 
                 }
