@@ -65,8 +65,8 @@ public class Tracker {
      * @param item you want to find.
      */
     public void update(Item item) {
-        for (int index = 0; index != items.length; index++) {
-            if (items[index] != null && this.items[index].getId().equals(item.getId()));
+        for (int index = 0; index != this.items.length; index++) {
+            if (this.items[index] != null && this.items[index].getId().equals(item.getId()));
                 this.items[index]= item;
             break;
         }
@@ -77,10 +77,10 @@ public class Tracker {
      * @param item which need to delete.
      */
     public void delete(Item item) {
-        for (int index = 0; index != items.length; index++) {
-            if (items[index] != null && items[index].getId().equals(item.getId())) {
-                items[index] = null;
-                position--;
+        for (int index = 0; index != this.items.length; index++) {
+            if (this.items[index] != null && this.items[index].getId().equals(item.getId())) {
+                this.items[index] = null;
+                    position--;
            break;
             }
         }
@@ -93,7 +93,7 @@ public class Tracker {
      */
     public Item findByName(String key) {
         Item result = null;
-            for (Item item : items) {
+            for (Item item : this.items) {
                 if (item !=null && item.getName().equals(key)) {
                     result = item;
                     break;
