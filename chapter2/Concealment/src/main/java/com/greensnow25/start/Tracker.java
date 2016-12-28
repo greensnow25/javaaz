@@ -100,7 +100,7 @@ public class Tracker {
      * @param item which need to delete.
      */
     public void delete(Item item) {
-        Item[] it = new Item[this.position];
+        Item[] it = new Item[this.position-1];
         position = 0;
         for (int index = 0; index != this.items.length; index++) {
             if (this.items[index] != null && !this.items[index].getId().equals(item.getId())) {
