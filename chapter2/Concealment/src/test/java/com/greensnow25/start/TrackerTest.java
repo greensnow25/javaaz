@@ -6,25 +6,32 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
- * public Class TrackerTest
+ * public Class TrackerTest.
+ *
  * @author greensnow25.
- * @since 27.12.16.
  * @version 1.0.
+ * @since 27.12.16.
  */
 
 public class TrackerTest {
     /**
      * object of class Tracker.
      */
-    private Tracker tracker ;
+    private Tracker tracker;
     /**
      * first item for test.
-      */
+     */
     private Task task;
+    /**
+     * second item for test.
+     */
+    private Task taskone;
 
     /**
      * prepare for tests.
@@ -32,9 +39,9 @@ public class TrackerTest {
 
     @Before
     public void beforeItem() {
-            this.tracker = new Tracker();
-         this.task = new Task("first task", "first desk");
-      // this.taskone = new Task ("second task", "second desk");
+        this.tracker = new Tracker();
+        this.task = new Task("first task", "first desk");
+        this.taskone = new Task("second task", "second desk");
     }
 
     /**
@@ -45,8 +52,8 @@ public class TrackerTest {
 
         Item item = tracker.add(task);
         String id = task.getId();
-        String iq = item.getId();
-        assertThat(iq, is(id));
+        Item result = tracker.findById(id);
+        assertThat(item, is(result));
 
     }
 
@@ -55,54 +62,57 @@ public class TrackerTest {
      */
     @Test
     public void whenRunthenFindItemByIdthenReturnItem() {
-
+        tracker.add(task);
         String id = task.getId();
         Item item = tracker.findById(id);
-        assertThat(item, is(id));
-    }
-
-    @Test
-    public void generateId()  {
-
+        assertThat(item.getId(), is(id));
     }
 
     /**
-     * method show all items
+     * generate Id.
      */
     @Test
-    public void whenGetAllthenShowItems()  {
-
-        Item[] result = new Item[10];
-        result[1] = task;
-        int count =0;
-        for (Item item : result) {
-            if (item != null){
-                count++;
-            }
-        }
-        assertThat(count, is(1));
-
-    }
-
-    /**
-     * method rewrite item/
-     */
-    @Test
-    public void whenUpdateRunthenRewriteItem()  {
+    public void wehnGenerateIdReturnNotNull() {
         tracker.add(task);
         String id = task.getId();
-            tracker.update(task);
-        String idup = task.getId();
-       assertThat(idup, is(id));
+        assertNotNull(id);
     }
 
     /**
-     * metod delete item
+     * method show all items.
      */
     @Test
-    public void whenDeleteItemReturnNull()  {
+    public void whenGetAllthenShowItems() {
         tracker.add(task);
-        String id  = task.getId();
+        tracker.add(taskone);
+        tracker.getAll();
+        int result = tracker.getPosition();
+        assertThat(result, is(2));
+
+    }
+
+    /**
+     * method rewrite item.
+     */
+    @Test
+    public void whenUpdateRunthenRewriteItem() {
+        tracker.add(task);
+        String id = task.getId();
+        tracker.update(task);
+        Item item = tracker.findById(task.getId());
+        assertThat(item.getId(), is(id));
+        assertNotEquals(task, is(task));
+    }
+
+
+
+    /**
+     * metod delete item.
+     */
+    @Test
+    public void whenDeleteItemReturnNull() {
+        tracker.add(task);
+        String id = task.getId();
         tracker.delete(task);
         assertNull(tracker.findById(id));
     }
@@ -111,7 +121,7 @@ public class TrackerTest {
      * method find by name.
      */
     @Test
-    public void whenFindByNameReturnName()  {
+    public void whenFindByNameReturnName() {
         tracker.add(task);
         String name = task.getName();
         Item item = tracker.findByName(name);
