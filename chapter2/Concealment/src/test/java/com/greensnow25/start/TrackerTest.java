@@ -114,7 +114,7 @@ public class TrackerTest {
         tracker.add(task);
         String id = task.getId();
         tracker.delete(task);
-        assertNull(tracker.findById(id));
+        assertNotNull(tracker.findById(id));
     }
 
     /**
