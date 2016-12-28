@@ -15,11 +15,11 @@ public class Tracker {
     /**
      * sizearray.
      */
-    private final int sizearray = 10;
+    private final int sizeArray = 10;
     /**
      * array of items.
      */
-    private Item[] items = new Item[sizearray];
+    private Item[] items = new Item[sizeArray];
     /**
      * position.
      */
@@ -45,7 +45,7 @@ public class Tracker {
      * Methos search item by id.
      *
      * @param id of item.
-     * @return finded item
+     * @return finded item.
      */
     public Item findById(String id) {
         Item result = null;
@@ -100,26 +100,28 @@ public class Tracker {
      * @param item which need to delete.
      */
     public void delete(Item item) {
-        Item[] it = new Item[this.position-1];
-        position = 0;
+        int count = 0;
         for (int index = 0; index != this.items.length; index++) {
-            if (this.items[index] != null && !this.items[index].getId().equals(item.getId())) {
-                it[position++] = this.items[index];
+            if (this.items[index] != null && this.items[index].getId().equals(item.getId())) {
+                this.items[index] = null;
+                System.arraycopy(items, index + 1, items, index, items.length - index - 1);
                 break;
             }
         }
+
+
     }
 
     /**
      * Method search item by name.
      *
-     * @param key - name of item.
+     * @param name - name of item.
      * @return finded item.
      */
-    public Item findByName(String key) {
+    public Item findByName(String name) {
         Item res = null;
         for (Item item : this.items) {
-            if (item != null && item.getName().equals(key)) {
+            if (item != null && item.getName().equals(name)) {
                 res = item;
                 break;
             }
@@ -127,12 +129,5 @@ public class Tracker {
         return res;
     }
 
-    /**
-     * getPosition.
-     *
-     * @return position.
-     */
-    public int getPosition() {
-        return position;
-    }
+
 }
