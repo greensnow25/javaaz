@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -31,25 +30,24 @@ public class TrackerTest {
     /**
      * second item for test.
      */
-    private Task taskone;
+    private Task taskOne;
 
     /**
      * prepare for tests.
      */
 
     @Before
-    public void beforeItem() {
+    public void beforeTest() {
         this.tracker = new Tracker();
         this.task = new Task("first task", "first desk");
-        this.taskone = new Task("second task", "second desk");
+        this.taskOne = new Task("second task", "second desk");
     }
 
     /**
      * method checks whether the item has been added.
      */
     @Test
-    public void whenAddItemthenAddItem() {
-
+    public void whenAddItemThenFindItemById() {
         Item item = tracker.add(task);
         String id = task.getId();
         Item result = tracker.findById(id);
@@ -61,7 +59,7 @@ public class TrackerTest {
      * method search item by id.
      */
     @Test
-    public void whenRunthenFindItemByIdthenReturnItem() {
+    public void whenAddItemThenFindItemByIdAndAssertThem() {
         tracker.add(task);
         String id = task.getId();
         Item item = tracker.findById(id);
@@ -72,7 +70,7 @@ public class TrackerTest {
      * generate Id.
      */
     @Test
-    public void wehnGenerateIdReturnNotNull() {
+    public void wehnAddGenerateIdThenAssertNotNull() {
         tracker.add(task);
         String id = task.getId();
         assertNotNull(id);
@@ -82,11 +80,11 @@ public class TrackerTest {
      * method show all items.
      */
     @Test
-    public void whenGetAllthenShowItems() {
+    public void whenAddItemsThenSwowLengthOfArray() {
         tracker.add(task);
-        tracker.add(taskone);
-        tracker.getAll();
-        int result = tracker.getPosition();
+        tracker.add(taskOne);
+        Item[] items = tracker.getAll();
+        int result = items.length;
         assertThat(result, is(2));
 
     }
@@ -95,13 +93,13 @@ public class TrackerTest {
      * method rewrite item.
      */
     @Test
-    public void whenUpdateRunthenRewriteItem() {
+    public void whenSetNameThenUpdateName() {
         tracker.add(task);
-        String id = task.getId();
+        tracker.add(taskOne);
+        taskOne.setName(task.getName());
         tracker.update(task);
-        Item item = tracker.findById(task.getId());
-        assertThat(item.getId(), is(id));
-        assertNotEquals(task, is(task));
+        assertThat(task.getName(), is(taskOne.getName()));
+
     }
 
 
@@ -110,18 +108,18 @@ public class TrackerTest {
      * metod delete item.
      */
     @Test
-    public void whenDeleteItemReturnNull() {
+    public void whenDeleteItemThenReturnNull() {
         tracker.add(task);
         String id = task.getId();
         tracker.delete(task);
-        assertNotNull(tracker.findById(id));
+        assertNull(tracker.findById(id));
     }
 
     /**
      * method find by name.
      */
     @Test
-    public void whenFindByNameReturnName() {
+    public void whenFindByNameThenAssertName() {
         tracker.add(task);
         String name = task.getName();
         Item item = tracker.findByName(name);
