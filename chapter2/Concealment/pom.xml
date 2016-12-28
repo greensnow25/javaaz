@@ -1,0 +1,15 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>greensnow25</groupId>
+    <artifactId>Concealment</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+
+    <parent>
+        <groupId>greensnow25</groupId>
+        <artifactId>chapter2</artifactId>
+        <version>1.0</version>
+
+    </parent>
+
+</project>
