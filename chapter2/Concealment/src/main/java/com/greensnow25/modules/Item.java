@@ -89,6 +89,12 @@ public class Item {
         this.id = id;
     }
 
-
+    /**
+     * set name.
+     * @param name string.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 
