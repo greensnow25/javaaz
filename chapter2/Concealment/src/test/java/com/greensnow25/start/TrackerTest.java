@@ -95,14 +95,12 @@ public class TrackerTest {
     @Test
     public void whenSetNameThenUpdateName() {
         tracker.add(task);
-        tracker.add(taskOne);
-        taskOne.setName(task.getName());
-        tracker.update(task);
-        assertThat(task.getName(), is(taskOne.getName()));
+        String id = task.getId();
+        taskOne.setId(id);
+        tracker.update(taskOne);
+        assertThat(tracker.findById(task.getId()).getName(), is ("second task"));
 
     }
-
-
 
     /**
      * metod delete item.
