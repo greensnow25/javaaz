@@ -1,12 +1,12 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>greensnow25</groupId>
-    <artifactId>junior1</artifactId>
+    <artifactId>chapter1</artifactId>
     <packaging>pom</packaging>
      <version>1.0</version>
     <parent>
         <groupId>greensnow25</groupId>
-        <artifactId>chapter1</artifactId>
+        <artifactId>junior</artifactId>
         <version>1.0</version>
 
     </parent>
