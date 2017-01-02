@@ -1,9 +1,10 @@
 package array;
 
 /**
- * есть два отсортированых массива типа int с равным количеством элементов
- * нужно обьеденить два массива в один.
- * Created by Mama on 21.12.2016.
+ * public class As fsotiation arrays.
+ * @author greensnow25.
+ * @since 2.01.17.
+ * @version 1.0.
  */
 
 public class As {
