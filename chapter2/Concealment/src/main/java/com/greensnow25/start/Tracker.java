@@ -1,6 +1,7 @@
 package com.greensnow25.start;
 
 import com.greensnow25.modules.Item;
+import com.greensnow25.modules.Task;
 
 import java.util.Random;
 
@@ -76,6 +77,7 @@ public class Tracker {
         Item[] result = new Item[this.position];
         for (int index = 0; index != this.position; index++) {
             result[index] = this.items[index];
+            System.out.println(result[index].getName() + "  " + result[index].getDiscription());
         }
         return result;
     }
@@ -100,11 +102,12 @@ public class Tracker {
      * @param item which need to delete.
      */
     public void delete(Item item) {
-        int count = 0;
+
         for (int index = 0; index != this.items.length; index++) {
             if (this.items[index] != null && this.items[index].getId().equals(item.getId())) {
                 this.items[index] = null;
                 System.arraycopy(items, index + 1, items, index, items.length - index - 1);
+                position--;
                 break;
             }
         }
@@ -129,5 +132,7 @@ public class Tracker {
         return res;
     }
 
-
+    public Item[] getItems() {
+        return items;
+    }
 }
