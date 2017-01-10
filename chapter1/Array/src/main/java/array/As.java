@@ -15,29 +15,31 @@ public class As {
      * @return unit array.
      */
 
-    final int[] sort(int[] one, int[] two) {
+    public int[] sort(int[] one, int[] two) {
         int[] result = new int[one.length + two.length];
         int index = 0;
         int j = 0;
         int i = 0;
 
-        while (j <= two.length - 1 && i <= one.length - 1) {
-            if (one[i] < two[j]) {
-                result[index++] = one[i];
-                i++;
-            } else if (two[j] < one[i]) {
-                result[index++] = two[j];
-                j++;
+        while (j != two.length && i != one.length) {
+            if (one[i] <= two[j]) {
+                result[index++] = one[i++];
+
+            } else if (two[j] <= one[i]) {
+                result[index++] = two[j++];
+
             }
         }
-        while (i <= one.length - 1) {
-            result[index++] = one[i];
-            i++;
+        if (i < one.length) {
+            System.arraycopy(one,i+1,result,index,one.length-i-1);
+
         }
-        while (j <= two.length - 1) {
-            result[index++] = two [j];
-            j++;
+        else if (j < two.length) {
+            System.arraycopy(two,j+1,result,index+1,two.length-j);
+
         }
+
+
         return result;
     }
 }
