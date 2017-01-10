@@ -2,6 +2,8 @@ package com.greensnow25.start;
 
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -11,7 +13,7 @@ import java.util.Scanner;
  * @since 10.01.17.
  * @version 1.
  */
-public class ConsoleInput {
+public class ConsoleInput implements AutoCloseable {
     /**
      * object of class Tracker.
      */
@@ -24,7 +26,7 @@ public class ConsoleInput {
     /**
      * reads the data entered from the console.
      */
-    private Scanner scan = new Scanner(System.in);
+
 
     /**
      *user welcome.
@@ -46,40 +48,46 @@ public class ConsoleInput {
      */
 
     public void choise() {
+        try (Scanner scan = new Scanner(System.in);) {
+            while (exit) {
 
-        while (exit) {
+                hello();
+                int scanInt = scan.nextInt();
+                if (scanInt == 1) {
+                    System.out.println("Введите имя и описание заявки");
+                    tracker.add(new Task(scan.next(), scan.next()));
+                } else if (scanInt == 2) {
+                    Item item = tracker.findById(scan.next());
+                    System.out.println("Bаша заявка:" + item.getName());
+                } else if (scanInt == 3) {
+                    tracker.getAll();
+                } else if (scanInt == 4) {
+                    System.out.println("Введите имя заявку, которую хотите обновить");
+                    Item item = tracker.findByName(scan.next());
+                    String id = item.getId();
+                    System.out.println("Введите новое имя и описание редактируемой заявки  заявки");
+                    Item itemOne = new Item(scan.next(), scan.next());
+                    itemOne.setId(id);
+                    tracker.update(itemOne);
+                } else if (scanInt == 5) {
+                    String nameDelede = scan.next();
+                    tracker.delete(tracker.findByName(nameDelede));
+                    System.out.println("Заявка " + nameDelede + " удалена.");
+                } else if (scanInt == 6) {
+                    Item item = tracker.findByName(scan.next());
+                    System.out.println("Заявка найдена : " + item.getName() + "  " + item.getDiscription());
+                } else if (scanInt == 0) {
+                    exit = false;
+                }
+            }
 
-           hello();
-           int scanInt = scan.nextInt();
-           if (scanInt == 1) {
-               System.out.println("Введите имя и описание заявки");
-               tracker.add(new Task(scan.next(), scan.next()));
-           } else if (scanInt == 2) {
-              Item item = tracker.findById(scan.next());
-              System.out.println("Bаша заявка:" + item.getName());
-           } else if (scanInt == 3) {
-               tracker.getAll();
-           } else if (scanInt == 4) {
-              System.out.println("Введите имя заявку, которую хотите обновить");
-               Item item = tracker.findByName(scan.next());
-              String id = item.getId();
-               System.out.println("Введите новое имя и описание редактируемой заявки  заявки");
-              Item itemOne = new Item(scan.next(), scan.next());
-              itemOne.setId(id);
-               tracker.update(itemOne);
-           } else if (scanInt == 5) {
-               String nameDelede = scan.next();
-               tracker.delete(tracker.findByName(nameDelede));
-               System.out.println("Заявка " + nameDelede + " удалена.");
-           } else if (scanInt == 6) {
-               Item item = tracker.findByName(scan.next());
-               System.out.println( "Заявка найдена : " + item.getName() + "  " + item.getDiscription());
-           } else if (scanInt == 0) {
-               exit = false;
-           }
-       }
+        } catch (Exception ex) {
 
+        }
     }
 
-
+    @Override
+    public void close() throws Exception {
+        System.out.print("Закрыто.");
+    }
 }
