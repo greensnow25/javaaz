@@ -11,12 +11,13 @@ public class StartUI {
     /**
      * method init run the aplication
      */
-    public void init() {
+    public void init() throws Exception {
 
 
         ConsoleInput input = new ConsoleInput();
 
         input.choise();
+        input.close();
 
 
 
@@ -25,7 +26,7 @@ public class StartUI {
      * main.
      * @param args string array.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         new StartUI().init();
 
