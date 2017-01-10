@@ -31,11 +31,11 @@ public class As {
             }
         }
         if (i < one.length) {
-            System.arraycopy(one,i+1,result,index,one.length-i-1);
+            System.arraycopy(one,i,result,index,one.length-i);
 
         }
         else if (j < two.length) {
-            System.arraycopy(two,j+1,result,index+1,two.length-j);
+            System.arraycopy(two,j,result,index,two.length-j);
 
         }
 
