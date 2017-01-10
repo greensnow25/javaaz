@@ -23,12 +23,7 @@ public class ConsoleInput implements AutoCloseable {
      */
        private boolean exit = true;
 
-    /**
-     * reads the data entered from the console.
-     */
-
-
-    /**
+     /**
      *user welcome.
      */
     public void hello() {
