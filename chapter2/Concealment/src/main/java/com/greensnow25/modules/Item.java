@@ -96,5 +96,7 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setDiscription(String discriptiion) {this.discription = discriptiion;}
 }
 
