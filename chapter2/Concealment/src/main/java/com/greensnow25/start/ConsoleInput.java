@@ -27,7 +27,16 @@ public class ConsoleInput implements AutoCloseable {
      *user welcome.
      */
     public void hello() {
-        System.out.println("1 - Добавить заявку.");
+        String sep = System.getProperty("line.separator");
+        System.out.format("%s%s%s","1 - Добавить заявку. ",
+                "2 - Найти заявку по id",
+                "3 - Показать все заявки.",
+                "4 - Обновить заявку.",
+                "5 - Удалить заявку.",
+                "6 - Найти заявку по имени.",
+                "0 - выход из приложения",
+                "введите желаемое действие" );
+        /**System.out.println("1 - Добавить заявку.");
         System.out.println("2 - Найти заявку по id");
         System.out.println("3 - Показать все заявки.");
         System.out.println("4 - Обновить заявку.");
@@ -35,6 +44,7 @@ public class ConsoleInput implements AutoCloseable {
         System.out.println("6 - Найти заявку по имени.");
         System.out.println("0 - выход из приложения");
         System.out.println("введите желаемое действие");
+         */
     }
 
     /**
@@ -77,7 +87,7 @@ public class ConsoleInput implements AutoCloseable {
             }
 
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
     }
 
