@@ -45,6 +45,9 @@ public class Item {
         this.name = name;
         this.discription = discription;
     }
+    public  Item () {
+
+    }
 
     /**
      * getName.
