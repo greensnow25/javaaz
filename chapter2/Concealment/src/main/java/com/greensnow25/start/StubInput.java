@@ -3,6 +3,7 @@ package com.greensnow25.start;
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -13,28 +14,44 @@ import java.util.Scanner;
  * @since 10.01.17.
  * @version 1.
  */
-public class StubInput   {
+public class StubInput  {
     /**
      * object of class Tracker.
      */
-    private Tracker tracker = new Tracker();
+     Tracker tracker = new Tracker();
     /**
      * boolean variable to exit the application.
      */
     private boolean exit = true;
-    Task task;
-    Task[] tasks = new Task[4];
-int scanInt;
-    int count;
     Item item;
+   Task[] tasks = new Task[10];
+    Task task = new Task();
+
+    int scanInt;
+    int count;
 
 
+    public StubInput(int scanInt, int count, String name, String description) {
+        task.setName(name);
+        task.setDiscription(description);
+        this.scanInt = scanInt;
+        this.count = count;
+    }
+    public StubInput (){
 
-    // Task taskOne = new Task("Thanks","I am fine.");
+    }
+
+    public StubInput(int scanInt, int count) {
+        this.count = count;
+        this.scanInt = scanInt;
+    }
+    public  StubInput(int scanInt){
+        this.scanInt = scanInt;
+    }
     /**
      *user welcome.
      */
-    public void hello() {
+    public void hello(StubInput stub) {
 
         System.out.println("1 - Добавить заявку.");
          System.out.println("2 - Найти заявку по id");
@@ -51,33 +68,24 @@ int scanInt;
      * public method choise() displays a menu to the console and.
      * requests the user's actions.
      */
-    public Task[] filing (){
-         Task[] result = this.tasks ;
-         result[0] = new Task("one", "one");
-         result[1] = new Task("two", "two");
-         result[2] = new Task("three", "three");
-         result[3] = new Task("four", "four");
 
-        return result;
-    }
 
     public void choise() {
+           
+          //  while (exit) {
 
-       // int count  = 0;
-        try (Scanner scan = new Scanner(System.in);) {
-            while (exit) {
-
-
-
-               // int scanInt = scan.nextInt();
                 if (scanInt == 1) {
 
                     if (count != tasks.length) {
-                        tracker.add(tasks[count++]);
+                        tracker.add(task);
+                        System.arraycopy(tracker.getItems(),0,tasks,0,10);
                         System.out.println("Заявка создана");
+                        System.out.println(tasks[count-1].getName() + "   " + tasks[count-1].getDiscription());
+                        System.out.println(tracker.getItems()[0].getName() + "   " + tracker.getItems()[0].getDiscription());
+                     //   break;
                     }else {
                         System.out.println("Добавить заявку невозможно!");
-                        break;
+                      //  break;
                     }
                 } else if (scanInt == 2) {
                     String id = tasks[count-1].getId();
@@ -85,6 +93,8 @@ int scanInt;
                     System.out.println("Bаша заявка:" + tasks[count-1].getName());
                 } else if (scanInt == 3) {
                     tracker.getAll();
+                    System.out.format("список");
+                //    break;
                 } else if (scanInt == 4) {
                     String name = tasks[count-1].getName();
                      item = tracker.findByName(name);
@@ -105,19 +115,18 @@ int scanInt;
                 } else if (scanInt == 0) {
                     exit = false;
                 }
-            }
+       //     }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+
         }
 
-    }
-    public static void main(String[] args) {
+
+   /** public static void main(String[] args) {
 StubInput stub = new StubInput();
         stub.hello();
-        stub.filing();
+
         stub.choise();
 
-    }
+    }*/
 
 }
