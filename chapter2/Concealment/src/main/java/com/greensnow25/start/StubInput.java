@@ -72,7 +72,7 @@ public class StubInput  {
 
     public void choise() {
            
-          //  while (exit) {
+            while (exit) {
 
                 if (scanInt == 1) {
 
@@ -82,10 +82,10 @@ public class StubInput  {
                         System.out.println("Заявка создана");
                         System.out.println(tasks[count-1].getName() + "   " + tasks[count-1].getDiscription());
                         System.out.println(tracker.getItems()[0].getName() + "   " + tracker.getItems()[0].getDiscription());
-                     //   break;
+                        break;
                     }else {
                         System.out.println("Добавить заявку невозможно!");
-                      //  break;
+                        break;
                     }
                 } else if (scanInt == 2) {
                     String id = tasks[count-1].getId();
@@ -94,7 +94,7 @@ public class StubInput  {
                 } else if (scanInt == 3) {
                     tracker.getAll();
                     System.out.format("список");
-                //    break;
+                    break;
                 } else if (scanInt == 4) {
                     String name = tasks[count-1].getName();
                      item = tracker.findByName(name);
@@ -115,7 +115,7 @@ public class StubInput  {
                 } else if (scanInt == 0) {
                     exit = false;
                 }
-       //     }
+            }
 
 
         }
