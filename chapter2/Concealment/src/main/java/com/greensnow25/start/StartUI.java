@@ -11,13 +11,13 @@ public class StartUI {
     /**
      * method init run the aplication
      */
-    public void init() throws Exception {
+    public void init() {
 
+       StubInput sb = new StubInput(1,1,"first","first");
+       sb.choise();
+        sb = new StubInput(3,1);
+        sb.choise();
 
-        ConsoleInput input = new ConsoleInput();
-
-        input.choise();
-        input.close();
 
 
 
