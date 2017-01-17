@@ -34,7 +34,6 @@ public class StartUI {
     public void choise() {
 
         boolean exit = true;
-        String findId = "1";
         try  {
             while (exit) {
 
@@ -47,12 +46,10 @@ public class StartUI {
                     System.out.println("Заявка " + tracker.findByName(askName).getName() + " добавлена");
                 } else if (action.equals("2")) {
                     String idName = input.ask("Введите ID заявки, которую хотите найти :");
-                    if (findId.equals(idName)) {
+
                         Item item = tracker.findById(idName);
                         System.out.println("Bаша заявка:" + item.getName());
-                    } else {
-                        System.out.println("Ваша заявка не найдена");
-                    }
+
                 } else if (action.equals("3")) {
                     tracker.getAll();
                 } else if (action.equals("4")) {
@@ -71,7 +68,6 @@ public class StartUI {
                 } else if (action.equals("6")) {
                     String name = input.ask("Введите имя заявки, которую необходимо найти : ");
                     Item item = tracker.findByName(name);
-                    System.out.println("Заявка найдена : " + item.getName() + "  " + item.getDiscription());
                 } else if (action.equals("0")) {
                     exit = false;
                 }

@@ -1,5 +1,7 @@
 package com.greensnow25.start;
 
+import com.greensnow25.modules.Item;
+import com.greensnow25.modules.Task;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,6 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -43,7 +47,7 @@ public class StartUITest {
     /**
      * id for search.
      */
-    private String id = "123";
+    private String id;
     /**
      * Tracker.
      */
@@ -63,11 +67,10 @@ public class StartUITest {
      */
     @Test
     public void whenAddItemtThenFindByNameAndPrint() {
-        System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[0]});
         new StartUI(input, tracker).choise();
-        String result = out.toString();
-        assertThat(result, is("Заявка first добавлена\r\n"));
+        String result = tracker.findByName(nameOne).getName();
+        assertThat(result, is("first"));
 
     }
 
@@ -76,11 +79,14 @@ public class StartUITest {
      */
     @Test
     public void whenFindByIdReturnItemIdAndPrint() {
-        Input input = new StubInput(new String[]{action[2], id, action[0]});
+        tracker.add(new Task(nameOne, discOne));
+        id = tracker.findByName(nameOne).getId();
         System.setOut(new PrintStream(out));
+        Input input = new StubInput(new String[]{action[2], id, action[0]});
         new StartUI(input, tracker).choise();
         String result = out.toString();
-        assertThat(result, is("Ваша заявка не найдена\r\n"));
+
+        assertThat(result, is("Bаша заявка:first\r\n"));
     }
 
     /**
@@ -92,6 +98,7 @@ public class StartUITest {
         System.setOut(new PrintStream(out));
         new StartUI(input, tracker).choise();
         String result = out.toString();
+
         assertThat(result, is("Заявка first добавлена\r\n"
                              + "first  first\r\n"));
     }
@@ -101,15 +108,15 @@ public class StartUITest {
      */
     @Test
     public void whenAddItemThenFindAndUpdateThen() {
-        Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[1], nameTwo, diskTwo,
-                                                action[4], nameOne, nameTwo, diskTwo, action[3], action[0]});
-        System.setOut(new PrintStream(out));
+        Item item = tracker.add(new Task(nameOne, diskTwo));
+                    tracker.add(new Task(nameTwo, diskTwo));
+        id = tracker.findByName(nameOne).getId();
+        Input input = new StubInput(new String[]{action[4], nameOne, nameTwo,
+                                                 diskTwo, action[3], action[0]});
         new StartUI(input, tracker).choise();
-        String result = out.toString();
-        assertThat(result, is("Заявка first добавлена\r\n"
-                            + "Заявка two добавлена\r\n"
-                            + "two  two\r\n"
-                            + "two  two\r\n"));
+        String result = tracker.findById(id).getId();
+
+        assertEquals(result, id);
     }
 
     /**
@@ -117,15 +124,11 @@ public class StartUITest {
      */
     @Test
     public void whenDeleteItemThenShowAll() {
-        Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[1], nameTwo, diskTwo,
-                                                 action[5], nameOne, action[3], action[0]});
-        System.setOut(new PrintStream(out));
+        tracker.add(new Task(nameOne, diskTwo));
+        Input input = new StubInput(new String[]{action[5], nameOne, action[3], action[0]});
         new StartUI(input, tracker).choise();
-        String result = out.toString();
-        assertThat(result, is("Заявка first добавлена\r\n"
-                            + "Заявка two добавлена\r\n"
-                            + "Заявка first удалена.\r\n"
-                            + "two  two\r\n"));
+
+        assertNull(tracker.findByName(nameOne));
     }
 
     /**
@@ -133,12 +136,12 @@ public class StartUITest {
      */
     @Test
     public void whenFindByNameThenReturnItem() {
-        Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[6], nameOne, action[0]});
-        System.setOut(new PrintStream(out));
+        tracker.add(new Task(nameTwo, diskTwo));
+        Input input = new StubInput(new String[]{action[6], nameOne, action[0]});
         new StartUI(input, tracker).choise();
-        String result = out.toString();
-        assertThat(result, is("Заявка first добавлена\r\n"
-                            + "Заявка найдена : first  first\r\n"));
+        String result = tracker.findByName(nameTwo).getName();
+
+        assertThat(result, is("two"));
     }
 
 }
