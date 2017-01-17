@@ -13,21 +13,26 @@ public class StartUI {
     /**
      * initialization.
      */
-   private Input input;
-
+    private Input input;
+    /**
+     * initialization.
+     */
+    private Tracker tracker;
     /**
      * constructor of class.
      * @param input can be consol or emulation.
+     * @param tracker add tracker.
      */
-    StartUI(Input input) {
+    StartUI(Input input, Tracker tracker) {
         this.input = input;
+        this.tracker = tracker;
     }
 
     /**
      * method performs actions with items.
      */
     public void choise() {
-        Tracker tracker = new Tracker();
+
         boolean exit = true;
         String findId = "1";
         try  {
@@ -89,8 +94,9 @@ public class StartUI {
      * @param args string array.
      */
     public static void main(String[] args) {
+        Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"1", "sada", "asd", "0"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
     }
     /**
      *user welcome.

@@ -44,13 +44,17 @@ public class StartUITest {
      * id for search.
      */
     private String id = "123";
-
+    /**
+     * Tracker.
+     */
+    private Tracker tracker;
     /**
      * run before test.
      */
     @Before
     public void befoteTest() {
-       this.out = new ByteArrayOutputStream();
+        this.out = new ByteArrayOutputStream();
+        this.tracker = new Tracker();
 
     }
 
@@ -61,7 +65,7 @@ public class StartUITest {
     public void whenAddItemtThenFindByNameAndPrint() {
         System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[0]});
-        new StartUI(input).choise();
+        new StartUI(input, tracker).choise();
         String result = out.toString();
         assertThat(result, is("Заявка first добавлена\r\n"));
 
@@ -74,7 +78,7 @@ public class StartUITest {
     public void whenFindByIdReturnItemIdAndPrint() {
         Input input = new StubInput(new String[]{action[2], id, action[0]});
         System.setOut(new PrintStream(out));
-        new StartUI(input).choise();
+        new StartUI(input, tracker).choise();
         String result = out.toString();
         assertThat(result, is("Ваша заявка не найдена\r\n"));
     }
@@ -86,7 +90,7 @@ public class StartUITest {
     public void whenAddItemThenShowItems() {
         Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[3], action[0]});
         System.setOut(new PrintStream(out));
-        new StartUI(input).choise();
+        new StartUI(input, tracker).choise();
         String result = out.toString();
         assertThat(result, is("Заявка first добавлена\r\n"
                              + "first  first\r\n"));
@@ -100,7 +104,7 @@ public class StartUITest {
         Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[1], nameTwo, diskTwo,
                                                 action[4], nameOne, nameTwo, diskTwo, action[3], action[0]});
         System.setOut(new PrintStream(out));
-        new StartUI(input).choise();
+        new StartUI(input, tracker).choise();
         String result = out.toString();
         assertThat(result, is("Заявка first добавлена\r\n"
                             + "Заявка two добавлена\r\n"
@@ -116,7 +120,7 @@ public class StartUITest {
         Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[1], nameTwo, diskTwo,
                                                  action[5], nameOne, action[3], action[0]});
         System.setOut(new PrintStream(out));
-        new StartUI(input).choise();
+        new StartUI(input, tracker).choise();
         String result = out.toString();
         assertThat(result, is("Заявка first добавлена\r\n"
                             + "Заявка two добавлена\r\n"
@@ -131,21 +135,10 @@ public class StartUITest {
     public void whenFindByNameThenReturnItem() {
         Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[6], nameOne, action[0]});
         System.setOut(new PrintStream(out));
-        new StartUI(input).choise();
+        new StartUI(input, tracker).choise();
         String result = out.toString();
         assertThat(result, is("Заявка first добавлена\r\n"
                             + "Заявка найдена : first  first\r\n"));
     }
-
-    /**
-     * test.
-     */
-    @Test
-    public void hellotest() {
-    new StartUI(new ConsoleInput()).hello();
-    }
-
-
-
 
 }
