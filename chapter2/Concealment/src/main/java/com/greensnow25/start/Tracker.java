@@ -1,7 +1,6 @@
 package com.greensnow25.start;
 
 import com.greensnow25.modules.Item;
-import com.greensnow25.modules.Task;
 
 import java.util.Random;
 
@@ -132,7 +131,19 @@ public class Tracker {
         return res;
     }
 
+    /**
+     * get Item[].
+     * @return aray of Items.
+     */
     public Item[] getItems() {
         return items;
+    }
+
+    /**
+     * get position.
+     * @return position.
+     */
+    public int getPosition() {
+        return position;
     }
 }

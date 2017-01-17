@@ -45,7 +45,11 @@ public class Item {
         this.name = name;
         this.discription = discription;
     }
-    public  Item () {
+
+    /**
+     * default constructor of class.
+     */
+    public Item() {
 
     }
 
@@ -100,5 +104,12 @@ public class Item {
         this.name = name;
     }
 
+    /**
+     * set discription.
+     * @param discription string.
+     */
+    public void setDiscription(String discription) {
+        this.discription = discription;
+    }
 }
 

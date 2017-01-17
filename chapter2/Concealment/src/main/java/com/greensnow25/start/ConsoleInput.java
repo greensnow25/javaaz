@@ -1,9 +1,5 @@
 package com.greensnow25.start;
 
-import com.greensnow25.modules.Item;
-import com.greensnow25.modules.Task;
-
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -13,18 +9,18 @@ import java.util.Scanner;
  * @since 10.01.17.
  * @version 1.
  */
-public class ConsoleInput implements AutoCloseable, Input  {
-
+public class ConsoleInput implements Input  {
+    /**
+     * Scanner obgect.
+     */
 
     private Scanner scan = new Scanner(System.in);
 
-
-
-
-    @Override
-    public void close() throws Exception {
-        System.out.print("Закрыто.");
-    }
+    /**
+     * override method ask question and returns next word.
+     * @param question - whos need ask user.
+     * @return returns the first word.
+     */
 
     @Override
     public String ask(String question) {
@@ -32,11 +28,7 @@ public class ConsoleInput implements AutoCloseable, Input  {
         return scan.next();
     }
 
-    @Override
-    public int askaction(String question) {
-        System.out.println(question);
-        return scan.nextInt();
-    }
+
 
 
 }

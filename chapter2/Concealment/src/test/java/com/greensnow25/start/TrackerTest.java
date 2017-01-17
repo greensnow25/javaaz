@@ -98,7 +98,7 @@ public class TrackerTest {
         String id = task.getId();
         taskOne.setId(id);
         tracker.update(taskOne);
-        assertThat(tracker.findById(task.getId()).getName(), is ("second task"));
+        assertThat(tracker.findById(task.getId()).getName(), is("second task"));
 
     }
 

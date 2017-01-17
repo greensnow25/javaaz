@@ -10,30 +10,44 @@ import com.greensnow25.modules.Task;
  * @version 1.0.
  */
 public class StartUI {
+    /**
+     * initialization.
+     */
    private Input input;
 
-    StartUI (Input input){
+    /**
+     * constructor of class.
+     * @param input can be consol or emulation.
+     */
+    StartUI(Input input) {
         this.input = input;
     }
 
+    /**
+     * method performs actions with items.
+     */
     public void choise() {
         Tracker tracker = new Tracker();
         boolean exit = true;
+        String findId = "1";
         try  {
             while (exit) {
-                hello();
-                String action = input.ask("Что будем делать?");
 
+                String action = input.ask("Что будем делать?");
 
                 if (action.equals("1")) {
                     String askName = input.ask("Enter the name :");
                     String askDesk = input.ask("Enter the diskription : ");
                     tracker.add(new Task(askName, askDesk));
-                    // break;
+                    System.out.println("Заявка " + tracker.findByName(askName).getName() + " добавлена");
                 } else if (action.equals("2")) {
                     String idName = input.ask("Введите ID заявки, которую хотите найти :");
-                    Item item = tracker.findById(idName);
-                    System.out.println("Bаша заявка:" + item.getName());
+                    if (findId.equals(idName)) {
+                        Item item = tracker.findById(idName);
+                        System.out.println("Bаша заявка:" + item.getName());
+                    } else {
+                        System.out.println("Ваша заявка не найдена");
+                    }
                 } else if (action.equals("3")) {
                     tracker.getAll();
                 } else if (action.equals("4")) {
@@ -64,34 +78,19 @@ public class StartUI {
     }
 
     /**
-     * method init run the aplication
+     * method init run the aplication.
      */
     public void init() {
-/**
-        String name = "123";
-        String desk = "fdwe";
-        int action = 1;
-        Input sb = new StubInput(new String[]{name,desk});
-   choise();*/
-       ConsoleInput in = new ConsoleInput();
-
-
+        hello();
         choise();
-
-
-
-
-
-
-
     }
     /**
      * main.
      * @param args string array.
      */
-    public static void main(String[] args) throws Exception {
-
-        new StartUI(new ConsoleInput()).init();
+    public static void main(String[] args) {
+        Input input = new StubInput(new String[]{"1", "sada", "asd", "0"});
+        new StartUI(input).init();
     }
     /**
      *user welcome.
@@ -99,14 +98,14 @@ public class StartUI {
 
     public void hello() {
 
-        System.out.println("1 - Добавить заявку.");
-        System.out.println("2 - Найти заявку по id");
-        System.out.println("3 - Показать все заявки.");
-        System.out.println("4 - Обновить заявку.");
-        System.out.println("5 - Удалить заявку.");
-        System.out.println("6 - Найти заявку по имени.");
-        System.out.println("0 - выход из приложения");
-        //  System.out.println("введите желаемое действие");
+        System.out.println("1 - Добавить заявку.\r\n"
+                         + "2 - Найти заявку по id\r\n"
+                         + "3 - Показать все заявки.\r\n"
+                         + "4 - Обновить заявку.\r\n"
+                         + "5 - Удалить заявку.\r\n"
+                         + "6 - Найти заявку по имени.\r\n"
+                         + "0 - выход из приложения");
+
 
     }
 
