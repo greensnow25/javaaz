@@ -4,7 +4,7 @@ package com.greensnow25.geometry;
  * public class Paint used Patterns Stratege.
  * @author greensnow25.
  * @since 18.01.17.
- * @version 1.
+ * @version 2.
  */
 public class Paint {
     /**
@@ -12,33 +12,21 @@ public class Paint {
      */
     private Shape shape;
 
+
     /**
      * constructor of the class.
-     * @param shape any shape.
      */
-    public Paint(Shape shape) {
-        this.shape = shape;
+    public Paint() {
+
     }
 
     /**
-     * public method draw the shape.
-     * @return draw shape.
+     * return string.
+     * @param shape some figure.
+     * @return sting.
      */
-    public String draw() {
+    public String draw(Shape shape) {
 
-        return shape.pic();
-    }
-
-    /**
-     * main.
-     * @param args string.
-     */
-    public static void main(String[] args) {
-       Paint paint = new Paint(new Triangle());
-        System.out.println(paint.draw());
-
-         paint = new Paint(new Square());
-        System.out.println(paint.draw());
-
+        return shape.pic(shape);
     }
 }

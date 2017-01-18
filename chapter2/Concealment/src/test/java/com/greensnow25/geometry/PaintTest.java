@@ -2,9 +2,6 @@ package com.greensnow25.geometry;
 
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -21,8 +18,9 @@ public class PaintTest {
      */
     @Test
     public void whenTriangleShapeThenReturnTriangle() {
-        Paint paint = new Paint(new Triangle());
-        String result = paint.draw();
+        Shape shape = new Triangle(5);
+        Paint paint = new Paint();
+        String result = paint.draw(shape);
         assertThat(result, is("    ^    \r\n"
                             + "   ^ ^   \r\n"
                             + "  ^   ^  \r\n"
@@ -35,8 +33,9 @@ public class PaintTest {
      */
     @Test
     public void  whenSquareShapeThenReturnSquare() {
-        Paint paint = new Paint(new Square());
-        String result = paint.draw();
+        Shape shape = new Square(5);
+        Paint paint = new Paint();
+        String result = paint.draw(shape);
         assertThat(result, is(" ^ ^ ^ ^ ^\r\n"
                             + " ^       ^\r\n"
                             + " ^       ^\r\n"
@@ -44,28 +43,5 @@ public class PaintTest {
                             + " ^ ^ ^ ^ ^\r\n"));
     }
 
-    /**
-     * main test.
-     */
-    @Test
-    public void whenRunAplicationThenReturnFigures()  {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-        Paint.main(null);
-        assertThat(out.toString(), is("    ^    \r\n"
-                                    + "   ^ ^   \r\n"
-                                    + "  ^   ^  \r\n"
-                                    + " ^     ^ \r\n"
-                                    + "^ ^ ^ ^ ^\r\n"
-                                    +           "\r\n"
-                                    + " ^ ^ ^ ^ ^\r\n"
-                                    + " ^       ^\r\n"
-                                    + " ^       ^\r\n"
-                                    + " ^       ^\r\n"
-                                    + " ^ ^ ^ ^ ^\r\n\r\n"));
-
-
-
-    }
 
 }

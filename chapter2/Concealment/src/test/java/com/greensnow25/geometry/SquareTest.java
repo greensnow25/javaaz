@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
  * public ClassTest SqureTest.
  * @author greensnow25.
  * @since 18.01.17.
- * @version 1.
+ * @version 2.
  */
 public class SquareTest {
     /**
@@ -17,7 +17,9 @@ public class SquareTest {
      */
     @Test
     public void whenRubThenReturnSquare() {
-        String result = new Square().pic();
+       Shape shape = new Square(5);
+        Paint paint = new Paint();
+        String result = paint.draw(shape);
 
         assertThat(result, is(" ^ ^ ^ ^ ^\r\n"
                             + " ^       ^\r\n"

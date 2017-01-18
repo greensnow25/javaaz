@@ -4,12 +4,13 @@ package com.greensnow25.geometry;
  * interface Shape.
  * @author greensnow25.
  * @since 18.01.17.
- * @version 1.
+ * @version 2.
  */
 public interface Shape {
     /**
      * pic.
-     * @return draw shape.
+     * @param shape some shape.
+     * @return string.
      */
-    String pic();
+    String pic(Shape shape);
 }

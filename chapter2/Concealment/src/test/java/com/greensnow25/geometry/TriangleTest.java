@@ -17,8 +17,8 @@ public class TriangleTest {
      */
     @Test
     public void whenRubThenReturnTriangle() {
-
-        String result = new Triangle().pic();
+        Shape tr = new Triangle(5);
+        String result = new Triangle(5).pic(tr);
         assertThat(result, is("    ^    \r\n"
                             + "   ^ ^   \r\n"
                             + "  ^   ^  \r\n"
