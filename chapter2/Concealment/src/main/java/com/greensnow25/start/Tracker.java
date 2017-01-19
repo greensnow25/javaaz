@@ -76,7 +76,9 @@ public class Tracker {
         Item[] result = new Item[this.position];
         for (int index = 0; index != this.position; index++) {
             result[index] = this.items[index];
-            System.out.println(result[index].getName() + "  " + result[index].getDiscription());
+            System.out.println("name  description     id");
+            System.out.println(result[index].getName() + "      " + result[index].getDiscription()
+            + "        " + result[index].getId());
         }
         return result;
     }
