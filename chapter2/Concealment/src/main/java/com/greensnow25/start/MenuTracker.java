@@ -1,5 +1,6 @@
 package com.greensnow25.start;
 
+import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
 
@@ -22,7 +23,7 @@ public class MenuTracker {
     /**
      * array of abjects.
      */
-    private UserAction[] userActions = new UserAction[6];
+    private UserAction[] userActions = new UserAction[7];
 
     /**
      * class constructor.
@@ -44,6 +45,7 @@ public class MenuTracker {
         userActions[3] = this.new UpdateItem();
         userActions[4] = this.new DeleteItem();
         userActions[5] = this.new FindByName();
+        userActions[6] = new AddComment();
     }
 
     /**
@@ -78,7 +80,9 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            tracker.add(new Task(input.ask("name"), input.ask("desk")));
+
+            tracker.add(new Task(input.ask("name"), input.ask("desk")
+                     , new Comment(new String[]{input.ask("enter the comment")})));
             System.out.println("operation sucsesfull ");
         }
 
@@ -126,7 +130,12 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
+
+            Comment coment = new Comment();
             tracker.getAll();
+            for (Item item : tracker.getAll()){
+                System.out.println();
+            }
         }
 
         @Override
@@ -150,7 +159,8 @@ public class MenuTracker {
             Item item = tracker.findByName(input.ask("\n"
                     + "enter the name of the application you will edit : "));
             item.getId();
-            Task task = new Task(input.ask("new name"), input.ask("new desk"));
+            Task task = new Task(input.ask("new name"), input.ask("new desk")
+                      , new Comment(new String[]{input.ask("enter the comment")}));
             task.setId(item.getId());
             tracker.update(task);
             System.out.println("operation sucsesfull ");
@@ -208,6 +218,27 @@ public class MenuTracker {
         @Override
         public String info() {
             return String.format("%s. %s", this.key(), "Find item by name: ");
+        }
+    }
+
+    public class AddComment implements UserAction {
+
+        @Override
+        public int key() {
+            return 6;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+
+            Item item = tracker.findById(input.ask("id"));
+
+          item.
+        }
+
+        @Override
+        public String info() {
+            return String.format("%s. %s", this.key(), "add the comment");
         }
     }
 }

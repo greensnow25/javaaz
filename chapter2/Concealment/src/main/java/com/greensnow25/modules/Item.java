@@ -6,7 +6,11 @@ package com.greensnow25.modules;
  * @since 27.12.16.
  * @version 1.0.
  */
-public class Item {
+public class Item  {
+    /**
+     * field class.
+     */
+    Comment comments ;
     /**
      * item id.
      */
@@ -30,7 +34,8 @@ public class Item {
      * @param create creating time.
      */
 
-  public Item(String name, String discription, long create) {
+  public Item(String name, String discription, long create, Comment comment) {
+      this.comments = comment;
       this.name = name;
       this.discription = discription;
       this.create = create;
@@ -41,7 +46,8 @@ public class Item {
      * @param name item name.
      * @param discription description of Item.
      */
-    public Item(String name, String discription) {
+    public Item(String name, String discription, Comment comment) {
+        this.comments = comment;
         this.name = name;
         this.discription = discription;
     }
@@ -50,6 +56,7 @@ public class Item {
      * default constructor of class.
      */
     public Item() {
+
 
     }
 

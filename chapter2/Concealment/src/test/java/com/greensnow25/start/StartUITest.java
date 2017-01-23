@@ -1,5 +1,6 @@
 package com.greensnow25.start;
 
+import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
 import org.junit.Before;
@@ -35,7 +36,7 @@ public class StartUITest {
     /**
      * array of action.
      */
-    private String[] action = new String[]{"0", "1", "2", "3", "4", "5", "6"};
+    private String[] action = new String[]{"0", "1", "2", "3", "4", "5", "y"};
     /**
      * second name .
      */
@@ -67,7 +68,7 @@ public class StartUITest {
      */
     @Test
     public void whenAddItemtThenFindByNameAndPrint() {
-        Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[0]});
+        Input input = new StubInput(new String[]{action[0], nameOne, discOne, action[6]});
         new StartUI(input, tracker).choise();
         String result = tracker.findByName(nameOne).getName();
         assertThat(result, is("first"));
@@ -79,7 +80,7 @@ public class StartUITest {
      */
     @Test
     public void whenFindByIdReturnItemIdAndPrint() {
-        tracker.add(new Task(nameOne, discOne));
+        tracker.add(new Task(nameOne, discOne, new Comment(new String[]{"w"})));
         id = tracker.findByName(nameOne).getId();
         System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{action[2], id, action[0]});
@@ -108,8 +109,8 @@ public class StartUITest {
      */
     @Test
     public void whenAddItemThenFindAndUpdateThen() {
-        Item item = tracker.add(new Task(nameOne, diskTwo));
-                    tracker.add(new Task(nameTwo, diskTwo));
+        Item item = tracker.add(new Task(nameOne, diskTwo,new Comment(new String[]{"w"})));
+                    tracker.add(new Task(nameTwo, diskTwo,new Comment(new String[]{"w"})));
         id = tracker.findByName(nameOne).getId();
         Input input = new StubInput(new String[]{action[4], nameOne, nameTwo,
                                                  diskTwo, action[3], action[0]});
@@ -124,7 +125,7 @@ public class StartUITest {
      */
     @Test
     public void whenDeleteItemThenShowAll() {
-        tracker.add(new Task(nameOne, diskTwo));
+        tracker.add(new Task(nameOne, diskTwo,new Comment(new String[]{"w"})));
         Input input = new StubInput(new String[]{action[5], nameOne, action[3], action[0]});
         new StartUI(input, tracker).choise();
 
@@ -136,7 +137,7 @@ public class StartUITest {
      */
     @Test
     public void whenFindByNameThenReturnItem() {
-        tracker.add(new Task(nameTwo, diskTwo));
+        tracker.add(new Task(nameTwo, diskTwo,new Comment(new String[]{"w"})));
         Input input = new StubInput(new String[]{action[6], nameOne, action[0]});
         new StartUI(input, tracker).choise();
         String result = tracker.findByName(nameTwo).getName();
