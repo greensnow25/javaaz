@@ -10,7 +10,7 @@ public class Item  {
     /**
      * field class.
      */
-    Comment comments ;
+    private Comment comments;
     /**
      * item id.
      */
@@ -34,8 +34,8 @@ public class Item  {
      * @param create creating time.
      */
 
-  public Item(String name, String discription, long create, Comment comment) {
-      this.comments = comment;
+  public Item(String name, String discription, long create) {
+      this.comments = new Comment();
       this.name = name;
       this.discription = discription;
       this.create = create;
@@ -46,8 +46,8 @@ public class Item  {
      * @param name item name.
      * @param discription description of Item.
      */
-    public Item(String name, String discription, Comment comment) {
-        this.comments = comment;
+    public Item(String name, String discription) {
+        this.comments = new Comment();
         this.name = name;
         this.discription = discription;
     }
@@ -117,6 +117,14 @@ public class Item  {
      */
     public void setDiscription(String discription) {
         this.discription = discription;
+    }
+
+    /**
+     * getComments.
+     * @return fields of class.
+     */
+    public Comment getComments() {
+        return this.comments;
     }
 }
 

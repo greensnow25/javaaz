@@ -8,7 +8,10 @@ package com.greensnow25.modules;
  */
 
 public class Task extends Item {
-
+    /**
+     * field comment.
+     */
+    private Comment comment;
     /**
      * public constructor of class.
      * @param name name of item.
@@ -16,6 +19,7 @@ public class Task extends Item {
      */
 
     public Task(String name, String description) {
+
         super(name, description);
 
     }

@@ -1,6 +1,5 @@
 package com.greensnow25.start;
 
-import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
 
@@ -12,6 +11,7 @@ import com.greensnow25.modules.Task;
  * @version 1.
  */
 public class MenuTracker {
+
     /**
      * class object.
      */
@@ -81,9 +81,10 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
 
-            tracker.add(new Task(input.ask("name"), input.ask("desk")
-                     , new Comment(new String[]{input.ask("enter the comment")})));
+            Item item = tracker.add(new Task(input.ask("name"), input.ask("desk")));
+            item.getComments().addComent(input.ask("Enter new comment:"));
             System.out.println("operation sucsesfull ");
+
         }
 
         @Override
@@ -131,10 +132,13 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
 
-            Comment coment = new Comment();
-            tracker.getAll();
-            for (Item item : tracker.getAll()){
-                System.out.println();
+            for (Item item : tracker.getAll()) {
+                for (int index = 0; index != item.getComments().show().length; index++) {
+                    System.out.println("NAME  DESCRIPTION      ID    COMMENT");
+                    System.out.format("%s  %s  %s  %s  %s", item.getName(), item.getDiscription(),
+                             item.getId(), item.getComments().show()[index],
+                             System.getProperty("line.separator"));
+                }
             }
         }
 
@@ -159,8 +163,7 @@ public class MenuTracker {
             Item item = tracker.findByName(input.ask("\n"
                     + "enter the name of the application you will edit : "));
             item.getId();
-            Task task = new Task(input.ask("new name"), input.ask("new desk")
-                      , new Comment(new String[]{input.ask("enter the comment")}));
+            Task task = new Task(input.ask("new name"), input.ask("new desk"));
             task.setId(item.getId());
             tracker.update(task);
             System.out.println("operation sucsesfull ");
@@ -221,6 +224,10 @@ public class MenuTracker {
         }
     }
 
+    /**
+     * public class AddComment
+     * add a comment to an existing application.
+     */
     public class AddComment implements UserAction {
 
         @Override
@@ -231,9 +238,9 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
 
-            Item item = tracker.findById(input.ask("id"));
+            Item item = tracker.findByName(input.ask("name"));
+            item.getComments().addComent(input.ask("enter new comment"));
 
-          item.
         }
 
         @Override

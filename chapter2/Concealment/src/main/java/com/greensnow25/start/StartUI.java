@@ -54,7 +54,7 @@ public class StartUI {
      */
     public static void main(String[] args) {
         Tracker tracker = new Tracker();
-        Input input = new StubInput(new String[]{"0", "first", "first", "n", "2", "y"});
+        Input input = new ConsoleInput();
         new StartUI(input, tracker).choise();
     }
 

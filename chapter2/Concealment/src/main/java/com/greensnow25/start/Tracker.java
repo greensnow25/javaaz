@@ -1,5 +1,6 @@
 package com.greensnow25.start;
 
+import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
 
 import java.util.Random;
@@ -13,6 +14,10 @@ import java.util.Random;
  */
 public class Tracker {
     /**
+     * private field of class.
+     */
+    private Comment comment;
+    /**
      * sizearray.
      */
     private final int sizeArray = 10;
@@ -20,6 +25,8 @@ public class Tracker {
      * array of items.
      */
     private Item[] items = new Item[sizeArray];
+
+
     /**
      * position.
      */
@@ -76,9 +83,6 @@ public class Tracker {
         Item[] result = new Item[this.position];
         for (int index = 0; index != this.position; index++) {
             result[index] = this.items[index];
-            System.out.println("name  description     id");
-            System.out.println(result[index].getName() + "      " + result[index].getDiscription()
-            + "        " + result[index].getId());
         }
         return result;
     }
@@ -133,6 +137,18 @@ public class Tracker {
         return res;
     }
 
+  /**  public void addComment(String id, Comment comment) {
+
+       Item item =findById(id);
+        comment.aDDCOMENT(findById(id).ge);
+
+
+
+
+
+
+    }*/
+
     /**
      * get Item[].
      * @return aray of Items.
@@ -147,5 +163,13 @@ public class Tracker {
      */
     public int getPosition() {
         return position;
+    }
+
+    /**
+     * getComment.
+     * @return fields of class.
+     */
+    public Comment getComment() {
+        return comment;
     }
 }

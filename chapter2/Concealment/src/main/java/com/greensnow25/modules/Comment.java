@@ -10,30 +10,49 @@ public class Comment {
 
     /**
      * private field comment.
-      */
+     */
+
     private String[] comments = new String[10];
 
+    /**
+     * private field position in array.
+     */
 
     private int position = 0;
 
-    public Comment(String[] comments) {
-        this.comments = comments;
-
-    }
-
+    /**
+     * connstructor of class.
+     */
     public Comment() {
+        this.comments = new String[10];
 
     }
 
-    public String  addComent(String name) {
+    /**
+     * public method add comment.
+     * @param name name of new comment.
+     */
 
-        return comments[position++] = name;
+    public void  addComent(String name) {
+
+         comments[position++] = name;
     }
 
-    public void show() {
-        for(String s : this.comments) {
-            System.out.println(s);
+    /**
+     * show all comments.
+     * @return  result array.
+     */
+    public String[] show() {
+
+        String[] result = new String[this.position];
+        for (int index = 0; index != this.position; index++) {
+            if (this.comments[index] != null) {
+               result[index] = this.comments[index];
+            } else {
+                break;
+            }
         }
+        return result;
     }
 
     /**
@@ -43,15 +62,5 @@ public class Comment {
     public String[] getComment() {
         return comments;
     }
-
-    /**
-     * setComment.
-     * @param comment this.coment.
-     */
-    public void setComment(String[] comment) {
-        this.comments = comment;
-    }
-
-
 
 }
