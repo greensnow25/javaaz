@@ -1,9 +1,6 @@
 package com.greensnow25.start;
 
-import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
-import com.greensnow25.modules.Task;
-
 import java.util.Random;
 
 /**

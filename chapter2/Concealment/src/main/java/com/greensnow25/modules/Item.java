@@ -31,11 +31,10 @@ public class Item  {
      * public constructor of class Item.
      * @param name item name.
      * @param discription description of Item.
-     * @param comment creating comment.
+     * @param create creating time.
      */
 
   public Item(String name, String discription, long create) {
-     // this.comments = new Comment(coment);
       this.name = name;
       this.discription = discription;
       this.create = create;

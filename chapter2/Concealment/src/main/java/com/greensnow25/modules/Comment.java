@@ -12,7 +12,7 @@ public class Comment {
      * private field comment.
      */
 
-    private String[] comments2 = new String[10];
+    private String[] comments;
 
     /**
      * private field position in array.
@@ -23,22 +23,20 @@ public class Comment {
     /**
      * connstructor of class.
      */
-    public Comment(String comment) {
-        this.comments2 = new String[10];
-        comments2[position++] = comment;
-    }
     public Comment() {
-        this.comments2 = new String[10];
+        this.comments = new String[10];
+
     }
+
 
     /**
      * public method add comment.
      * @param name name of new comment.
      */
 
-    public String  addComent(String name) {
+    public void  addComent(String name) {
 
-         return comments2[position++] = name;
+          comments[position++] = name;
     }
 
     /**
@@ -49,8 +47,8 @@ public class Comment {
 
         String[] result = new String[this.position];
         for (int index = 0; index != this.position; index++) {
-            if (this.comments2[index] != null) {
-               result[index] = this.comments2[index];
+            if (this.comments[index] != null) {
+               result[index] = this.comments[index];
             } else {
                 break;
             }
@@ -58,13 +56,6 @@ public class Comment {
         return result;
     }
 
-    /**
-     * getComment.
-     * @return coment.
-     */
-    public String[] getComment() {
-        return comments2;
-    }
 
 
 }

@@ -1,6 +1,5 @@
 package com.greensnow25.start;
 
-import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
 
@@ -12,7 +11,7 @@ import com.greensnow25.modules.Task;
  * @version 1.
  */
 public class MenuTracker {
-    Item item;
+
     /**
      * class object.
      */
@@ -82,8 +81,8 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
 
-            Item item = tracker.add(new Task(input.ask("name"), input.ask("desk"), input.ask("Enter comment :"))) ;
-            //item.getComments().addComent(input.ask("Enter new comment:"));
+            Item item = tracker.add(new Task(input.ask("name"), input.ask("desk")));
+            item.getComments().addComent(input.ask("Enter new comment:"));
             System.out.println("operation sucsesfull ");
 
         }
@@ -107,7 +106,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-             Item item = tracker.findById(input.ask("enter id"));
+            Item item = tracker.findById(input.ask("enter id"));
             System.out.format("%s  %s", "operation sucsesfull name "
                      + item.getName(), "desk " + item.getDiscription() + System.getProperty("line.separator"));
 
