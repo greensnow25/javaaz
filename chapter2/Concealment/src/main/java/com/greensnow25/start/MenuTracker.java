@@ -107,7 +107,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             Item item = tracker.findById(input.ask("enter id"));
-            System.out.format("%s  %s", "operation sucsesfull name "
+            System.out.format("%s  %s", "operation sucsesfull name " + System.getProperty("line.separator")
                      + item.getName(), "desk " + item.getDiscription() + System.getProperty("line.separator"));
 
         }
@@ -131,15 +131,17 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-
-            for (Item item : tracker.getAll()) {
+            String sep = System.getProperty("line.separator");
+            for (Item item: tracker.getAll()) {
+                System.out.println("NAME  DESCRIPTION      ID    ");
+                System.out.format("%s  %s  %s  %s", item.getName(), item.getDiscription(),
+                        item.getId(), sep);
+                System.out.println("COMMENTS LIST :");
                 for (int index = 0; index != item.getComments().show().length; index++) {
-                    System.out.println("NAME  DESCRIPTION      ID    COMMENT");
-                    System.out.format("%s  %s  %s  %s  %s", item.getName(), item.getDiscription(),
-                             item.getId(), item.getComments().show()[index],
-                             System.getProperty("line.separator"));
+                    System.out .format("%s  %s", item.getComments().show()[index], sep);
                 }
             }
+
         }
 
         @Override
