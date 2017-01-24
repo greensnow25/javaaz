@@ -11,7 +11,7 @@ public class Task extends Item {
     /**
      * field comment.
      */
-    private Comment comment;
+    Comment comment1;
     /**
      * public constructor of class.
      * @param name name of item.
@@ -27,9 +27,12 @@ public class Task extends Item {
     /**
      * default constructor of class.
      */
-    public Task() {
-
+    public Task(String name, String description, String comment) {
+        super(name, description);
+       this.comment1 = new Comment(comment);
     }
 
-
+    public Comment getComment() {
+        return comment1;
+    }
 }

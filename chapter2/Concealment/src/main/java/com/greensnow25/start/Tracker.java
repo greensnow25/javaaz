@@ -2,6 +2,7 @@ package com.greensnow25.start;
 
 import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
+import com.greensnow25.modules.Task;
 
 import java.util.Random;
 
@@ -13,10 +14,7 @@ import java.util.Random;
  * @since 27.12.16.
  */
 public class Tracker {
-    /**
-     * private field of class.
-     */
-    private Comment comment;
+
     /**
      * sizearray.
      */
@@ -165,11 +163,6 @@ public class Tracker {
         return position;
     }
 
-    /**
-     * getComment.
-     * @return fields of class.
-     */
-    public Comment getComment() {
-        return comment;
-    }
+
+
 }
