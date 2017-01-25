@@ -39,13 +39,13 @@ public class MenuTracker {
      * filling array objects with help inner clases.
      */
     public  void filling() {
-        userActions[0] = new AddItem();
+        userActions[0] = this.new AddItem();
         userActions[1] = this.new FindById();
         userActions[2] = this.new ShowAll();
         userActions[3] = this.new UpdateItem();
         userActions[4] = this.new DeleteItem();
         userActions[5] = this.new FindByName();
-        userActions[6] = new AddComment();
+        userActions[6] = this.new AddComment();
     }
 
     /**
@@ -107,8 +107,9 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             Item item = tracker.findById(input.ask("enter id"));
-            System.out.format("%s  %s", "operation sucsesfull name " + System.getProperty("line.separator")
-                     + item.getName(), "desk " + item.getDiscription() + System.getProperty("line.separator"));
+            String sep = System.getProperty("line.separator");
+            System.out.format("%s %s", "operation sucsesfull " + sep + "name "
+                     + item.getName(), "desk " + item.getDiscription() + sep);
 
         }
 
@@ -216,8 +217,9 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             Item item = tracker.findByName(input.ask("enter the name : "));
-            System.out.format("%s  %s", "operation sucsesfull name "
-                   + item.getName(), "desk " + item.getDiscription() + System.getProperty("line.separator"));
+            String sep = System.getProperty("line.separator");
+            System.out.format("%s %s %s %s %s %s %s", "operation sucsesfull", sep,
+                    "name ", item.getName(), "desk ", item.getDiscription(), sep);
         }
 
         @Override

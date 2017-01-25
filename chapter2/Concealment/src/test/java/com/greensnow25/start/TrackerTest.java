@@ -39,8 +39,8 @@ public class TrackerTest {
     @Before
     public void beforeTest() {
         this.tracker = new Tracker();
-       // this.task = new Task("first task", "first desk");
-     //   this.taskOne = new Task("second task", "second desk");
+        this.task = new Task("first task", "first desk");
+        this.taskOne = new Task("second task", "second desk");
     }
 
     /**

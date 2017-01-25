@@ -32,11 +32,17 @@ public class Comment {
     /**
      * public method add comment.
      * @param name name of new comment.
+     * @return array of strings.
      */
 
-    public void  addComent(String name) {
+    public String[] addComent(String name) {
+        String[] result = name.split(System.getProperty("line.separator"));
 
-          comments[position++] = name;
+        for (int i = 0; i < result.length; i++) {
+            comments[position++] = result[i];
+        }
+
+        return comments;
     }
 
     /**

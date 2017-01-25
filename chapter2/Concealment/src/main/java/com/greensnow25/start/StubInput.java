@@ -22,6 +22,7 @@ public class StubInput implements Input {
      * @param answers arrayf of Strings.
      */
     public StubInput(String[] answers) {
+
         this.answers = answers;
     }
 

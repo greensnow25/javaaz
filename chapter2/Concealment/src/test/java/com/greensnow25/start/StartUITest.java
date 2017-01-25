@@ -1,6 +1,5 @@
 package com.greensnow25.start;
 
-import com.greensnow25.modules.Comment;
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
 import org.junit.Before;
@@ -34,9 +33,17 @@ public class StartUITest {
      */
     private String discOne = "first";
     /**
+     * first comment.
+     */
+    private String commentOne = "first";
+    /**
+     * second comment.
+     */
+    private String commentTwo = "two";
+    /**
      * array of action.
      */
-    private String[] action = new String[]{"0", "1", "2", "3", "4", "5", "y"};
+    private String[] action = new String[]{"0", "1", "2", "3", "4", "5", "6"};
     /**
      * second name .
      */
@@ -68,7 +75,8 @@ public class StartUITest {
      */
     @Test
     public void whenAddItemtThenFindByNameAndPrint() {
-        Input input = new StubInput(new String[]{action[0], nameOne, discOne, action[6]});
+        Input input = new StubInput(new String[]{action[0], nameOne, discOne, commentOne,
+                                    "n", action[5], nameOne, "y"});
         new StartUI(input, tracker).choise();
         String result = tracker.findByName(nameOne).getName();
         assertThat(result, is("first"));
@@ -80,28 +88,61 @@ public class StartUITest {
      */
     @Test
     public void whenFindByIdReturnItemIdAndPrint() {
-        tracker.add(new Task(nameOne, discOne, new Comment(new String[]{"w"})));
+        tracker.add(new Task(nameOne, discOne));
         id = tracker.findByName(nameOne).getId();
         System.setOut(new PrintStream(out));
-        Input input = new StubInput(new String[]{action[2], id, action[0]});
+        Input input = new StubInput(new String[]{action[1], id, "y"});
         new StartUI(input, tracker).choise();
         String result = out.toString();
-
-        assertThat(result, is("Bаша заявка:first\r\n"));
+        String sep =  System.getProperty("line.separator");
+        assertThat(result, is("0. Add the item." + sep
+                            + "1. Find item by id." + sep
+                            + "2. Show items ." + sep
+                            + "3. Edit item." + sep
+                            + "4. Delete item." + sep
+                            + "5. Find item by name: " + sep
+                            + "6. add the comment" + sep
+                            + "operation sucsesfull " + sep
+                            + "name first desk first" + sep));
     }
+
+
 
     /**
      * test show all items.
      */
     @Test
     public void whenAddItemThenShowItems() {
-        Input input = new StubInput(new String[]{action[1], nameOne, discOne, action[3], action[0]});
+
+        Input input = new StubInput(new String[]{action[0], nameOne, discOne, commentOne,
+                                    "n", action[2], "y"});
         System.setOut(new PrintStream(out));
         new StartUI(input, tracker).choise();
         String result = out.toString();
-
-        assertThat(result, is("Заявка first добавлена\r\n"
-                             + "first  first\r\n"));
+        Item item = tracker.findByName(nameOne);
+        String id = item.getId();
+        String name = item.getName();
+        String desk = item.getDiscription();
+        String sep = System.getProperty("line.separator");
+        assertThat(result, is("0. Add the item." + sep
+                             + "1. Find item by id." + sep
+                             + "2. Show items ." + sep
+                             + "3. Edit item." + sep
+                             + "4. Delete item." + sep
+                             + "5. Find item by name: " + sep
+                             + "6. add the comment" + sep
+                             + "operation sucsesfull " + sep
+                             + "0. Add the item." + sep
+                             + "1. Find item by id." + sep
+                             + "2. Show items ." + sep
+                             + "3. Edit item." + sep
+                             + "4. Delete item." + sep
+                             + "5. Find item by name: " + sep
+                             + "6. add the comment" + sep
+                             + "NAME  DESCRIPTION      ID    " + sep
+                             + name + "  " +  desk + "  " + id + "  " + sep
+                             + "COMMENTS LIST :" + sep
+                             + "first  " + sep));
     }
 
     /**
@@ -109,11 +150,11 @@ public class StartUITest {
      */
     @Test
     public void whenAddItemThenFindAndUpdateThen() {
-        Item item = tracker.add(new Task(nameOne, diskTwo,new Comment(new String[]{"w"})));
-                    tracker.add(new Task(nameTwo, diskTwo,new Comment(new String[]{"w"})));
+                    tracker.add(new Task(nameOne, diskTwo));
+                    tracker.add(new Task(nameTwo, diskTwo));
         id = tracker.findByName(nameOne).getId();
-        Input input = new StubInput(new String[]{action[4], nameOne, nameTwo,
-                                                 diskTwo, action[3], action[0]});
+        Input input = new StubInput(new String[]{action[3], nameOne, nameTwo,
+                                                 diskTwo, "y"});
         new StartUI(input, tracker).choise();
         String result = tracker.findById(id).getId();
 
@@ -125,8 +166,8 @@ public class StartUITest {
      */
     @Test
     public void whenDeleteItemThenShowAll() {
-        tracker.add(new Task(nameOne, diskTwo,new Comment(new String[]{"w"})));
-        Input input = new StubInput(new String[]{action[5], nameOne, action[3], action[0]});
+        tracker.add(new Task(nameOne, diskTwo));
+        Input input = new StubInput(new String[]{action[4], nameOne, "y"});
         new StartUI(input, tracker).choise();
 
         assertNull(tracker.findByName(nameOne));
@@ -137,12 +178,45 @@ public class StartUITest {
      */
     @Test
     public void whenFindByNameThenReturnItem() {
-        tracker.add(new Task(nameTwo, diskTwo,new Comment(new String[]{"w"})));
-        Input input = new StubInput(new String[]{action[6], nameOne, action[0]});
-        new StartUI(input, tracker).choise();
-        String result = tracker.findByName(nameTwo).getName();
 
-        assertThat(result, is("two"));
+        Item item = tracker.add(new Task(nameTwo, diskTwo));
+        item.getComments().addComent(commentOne);
+        Input input = new StubInput(new String[]{action[5], nameTwo, "y"});
+        System.setOut(new PrintStream(out));
+        new StartUI(input, tracker).choise();
+        String name = out.toString();
+        String sep = System.getProperty("line.separator");
+
+        assertThat(name, is("0. Add the item." + sep
+                          + "1. Find item by id." + sep
+                          + "2. Show items ." + sep
+                          + "3. Edit item." + sep
+                          + "4. Delete item." + sep
+                          + "5. Find item by name: " + sep
+                          + "6. add the comment" + sep
+                          + "operation sucsesfull " + sep
+                          + " name  two desk  two " + sep));
+
+    }
+
+    /**
+     * add comment from item.
+     */
+    @Test
+    public void whenAddCommentThenShowComment() {
+        Item item = tracker.add(new Task(nameOne, discOne));
+        item.getComments().addComent(commentTwo);
+        Input input = new StubInput(new String[]{action[6], nameOne, commentOne, "y"});
+        new StartUI(input, tracker).choise();
+        System.setOut(new PrintStream(out));
+        for (String s : item.getComments().show()) {
+            System.out.println(s);
+        }
+        String result = out.toString();
+        String sep = System.getProperty("line.separator");
+
+        assertThat(result, is("two" + sep + "first" + sep));
+
     }
 
 }
