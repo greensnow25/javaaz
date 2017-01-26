@@ -3,13 +3,14 @@ package com.greensnow25.start;
 import java.util.Scanner;
 
 /**
- *public class ConsoleInput displays a menu to the console and.
+ * public class ConsoleInput displays a menu to the console and.
  * requests the user's actions.
+ *
  * @author greensnow25.
- * @since 10.01.17.
  * @version 1.
+ * @since 10.01.17.
  */
-public class ConsoleInput implements Input  {
+public class ConsoleInput implements Input {
     /**
      * Scanner obgect.
      */
@@ -18,6 +19,7 @@ public class ConsoleInput implements Input  {
 
     /**
      * override method ask question and returns next word.
+     *
      * @param question - whos need ask user.
      * @return returns the first word.
      */
@@ -28,7 +30,24 @@ public class ConsoleInput implements Input  {
         return scan.next();
     }
 
+    @Override
+    public int ask(String question, int[] range) throws MenuOutExeption {
+        int key = Integer.valueOf(this.ask(question));
+        boolean exist = false;
 
+        for (int value : range) {
+            if (key == value) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new MenuOutExeption("Out of menu range");
+        }
+
+    }
 
 
 }

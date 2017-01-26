@@ -2,12 +2,12 @@ package com.greensnow25.start;
 
 /**
  * public class StartUI run TRACKER.
+ *
  * @author grensnow25.
- * @since 28.12.16.
  * @version 1.0.
+ * @since 28.12.16.
  */
 public class StartUI {
-
     /**
      * initialization.
      */
@@ -16,9 +16,11 @@ public class StartUI {
      * initialization.
      */
     private Tracker tracker;
+
     /**
      * constructor of class.
-     * @param input can be consol or emulation.
+     *
+     * @param input   can be consol or emulation.
      * @param tracker add tracker.
      */
     StartUI(Input input, Tracker tracker) {
@@ -31,12 +33,15 @@ public class StartUI {
      */
     public void choise() {
         MenuTracker menu = new MenuTracker(input, tracker);
+
         boolean exit = true;
         try {
             menu.filling();
+            menu.showkeys();
             while (exit) {
                 menu.show();
-                menu.select(Integer.valueOf(input.ask("Choise action :")));
+
+                menu.select(input.ask("Choise action :", menu.getRange()));
                 if ("y".equals(input.ask("Exit y/ n"))) {
                     break;
                 }
@@ -50,14 +55,15 @@ public class StartUI {
 
     /**
      * main.
+     *
      * @param args string array.
      */
     public static void main(String[] args) {
         Tracker tracker = new Tracker();
-        Input input = new ConsoleInput();
+        Input input = new ValidStubInput(
+                new String[]{"9", "2", "1", "2", "y"});
         new StartUI(input, tracker).choise();
     }
-
 
 
 }

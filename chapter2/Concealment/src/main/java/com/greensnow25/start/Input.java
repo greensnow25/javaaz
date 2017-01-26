@@ -14,6 +14,12 @@ public interface Input {
      */
     String ask(String question);
 
-
+    /**
+     * method with parametrs.
+     * @param question whos you like to ask.
+     * @param range of actions.
+     * @return key.
+     */
+    int ask(String question, int[] range);
 }
 
