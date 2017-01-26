@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class StubInputTest {
 
     @Test(expected = MenuOutExeption.class)
-    public void whenTrowExeptionThenReturnLine() throws MenuOutExeption {
+    public void whenTrowExeptionThenExeptionReturn() throws MenuOutExeption {
         StubInput stubInput = new StubInput(new String[]{"1"});
         int[] range = new int[]{0, 2, 6};
 
