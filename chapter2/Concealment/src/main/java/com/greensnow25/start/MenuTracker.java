@@ -14,9 +14,9 @@ import com.greensnow25.modules.Task;
 public class MenuTracker {
     /**
      * array of keys from classes.
-      */
+     */
     private int[] range = new int[7];
-      /**
+    /**
      * class object.
      */
     private Input input;
@@ -67,12 +67,13 @@ public class MenuTracker {
      */
     public void showkeys() {
         int position = 0;
-       for (int index = 0; index < userActions.length; index++) {
+        for (int index = 0; index < userActions.length; index++) {
             if (userActions[index] != null) {
                 this.range[position++] = userActions[index].key();
-           }
+            }
         }
     }
+
     /**
      * method collect informstiom from inner classes.
      */
@@ -127,14 +128,10 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            try {
-                Item item = tracker.findById(input.ask("enter id"));
-                String sep = System.getProperty("line.separator");
-                System.out.format("%s %s", "operation sucsesfull " + sep + "name "
-                        + item.getName(), "desk " + item.getDiscription() + sep);
-            } catch (NullPointerException e) {
-                System.out.println("Item with indicate id does not exist. Enter corect id.");
-            }
+            Item item = tracker.findById(input.ask("enter id"));
+            String sep = System.getProperty("line.separator");
+            System.out.format("%s %s", "operation sucsesfull " + sep + "name "
+                    + item.getName(), "desk " + item.getDiscription() + sep);
         }
 
         @Override
@@ -186,18 +183,15 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            try {
-                Item item = tracker.findByName(input.ask("\n"
-                        + "enter the name of the application you will edit : "));
-                item.getId();
-                Task task = new Task(input.ask("new name"), input.ask("new desk"));
-                task.setId(item.getId());
-                tracker.update(task);
-                System.out.println("operation sucsesfull ");
-            } catch (NullPointerException e) {
-                System.out.println("Item with indicate name does not exist. Enter corect name.");
-            }
+            Item item = tracker.findByName(input.ask("\n"
+                    + "enter the name of the application you will edit : "));
+            item.getId();
+            Task task = new Task(input.ask("new name"), input.ask("new desk"));
+            task.setId(item.getId());
+            tracker.update(task);
+            System.out.println("operation sucsesfull ");
         }
+
         @Override
         public String info() {
             return String.format("%s. %s", this.key(), "Edit item.");
@@ -217,19 +211,17 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            try {
-                Item item = tracker.findByName(input.ask(
-                        "Enter item mane whos will be delete: "));
-                if (item != null) {
-                    tracker.delete(item);
-                    System.out.println("operation sucsesfull ");
-                } else {
-                    System.out.println("Item does not exist.");
-                }
-            } catch (NullPointerException e) {
-                System.out.println("Item with indicate name does not exist. Enter corect name.");
+
+            Item item = tracker.findByName(input.ask(
+                    "Enter item mane whos will be delete: "));
+            if (item != null) {
+                tracker.delete(item);
+                System.out.println("operation sucsesfull ");
+            } else {
+                System.out.println("Item does not exist.");
             }
         }
+
         @Override
         public String info() {
             return String.format("%s. %s", this.key(), "Delete item.");
@@ -249,14 +241,11 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            try {
-                Item item = tracker.findByName(input.ask("enter the name : "));
-                String sep = System.getProperty("line.separator");
-                System.out.format("%s %s %s %s %s %s %s", "operation sucsesfull", sep,
-                        "name ", item.getName(), "desk ", item.getDiscription(), sep);
-            } catch (NullPointerException e) {
-                System.out.println("Item with indicate name does not exist. Enter corect name.");
-            }
+
+            Item item = tracker.findByName(input.ask("enter the name : "));
+            String sep = System.getProperty("line.separator");
+            System.out.format("%s %s %s %s %s %s %s", "operation sucsesfull", sep,
+                    "name ", item.getName(), "desk ", item.getDiscription(), sep);
         }
 
         @Override
@@ -278,14 +267,10 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            try {
-                Item item = tracker.findByName(input.ask("name"));
-                item.getComments().addComent(input.ask("enter new comment"));
-
-            } catch (NullPointerException e) {
-                System.out.println("Item with indicate name does not exist. Enter corect name.");
-            }
+            Item item = tracker.findByName(input.ask("name"));
+            item.getComments().addComent(input.ask("enter new comment"));
         }
+
         @Override
         public String info() {
             return String.format("%s. %s", this.key(), "add the comment");
@@ -294,6 +279,7 @@ public class MenuTracker {
 
     /**
      * get range.
+     *
      * @return array of keys from classes.
      */
     public int[] getRange() {

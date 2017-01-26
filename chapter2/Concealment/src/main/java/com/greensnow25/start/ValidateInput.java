@@ -8,6 +8,7 @@ package com.greensnow25.start;
  * @since 25.01.17.
  */
 public class ValidateInput extends ConsoleInput {
+
     /**
      * method check is key of range.
      * if hot trows exception and treats them.
@@ -23,8 +24,8 @@ public class ValidateInput extends ConsoleInput {
             try {
                 valid = super.ask(question, range);
                 invalid = false;
-            } catch (MenuOutExeption my) {
-                System.out.println("Out of range. Enter operation again");
+        //    } catch (MenuOutExeption my) {
+       //         System.out.println(my.getMessage());
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter validate date again");
             }

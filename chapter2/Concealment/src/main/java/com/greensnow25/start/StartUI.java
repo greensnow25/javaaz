@@ -40,11 +40,17 @@ public class StartUI {
             menu.showkeys();
             while (exit) {
                 menu.show();
-
-                menu.select(input.ask("Choise action :", menu.getRange()));
+                try {
+                    menu.select(input.ask("Choise action :", menu.getRange()));
+                } catch (MenuOutExeption ex) {
+                    System.out.println(ex.getMessage());
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
                 if ("y".equals(input.ask("Exit y/ n"))) {
                     break;
                 }
+
             }
 
         } catch (Exception ex) {
@@ -60,8 +66,8 @@ public class StartUI {
      */
     public static void main(String[] args) {
         Tracker tracker = new Tracker();
-        Input input = new ValidStubInput(
-                new String[]{"9", "2", "1", "2", "y"});
+        Input input = new ValidateInput();
+        //new String[]{"9", "2", "1", "2", "y"});
         new StartUI(input, tracker).choise();
     }
 
