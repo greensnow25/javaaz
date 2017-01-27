@@ -12,10 +12,7 @@ import com.greensnow25.modules.Task;
  * @since 19.01.17.
  */
 public class MenuTracker {
-    /**
-     * array of keys from classes.
-     */
-    private int[] range = new int[7];
+
     /**
      * class object.
      */
@@ -28,6 +25,11 @@ public class MenuTracker {
      * array of abjects.
      */
     private UserAction[] userActions = new UserAction[7];
+
+    /**
+     * array of keys from classes.
+     */
+    private int[] range = new int[userActions.length];
 
     /**
      * class constructor.
