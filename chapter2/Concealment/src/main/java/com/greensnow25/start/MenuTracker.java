@@ -46,13 +46,13 @@ public class MenuTracker {
      * filling array objects with help inner clases.
      */
     public void filling() {
-        userActions[0] = this.new AddItem("Add the item.");
-        userActions[1] = this.new FindById("Find item by id.");
-        userActions[2] = this.new ShowAll("Show items .");
-        userActions[3] = this.new UpdateItem("Edit item.");
-        userActions[4] = this.new DeleteItem("Delete item.");
-        userActions[5] = this.new FindByName("Find item by name: ");
-        userActions[6] = this.new AddComment("Add the comment");
+        userActions[0] = this.new AddItem("Add the item.", 0);
+        userActions[1] = this.new FindById("Find item by id.", 1);
+        userActions[2] = this.new ShowAll("Show items .", 2);
+        userActions[3] = this.new UpdateItem("Edit item.", 3);
+        userActions[4] = this.new DeleteItem("Delete item.", 4);
+        userActions[5] = this.new FindByName("Find item by name: ", 5);
+        userActions[6] = this.new AddComment("Add the comment", 6);
     }
 
     /**
@@ -93,19 +93,13 @@ public class MenuTracker {
      */
     private class AddItem extends BaseAction {
 
-
         /**
          * constructor of class.
          *
          * @param name Information about what the class can do.
          */
-        AddItem(String name) {
-            super(name);
-        }
-
-        @Override
-        public int key() {
-            return 0;
+        AddItem(String name, int keyAction) {
+            super(name, keyAction);
         }
 
         @Override
@@ -133,13 +127,8 @@ public class MenuTracker {
          *
          * @param name Information about what the class can do.
          */
-        FindById(String name) {
-            super(name);
-        }
-
-        @Override
-        public int key() {
-            return 1;
+        FindById(String name, int keyAction) {
+            super(name, keyAction);
         }
 
         @Override
@@ -162,13 +151,8 @@ public class MenuTracker {
          *
          * @param name Information about what the class can do.
          */
-        ShowAll(String name) {
-            super(name);
-        }
-
-        @Override
-        public int key() {
-            return 2;
+        ShowAll(String name, int keyAction) {
+            super(name, keyAction);
         }
 
         @Override
@@ -196,13 +180,8 @@ public class MenuTracker {
          *
          * @param name Information about what the class can do.
          */
-        UpdateItem(String name) {
-            super(name);
-        }
-
-        @Override
-        public int key() {
-            return 3;
+        UpdateItem(String name, int keyAction) {
+            super(name, keyAction);
         }
 
         @Override
@@ -228,13 +207,8 @@ public class MenuTracker {
          *
          * @param name Information about what the class can do.
          */
-        DeleteItem(String name) {
-            super(name);
-        }
-
-        @Override
-        public int key() {
-            return 4;
+        DeleteItem(String name, int keyAction) {
+            super(name, keyAction);
         }
 
         @Override
@@ -262,13 +236,8 @@ public class MenuTracker {
          *
          * @param name Information about what the class can do.
          */
-        FindByName(String name) {
-            super(name);
-        }
-
-        @Override
-        public int key() {
-            return 5;
+        FindByName(String name, int keyAction) {
+            super(name, keyAction);
         }
 
         @Override
@@ -292,13 +261,8 @@ public class MenuTracker {
          *
          * @param name Information about what the class can do.
          */
-        AddComment(String name) {
-            super(name);
-        }
-
-        @Override
-        public int key() {
-            return 6;
+        AddComment(String name, int keyAction) {
+            super(name, keyAction);
         }
 
         @Override
@@ -307,9 +271,6 @@ public class MenuTracker {
             item.getComments().addComent(input.ask("enter new comment"));
         }
 
-        //  @Override
-        //  public String info() {return String.format("%s. %s", this.key(), "add the comment");
-        //  }
     }
 
     /**
