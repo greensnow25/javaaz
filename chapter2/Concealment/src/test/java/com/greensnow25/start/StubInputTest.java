@@ -2,8 +2,6 @@ package com.greensnow25.start;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * test class trow exeption.
  *
@@ -12,7 +10,11 @@ import static org.junit.Assert.*;
  * @since 27.01.17.
  */
 public class StubInputTest {
-
+    /**
+     * error occurs when the key does not exist.
+     *
+     * @throws MenuOutExeption my exeption.
+     */
     @Test(expected = MenuOutExeption.class)
     public void whenTrowExeptionThenExeptionReturn() throws MenuOutExeption {
         StubInput stubInput = new StubInput(new String[]{"1"});

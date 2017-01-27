@@ -44,13 +44,13 @@ public class MenuTracker {
      * filling array objects with help inner clases.
      */
     public void filling() {
-        userActions[0] = this.new AddItem();
-        userActions[1] = this.new FindById();
-        userActions[2] = this.new ShowAll();
-        userActions[3] = this.new UpdateItem();
-        userActions[4] = this.new DeleteItem();
-        userActions[5] = this.new FindByName();
-        userActions[6] = this.new AddComment();
+        userActions[0] = this.new AddItem("Add the item.");
+        userActions[1] = this.new FindById("Find item by id.");
+        userActions[2] = this.new ShowAll("Show items .");
+        userActions[3] = this.new UpdateItem("Edit item.");
+        userActions[4] = this.new DeleteItem("Delete item.");
+        userActions[5] = this.new FindByName("Find item by name: ");
+        userActions[6] = this.new AddComment("Add the comment");
     }
 
     /**
@@ -89,7 +89,17 @@ public class MenuTracker {
      * Inner class AddItem.
      * add Item.
      */
-    private class AddItem implements UserAction {
+    private class AddItem extends BaseAction {
+
+
+        /**
+         * constructor of class.
+         *
+         * @param name Information about what the class can do.
+         */
+        AddItem(String name) {
+            super(name);
+        }
 
         @Override
         public int key() {
@@ -108,18 +118,22 @@ public class MenuTracker {
                 System.out.println("an array of filled application form please delete item");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Add the item.");
-        }
     }
 
     /**
      * Inner class FindById
      * find item by id.
      */
-    private class FindById implements UserAction {
+    private class FindById extends BaseAction {
+
+        /**
+         * constructor of class.
+         *
+         * @param name Information about what the class can do.
+         */
+        FindById(String name) {
+            super(name);
+        }
 
         @Override
         public int key() {
@@ -133,18 +147,22 @@ public class MenuTracker {
             System.out.format("%s %s", "operation sucsesfull " + sep + "name "
                     + item.getName(), "desk " + item.getDiscription() + sep);
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find item by id.");
-        }
     }
 
     /**
      * Inner class ShowAll.
      * show all items.
      */
-    private class ShowAll implements UserAction {
+    private class ShowAll extends BaseAction {
+
+        /**
+         * constructor of class.
+         *
+         * @param name Information about what the class can do.
+         */
+        ShowAll(String name) {
+            super(name);
+        }
 
         @Override
         public int key() {
@@ -164,18 +182,22 @@ public class MenuTracker {
                 }
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Show items .");
-        }
     }
 
     /**
      * Inner class UpdateItem.
      * class update item
      */
-    private class UpdateItem implements UserAction {
+    private class UpdateItem extends BaseAction {
+        /**
+         * constructor of class.
+         *
+         * @param name Information about what the class can do.
+         */
+        UpdateItem(String name) {
+            super(name);
+        }
+
         @Override
         public int key() {
             return 3;
@@ -191,18 +213,22 @@ public class MenuTracker {
             tracker.update(task);
             System.out.println("operation sucsesfull ");
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Edit item.");
-        }
     }
 
     /**
      * Inner class DeleteItem/
      * delete the item.
      */
-    private class DeleteItem implements UserAction {
+    private class DeleteItem extends BaseAction {
+
+        /**
+         * constructor of class.
+         *
+         * @param name Information about what the class can do.
+         */
+        DeleteItem(String name) {
+            super(name);
+        }
 
         @Override
         public int key() {
@@ -221,18 +247,22 @@ public class MenuTracker {
                 System.out.println("Item does not exist.");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Delete item.");
-        }
     }
 
     /**
      * Inner class FindByName.
      * find item be name.
      */
-    private class FindByName implements UserAction {
+    private class FindByName extends BaseAction {
+
+        /**
+         * constructor of class.
+         *
+         * @param name Information about what the class can do.
+         */
+        FindByName(String name) {
+            super(name);
+        }
 
         @Override
         public int key() {
@@ -247,18 +277,22 @@ public class MenuTracker {
             System.out.format("%s %s %s %s %s %s %s", "operation sucsesfull", sep,
                     "name ", item.getName(), "desk ", item.getDiscription(), sep);
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find item by name: ");
-        }
     }
 
     /**
      * public class AddComment
      * add a comment to an existing application.
      */
-    public class AddComment implements UserAction {
+    public class AddComment extends BaseAction {
+
+        /**
+         * constructor of class.
+         *
+         * @param name Information about what the class can do.
+         */
+        AddComment(String name) {
+            super(name);
+        }
 
         @Override
         public int key() {
@@ -271,10 +305,9 @@ public class MenuTracker {
             item.getComments().addComent(input.ask("enter new comment"));
         }
 
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "add the comment");
-        }
+        //  @Override
+        //  public String info() {return String.format("%s. %s", this.key(), "add the comment");
+        //  }
     }
 
     /**

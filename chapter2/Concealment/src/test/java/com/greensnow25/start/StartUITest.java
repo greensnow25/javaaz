@@ -101,7 +101,7 @@ public class StartUITest {
                             + "3. Edit item." + sep
                             + "4. Delete item." + sep
                             + "5. Find item by name: " + sep
-                            + "6. add the comment" + sep
+                            + "6. Add the comment" + sep
                             + "operation sucsesfull " + sep
                             + "name first desk first" + sep));
     }
@@ -130,7 +130,7 @@ public class StartUITest {
                              + "3. Edit item." + sep
                              + "4. Delete item." + sep
                              + "5. Find item by name: " + sep
-                             + "6. add the comment" + sep
+                             + "6. Add the comment" + sep
                              + "operation sucsesfull " + sep
                              + "0. Add the item." + sep
                              + "1. Find item by id." + sep
@@ -138,7 +138,7 @@ public class StartUITest {
                              + "3. Edit item." + sep
                              + "4. Delete item." + sep
                              + "5. Find item by name: " + sep
-                             + "6. add the comment" + sep
+                             + "6. Add the comment" + sep
                              + "NAME  DESCRIPTION      ID    " + sep
                              + name + "  " +  desk + "  " + id + "  " + sep
                              + "COMMENTS LIST :" + sep
@@ -193,7 +193,7 @@ public class StartUITest {
                           + "3. Edit item." + sep
                           + "4. Delete item." + sep
                           + "5. Find item by name: " + sep
-                          + "6. add the comment" + sep
+                          + "6. Add the comment" + sep
                           + "operation sucsesfull " + sep
                           + " name  two desk  two " + sep));
 
