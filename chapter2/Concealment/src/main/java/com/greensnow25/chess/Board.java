@@ -25,12 +25,13 @@ public class Board {
      * array of figures.
      */
     Figure[] figures = new Figure[10];
+    Cell[][] result = new Cell[axisX.length][axisY.length];
     /**
      * method filing the board cells.
      * @return array of Cells.
      */
-    public Cell[][] fillingboard() {
-        Cell[][] result = new Cell[axisX.length][axisY.length];
+    public void fillingboard() {
+
         for (int y = 0; y != axisY.length; y++) {
             for (int x = 0; x != axisX.length; x++) {
                 result[x][y] = new Cell(axisX[x], axisY[y]);
@@ -39,7 +40,7 @@ public class Board {
             }
             System.out.println();
         }
-        return result;
+
     }
 
     /**
@@ -60,4 +61,5 @@ public class Board {
         board.fillingboard();
 
     }
+
 }
