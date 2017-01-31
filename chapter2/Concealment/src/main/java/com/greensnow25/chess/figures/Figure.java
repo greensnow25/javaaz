@@ -16,7 +16,7 @@ public abstract class Figure {
     public Figure(Cell position) {
         this.position = position;
     }
-    abstract public Cell[] way(Cell position) throws ImposibleMoveExeption;
+    abstract public Cell[] way(Cell position, Board board) throws ImposibleMoveExeption;
 
     public Cell getPosition() {
         return position;

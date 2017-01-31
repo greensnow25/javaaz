@@ -64,6 +64,7 @@ public class Board {
      * @throws FigureNotFoundException
      */
      public boolean move(Cell sourse, Cell distanse) throws ImposibleMoveExeption, OccupiedWayException,
+
             FigureNotFoundException {
          return true;
      }
