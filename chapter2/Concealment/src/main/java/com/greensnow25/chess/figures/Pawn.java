@@ -29,7 +29,7 @@ public class Pawn extends Figure {
         int count = 0;
 
 
-        for (int x = 0; x != board.getResult().length; x++) {                 //просматриваем ось Х на доске
+        for (int x = 0; x != board.getResult().length; x++) {                   //просматриваем ось Х на доске
             for (int y = 0; y != board.getResult().length; y++) {               //просматриваем ось У н
                 for (int i = 0; i != board.getFigures().length; i++) {          //просматриваем фигуры , которые мы добавили
                     if (board.getFigures()[i] != null && res[x][y].equals(fi.getPosition())) {   //уславие для поиска месторосположения фигуры пешка
