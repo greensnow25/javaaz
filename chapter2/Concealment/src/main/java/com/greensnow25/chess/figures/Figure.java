@@ -1,5 +1,7 @@
-package com.greensnow25.chess;
+package com.greensnow25.chess.figures;
 
+import com.greensnow25.chess.Board;
+import com.greensnow25.chess.Cell;
 import com.greensnow25.chess.exeptions.FigureNotFoundException;
 import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
 import com.greensnow25.chess.exeptions.OccupiedWayException;
@@ -9,14 +11,14 @@ import com.greensnow25.chess.exeptions.OccupiedWayException;
  */
 public abstract class Figure {
 
-    final Cell position;
-
-
+   final Cell position;
 
     public Figure(Cell position) {
         this.position = position;
     }
     abstract public Cell[] way(Cell position) throws ImposibleMoveExeption;
 
-
+    public Cell getPosition() {
+        return position;
+    }
 }
