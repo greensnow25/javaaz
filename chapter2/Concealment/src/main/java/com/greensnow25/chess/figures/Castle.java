@@ -9,12 +9,12 @@ import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
  */
 public class Castle extends Figure {
 
-    public Castle(Cell position) {
-        super(position);
+    public Castle(Cell position, Board board) {
+        super(position, board);
     }
 
     @Override
-    public Cell[] way(Cell position, Board board) throws ImposibleMoveExeption {
+    public Cell[] way(Cell position) throws ImposibleMoveExeption {
     Cell[][] result = board.fillingboard();
     Cell[] movearray = new Cell[10];
         int count =0;

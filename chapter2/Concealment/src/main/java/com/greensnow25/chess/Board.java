@@ -15,6 +15,7 @@ import com.greensnow25.chess.figures.Pawn;
  * @since 30.01.17.
  */
 public class Board {
+
     /**
      * of array we take coorinates from axisY.
      */
@@ -29,15 +30,17 @@ public class Board {
     int positionFigure = 0;
     Figure[] figures = new Figure[10];
     Cell[][] result = new Cell[axisX.length][axisY.length];
+
     /**
      * method filing the board cells.
+     *
      * @return array of Cells.
      */
-   public Figure addFigure(Figure figure){
+    public Figure addFigure(Figure figure) {
 
-       this.figures[positionFigure++] = figure;
-       return figure;
-   }
+        this.figures[positionFigure++] = figure;
+        return figure;
+    }
 
     public Cell[][] fillingboard() {
 
@@ -56,18 +59,25 @@ public class Board {
 
     /**
      * method move figure.
-     * @param sourse original position figures.
+     *
+     * @param sourse   original position figures.
      * @param distanse the position where you want to move the piece.
      * @return is action possible.
      * @throws ImposibleMoveExeption
      * @throws OccupiedWayException
      * @throws FigureNotFoundException
      */
-     public boolean move(Cell sourse, Cell distanse) throws ImposibleMoveExeption, OccupiedWayException,
-
+    public boolean move(Cell sourse, Cell distanse) throws ImposibleMoveExeption, OccupiedWayException,
             FigureNotFoundException {
-         return true;
-     }
+        for (int fig = 0; fig != figures.length; fig++) {
+            if (sourse.equals(figures[fig]) ) {
+                throw new FigureNotFoundException("Фигура не сувществует");
+            }
+
+        }
+        return true;
+    }
+
 
     public Figure[] getFigures() {
         return figures;
@@ -81,4 +91,7 @@ public class Board {
         return axisX;
     }
 
+    public String[] getAxisY() {
+        return axisY;
+    }
 }

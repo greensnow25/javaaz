@@ -58,22 +58,7 @@ public class Cell {
         this.axisY = axisY;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cell)) return false;
 
-        Cell cell = (Cell) o;
 
-        if (!axisX.equals(cell.axisX)) return false;
-        return axisY.equals(cell.axisY);
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = axisX.hashCode();
-        result = 31 * result + axisY.hashCode();
-        return result;
-    }
 }

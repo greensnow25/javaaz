@@ -13,12 +13,14 @@ public abstract class Figure {
 
    final Cell position;
 
-    public Figure(Cell position) {
-        this.position = position;
-    }
-    abstract public Cell[] way(Cell position, Board board) throws ImposibleMoveExeption;
+    protected Board board;
 
-    public Cell getPosition() {
-        return position;
+    public Figure(Cell position, Board board) {
+        this.position = position;
+        this.board = board;
     }
+
+    abstract public Cell[] way(Cell position) throws ImposibleMoveExeption, OccupiedWayException, FigureNotFoundException;
+
+
 }

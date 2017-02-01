@@ -2,7 +2,9 @@ package com.greensnow25.chess.figures;
 
 import com.greensnow25.chess.Board;
 import com.greensnow25.chess.Cell;
+import com.greensnow25.chess.exeptions.FigureNotFoundException;
 import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
+import com.greensnow25.chess.exeptions.OccupiedWayException;
 
 /**
  * public class Pawn.
@@ -14,53 +16,44 @@ import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
 public class Pawn extends Figure {
 
 
+    public Pawn(Cell position, Board board) {
+        super(position, board);
 
-    public Pawn(Cell position) {
-        super(position);
     }
 
 
     @Override
-    public Cell[] way(Cell destination, Board board) throws ImposibleMoveExeption {
+    public Cell[] way(Cell destination) throws ImposibleMoveExeption, OccupiedWayException, FigureNotFoundException {
+     // board.move(position,destination);
 
-       Cell[][] res = board.fillingboard();
+        Cell[] moves = new Cell[10];
+        if (!position.getAxisX().equals(destination.getAxisX()) ||
+                Integer.parseInt(destination.getAxisY()) - Integer.parseInt(position.getAxisY()) > 1) {
+            throw new ImposibleMoveExeption("ход невозможен.");
 
+        } else {
+            int count = 0;
 
-        Cell[] result = new Cell[10];
-        int count = 0;
+            for (int y = 0; y != board.getAxisY().length; y++) {
+                for (int x = 0; x != board.getAxisX().length; x++) {
 
-        for (int x = 0; x != board.getResult().length; x++) {                   //просматриваем ось Х на доске
-            for (int y = 0; y != board.getResult().length; y++) {               //просматриваем ось У н
-                for (int i = 0; i != board.getFigures().length; i++) {          //просматриваем фигуры , которые мы добавили
+                    if (board.getAxisX()[x].equals(position.getAxisX()) && board.getAxisY()[y].equals(position.getAxisY())) {
 
-                    if (board.getFigures()[i] != null && res[x][y].equals(board.getFigures()[i].getPosition())&&
-                             board.getFigures()[i] instanceof Pawn) {   //уславие для поиска месторосположения фигуры пешка
-                        for (int yStart = y; yStart != res.length - 1 - Integer.parseInt(destination.getAxisY()); yStart--) { //просматриваем ось У, и связываем с желаемой позициейю
-                            if (Integer.parseInt(destination.getAxisY()) -                                  //условие по которому пешка мошет двигатся только на 1 клетку вперед.
-                                    Integer.parseInt(board.getFigures()[i].getPosition().getAxisY()) == 1) {
-                                result[count++] = res[x][yStart];                                            //записываем, через какие клетки предстоит пройти
-                                System.out.print(res[x][y].getAxisX() + res[x][yStart].getAxisY() + "  ");
-                            } else {
-                                throw new ImposibleMoveExeption("Ход невозможен");
+                        for (int yMove = y; yMove != 0; yMove--) {
+
+                            moves[count++] = new Cell(board.getAxisX()[x], board.getAxisY()[yMove]);
+                            if (board.getAxisY()[yMove].equals(destination.getAxisY())) {
+                                break;
                             }
+
                         }
-                        break;
-
-
                     }
-
                 }
             }
+
         }
 
-        return result;
-
-
+        return moves;
     }
 
-
-    @Override
-    public Cell getPosition() {
-        return super.getPosition();
-    }
 }
