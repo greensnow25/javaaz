@@ -19,16 +19,18 @@ public class Board {
     /**
      * of array we take coorinates from axisY.
      */
-    private String[] axisY = new String[]{"8", "7", "6", "5", "4", "3", "2", "1"};
+    private int[] axisY = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
     /**
      * of array we take coorinates from axisX.
      */
-    private String[] axisX = new String[]{"a", "b", "c", "d", "e", "f", "g", "h"};
+    private int[] axisX = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
     /**
      * array of figures.
      */
     int positionFigure = 0;
+
     Figure[] figures = new Figure[10];
+
     Cell[][] result = new Cell[axisX.length][axisY.length];
 
     /**
@@ -44,13 +46,10 @@ public class Board {
 
     public Cell[][] fillingboard() {
 
-
         for (int y = 0; y != axisY.length; y++) {
             for (int x = 0; x != axisX.length; x++) {
-
                 result[x][y] = new Cell(axisX[x], axisY[y]);
-
-                System.out.print(result[x][y].getAxisX() + result[x][y].getAxisY() + " ");
+                System.out.print(result[x][y].getAxisX() + "" + result[x][y].getAxisY() + " ");
             }
             System.out.println();
         }
@@ -69,12 +68,29 @@ public class Board {
      */
     public boolean move(Cell sourse, Cell distanse) throws ImposibleMoveExeption, OccupiedWayException,
             FigureNotFoundException {
-        for (int fig = 0; fig != figures.length; fig++) {
-            if (sourse.equals(figures[fig]) ) {
-                throw new FigureNotFoundException("Фигура не сувществует");
+        Figure figure = null;
+        for (int i = 0; i != positionFigure; i++) {
+            if (figures[i].getPosition().equals(sourse) && figures[i] != null) {
+                figure = figures[i];
             }
-
         }
+        if (figure == null) {
+            throw new FigureNotFoundException("FIGURE NOT FOUND");
+        }
+
+        Cell[] cellMoves = figure.way(distanse);
+        for (int i = 0; i != positionFigure; i++) {
+            for (int j = 0; j !=cellMoves.length; j++) {
+      //          if (!figures[i].equals(figure) && cellMoves[j] != null && figures[i] !=null) {
+      //              System.out.println("efwfwefregreg");
+      //              break;
+        //        }
+
+
+            }
+        }
+
+
         return true;
     }
 
@@ -87,11 +103,15 @@ public class Board {
         return result;
     }
 
-    public String[] getAxisX() {
+    public int[] getAxisX() {
         return axisX;
     }
 
-    public String[] getAxisY() {
+    public int[] getAxisY() {
         return axisY;
+    }
+
+    public void setFigures(Figure[] figures) {
+        this.figures = figures;
     }
 }

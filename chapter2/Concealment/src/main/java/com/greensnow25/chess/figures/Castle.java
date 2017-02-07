@@ -2,6 +2,7 @@ package com.greensnow25.chess.figures;
 
 import com.greensnow25.chess.Board;
 import com.greensnow25.chess.Cell;
+import com.greensnow25.chess.exeptions.FigureNotFoundException;
 import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
 
 /**
@@ -9,20 +10,30 @@ import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
  */
 public class Castle extends Figure {
 
-    public Castle(Cell position, Board board) {
-        super(position, board);
+    public Castle(Cell position) {
+        super(position);
     }
 
     @Override
-    public Cell[] way(Cell position) throws ImposibleMoveExeption {
-    Cell[][] result = board.fillingboard();
-    Cell[] movearray = new Cell[10];
-        int count =0;
-        for (int fig =0; fig != board.getFigures().length; fig++) {
-            if (board.getFigures()[fig] instanceof Castle && board.getFigures()[fig] ==null) {
 
-            }
+
+    public Cell[] way(Cell destenation) throws ImposibleMoveExeption, FigureNotFoundException {
+
+        int posX = position.getAxisX();
+        int posY = position.getAxisY();
+        int destX = destenation.getAxisX();
+        int destY = destenation.getAxisY();
+
+        Cell[] moves;
+
+        if (Math.abs(posX - destX)!= Math.abs(posY - destY)){
+            moves = createPath(destenation);
+        } else {
+            throw new ImposibleMoveExeption("CASTLE IMPOSIBLE MOVE");
         }
-        return new Cell[0];
-    }
+
+            return moves;
+        }
+
+
 }

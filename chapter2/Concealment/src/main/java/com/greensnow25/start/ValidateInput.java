@@ -24,8 +24,7 @@ public class ValidateInput extends ConsoleInput {
             try {
                 valid = super.ask(question, range);
                 invalid = false;
-        //    } catch (MenuOutExeption my) {
-       //         System.out.println(my.getMessage());
+
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter validate date again");
             }

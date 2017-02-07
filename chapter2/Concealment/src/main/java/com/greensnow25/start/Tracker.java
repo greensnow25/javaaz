@@ -132,33 +132,7 @@ public class Tracker {
         return res;
     }
 
-  /**  public void addComment(String id, Comment comment) {
 
-       Item item =findById(id);
-        comment.aDDCOMENT(findById(id).ge);
-
-
-
-
-
-
-    }*/
-
-    /**
-     * get Item[].
-     * @return aray of Items.
-     */
-    public Item[] getItems() {
-        return items;
-    }
-
-    /**
-     * get position.
-     * @return position.
-     */
-    public int getPosition() {
-        return position;
-    }
 
 
 

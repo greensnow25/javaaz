@@ -9,20 +9,13 @@ import com.greensnow25.chess.exeptions.OccupiedWayException;
 /**
  *
  */
-public abstract class Figure {
-
-    final Cell position;
-
-    protected Board board;
-
-    public Figure(Cell position) {
-        this.position = position;
+public class Queen extends Figure {
+    public Queen(Cell position) {
+        super(position);
     }
 
-    abstract public Cell[] way(Cell destenation) throws ImposibleMoveExeption, FigureNotFoundException, OccupiedWayException;
-
-
-    public Cell[] createPath(Cell destenation) throws ImposibleMoveExeption {
+    @Override
+    public Cell[] way(Cell destenation) throws ImposibleMoveExeption, OccupiedWayException, FigureNotFoundException {
         Cell[] moves = new Cell[10];
         int count = 0;
 
@@ -33,7 +26,7 @@ public abstract class Figure {
 
         int xMove = 0;
         int yMove = 0;
-        int nums = 0;
+        int nums=0;
 
         if (posX > destX && posY > destY) {
             xMove = -1;
@@ -66,46 +59,26 @@ public abstract class Figure {
         int counterY = Math.abs(destY - posY);
 
 
-        if (counterX > counterY) {
-            nums = counterX;
-        } else {
-            nums = counterY;
+        if(counterX > counterY){
+            nums= counterX;
+        }else {
+            nums =counterY;
         }
 
 
-        for (int i = 0; i != nums + 1; i++) {
+        for (int i = 0; i != nums +1; i++ ) {
 
-            moves[count++] = new Cell(posX, posY);
-            posX += xMove;
-            posY += yMove;
+                moves[count++] = new Cell(posX, posY);
+                posX += xMove;
+                posY += yMove;
 
         }
-        Cell[] cells = new Cell[count];
-
-        System.arraycopy(moves, 0, moves, 0, count);
-
-        if (!moves[count - 1].equals(new Cell(destX, destY))) {
-            throw new ImposibleMoveExeption("IMPOSIBLE MOVE");
+        if (!moves[count-1].equals(new Cell(destX,destY))){
+            throw new ImposibleMoveExeption("the queen does not go well");
         }
-        return cells;
+        return moves;
     }
-
-
-    public Cell getPosition() {
-        return position;
-    }
-
-    public Figure findFigure(Cell sourse) throws FigureNotFoundException {
-        for (Figure fig : board.getFigures()) {
-            if (fig instanceof Figure) {
-                return this;
-            } else {
-                throw new FigureNotFoundException("фигура не найдена");
-            }
-
-        }
-        return this;
-
-    }
-
 }
+
+
+

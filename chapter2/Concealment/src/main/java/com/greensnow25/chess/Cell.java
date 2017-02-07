@@ -12,18 +12,18 @@ public class Cell {
     /**
      * field describes axis X.
      */
-    private String axisX;
+    private int axisX;
     /**
      * field describes axis Y.
      */
-    private String axisY;
+    private int axisY;
 
     /**
      * constructor of class.
      * @param axisX axis X.
      * @param axisY axis Y.
      */
-    public Cell(String axisX, String axisY) {
+    public Cell(int axisX, int axisY) {
         this.axisX = axisX;
         this.axisY = axisY;
     }
@@ -32,14 +32,14 @@ public class Cell {
      * get axis X
      * @return X.
      */
-    public String getAxisX() {
+    public int getAxisX() {
         return axisX;
     }
     /**
      * get axis Y
      * @return Y.
      */
-    public String getAxisY() {
+    public int getAxisY() {
         return axisY;
     }
 
@@ -47,18 +47,28 @@ public class Cell {
      * set axis X.
      * @param axisX X.
      */
-    public void setAxisX(String axisX) {
+    public void setAxisX(int axisX) {
         this.axisX = axisX;
     }
     /**
      * set axis Y.
      * @param axisY Y.
      */
-    public void setAxisY(String axisY) {
+    public void setAxisY(int axisY) {
         this.axisY = axisY;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cell)) return false;
 
+        Cell cell = (Cell) o;
+
+        if (axisX != cell.axisX) return false;
+        return axisY == cell.axisY;
+
+    }
 
 
 }

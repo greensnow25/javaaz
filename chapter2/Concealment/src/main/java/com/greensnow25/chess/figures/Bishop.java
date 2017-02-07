@@ -7,37 +7,30 @@ import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
 import com.greensnow25.chess.exeptions.OccupiedWayException;
 
 /**
- * public class Pawn.
  *
- * @author greensnow 25.
- * @version 1.
- * @since 30.01.17.
  */
-public class Pawn extends Figure {
+public class Bishop extends Figure {
 
-    public Pawn(Cell position) {
+    public Bishop(Cell position) {
         super(position);
-
     }
 
-
     @Override
-    public Cell[] way(Cell destenation) throws ImposibleMoveExeption, FigureNotFoundException {
+    public Cell[] way(Cell destenation) throws ImposibleMoveExeption {
         int posX = position.getAxisX();
         int posY = position.getAxisY();
         int destX = destenation.getAxisX();
         int destY = destenation.getAxisY();
+        Cell[] moves = new Cell[10];
 
-        Cell[] moves ;
 
-        if (posX == destX || posY != destY) {
-          moves = createPath(destenation);
-
+        if (Math.abs(posX - destX) == Math.abs(posY - destY)) {
+            moves = createPath(destenation);
         } else {
-            throw new ImposibleMoveExeption("PAWN IMPOSIBLI MOVE");
+            throw new ImposibleMoveExeption("BISHOP IMPOSIBLE MOVE");
         }
+
 
         return moves;
     }
-
 }
