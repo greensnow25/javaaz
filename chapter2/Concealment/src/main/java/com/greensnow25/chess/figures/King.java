@@ -15,7 +15,7 @@ public class King extends Figure {
     }
 
     @Override
-    public Cell[] way(Cell destenation) throws ImposibleMoveExeption, OccupiedWayException, FigureNotFoundException {
+    public Cell[] way(Cell destenation) throws ImposibleMoveExeption {
 
         Cell[] moves = new Cell[2];
         int count = 0;

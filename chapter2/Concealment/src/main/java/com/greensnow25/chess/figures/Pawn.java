@@ -22,7 +22,7 @@ public class Pawn extends Figure {
 
 
     @Override
-    public Cell[] way(Cell destenation) throws ImposibleMoveExeption, FigureNotFoundException {
+    public Cell[] way(Cell destenation) throws ImposibleMoveExeption {
         int posX = position.getAxisX();
         int posY = position.getAxisY();
         int destX = destenation.getAxisX();

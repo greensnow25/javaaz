@@ -12,12 +12,12 @@ public class RunChess {
 
     public static void main(String[] args) throws ImposibleMoveExeption, OccupiedWayException, FigureNotFoundException {
         Board board = new Board();
-     Pawn pawn = new Pawn(new Cell(3,4));
+     Pawn pawn = new Pawn(new Cell(3,5));
        board.addFigure(pawn);
         board.fillingboard();
       Bishop bishop = new Bishop(new Cell (2,6));
        board.addFigure(bishop);
-      bishop.way(new Cell(5,3));
+    //  bishop.way(new Cell(5,3));
         board.move(new Cell(2,6), new Cell(5,3));
 
 

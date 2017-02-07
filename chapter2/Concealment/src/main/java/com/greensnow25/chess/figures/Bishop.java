@@ -21,8 +21,7 @@ public class Bishop extends Figure {
         int posY = position.getAxisY();
         int destX = destenation.getAxisX();
         int destY = destenation.getAxisY();
-        Cell[] moves = new Cell[10];
-
+        Cell[] moves;
 
         if (Math.abs(posX - destX) == Math.abs(posY - destY)) {
             moves = createPath(destenation);
