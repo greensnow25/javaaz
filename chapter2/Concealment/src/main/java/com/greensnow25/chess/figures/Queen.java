@@ -16,64 +16,20 @@ public class Queen extends Figure {
 
     @Override
     public Cell[] way(Cell destenation) throws ImposibleMoveExeption {
-        Cell[] moves = new Cell[10];
-        int count = 0;
+        Cell[] moves ;
 
         int posX = position.getAxisX();
         int posY = position.getAxisY();
         int destX = destenation.getAxisX();
         int destY = destenation.getAxisY();
 
-        int xMove = 0;
-        int yMove = 0;
-        int nums=0;
+        int xMove = Math.abs(posX - destX);
+        int yMove = Math.abs(posY - destY);
 
-        if (posX > destX && posY > destY) {
-            xMove = -1;
-            yMove = -1;
-        } else if (posX == destX && posY > destY) {
-            xMove = 0;
-            yMove = -1;
-        } else if (posX < destX && posY > destY) {
-            xMove = 1;
-            yMove = -1;
-        } else if (posX < destX && posY == destY) {
-            xMove = 1;
-            yMove = 0;
-        } else if (posX < destX && posY < destY) {
-            xMove = 1;
-            yMove = 1;
-        } else if (posX == destX && posY < destY) {
-            xMove = 0;
-            yMove = 1;
-        } else if (posX > destX && posY < destY) {
-            xMove = -1;
-            yMove = 1;
-        } else if (posX > destX && posY == destY) {
-            xMove = -1;
-            yMove = 0;
+        if (xMove == yMove || posX == destX || posY == destY){
+            moves = createPath(destenation);
         }
-
-
-        int counterX = Math.abs(destX - posX);
-        int counterY = Math.abs(destY - posY);
-
-
-        if(counterX > counterY){
-            nums= counterX;
-        }else {
-            nums =counterY;
-        }
-
-
-        for (int i = 0; i != nums +1; i++ ) {
-
-                moves[count++] = new Cell(posX, posY);
-                posX += xMove;
-                posY += yMove;
-
-        }
-        if (!moves[count-1].equals(new Cell(destX,destY))){
+        else {
             throw new ImposibleMoveExeption("the queen does not go well");
         }
         return moves;

@@ -3,16 +3,14 @@ package com.greensnow25.chess;
 import com.greensnow25.chess.exeptions.FigureNotFoundException;
 import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
 import com.greensnow25.chess.exeptions.OccupiedWayException;
-import com.greensnow25.chess.figures.Bishop;
 import com.greensnow25.chess.figures.Figure;
-import com.greensnow25.chess.figures.Pawn;
 
 /**
- * public class Board
- * descried chess board.
+ * public class Board draw the board and checks the validity of entered data.
+ * if data true then figure move.
  *
  * @author greensnow 25.
- * @version 1.
+ * @version 2.
  * @since 30.01.17.
  */
 public class Board {
@@ -26,25 +24,32 @@ public class Board {
      */
     private int[] axisX = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
     /**
-     * array of figures.
+     * figure position in array.
      */
     int positionFigure = 0;
-
-    Figure[] figures = new Figure[10];
-
-    Cell[][] result = new Cell[axisX.length][axisY.length];
-
     /**
-     * method filing the board cells.
-     *
-     * @return array of Cells.
+     *array of figures.
+     */
+    Figure[] figures = new Figure[10];
+    /**
+     * array of cells, demonstrait the board.
+     */
+    Cell[][] result = new Cell[axisX.length][axisY.length];
+    /**
+     * method add figure on figures array.
+     * @param figure that add.
+     * @return figure.
      */
     public Figure addFigure(Figure figure) {
 
         this.figures[positionFigure++] = figure;
         return figure;
     }
-
+    /**
+     * method filing the board cells.
+     *
+     * @return array of Cells.
+     */
     public Cell[][] fillingboard() {
 
         for (int y = 0; y != axisY.length; y++) {
@@ -58,42 +63,81 @@ public class Board {
     }
 
     /**
-     * method move figure.
+     * method move figure and conducts inspections.
      *
      * @param sourse   original position figures.
-     * @param distanse the position where you want to move the piece.
+     * @param distanse the position where you want to move the figure.
      * @return is action possible.
-     * @throws ImposibleMoveExeption
-     * @throws OccupiedWayException
-     * @throws FigureNotFoundException
+     * @throws ImposibleMoveExeption it is impossible to move the piece because of incorrect data.
+     * @throws OccupiedWayException in the way of the figures is another figure.
+     * @throws FigureNotFoundException figure not found in sourse.
      */
-    public boolean move(Cell sourse, Cell distanse) throws ImposibleMoveExeption, OccupiedWayException,
-            FigureNotFoundException {
-        figure = null;
+    public boolean move(Cell sourse, Cell distanse) throws OccupiedWayException, FigureNotFoundException {
+        figure = findFigure(sourse);
+        boolean result = imposibleMove(distanse);
+        try {
+            if (figure == null) {
+                throw new FigureNotFoundException("FIGURE NOT FOUND");
+            } else if (result) {
+                throw new OccupiedWayException("IMPOSEBLI MOVE. THE POSITION OCCUPIED ANOTHER FIGURE");
+            }
+        } catch (FigureNotFoundException | OccupiedWayException ex) {
+            ex.printStackTrace();
+
+        }
+
+        // if conditions is true, move figure at destenation.
+
+        figure.getPosition().setAxisX(distanse.getAxisX());
+        figure.getPosition().setAxisY(distanse.getAxisY());
+        return result;
+    }
+
+    /**
+     * method find figure in sourse.
+     * @param sourse cell boards where the figure set.
+     * @return return figure if it is found.
+     */
+    final Figure findFigure(Cell sourse) {
+        Figure fig = null;
         for (int i = 0; i != positionFigure; i++) {
             if (figures[i].getPosition().equals(sourse) && figures[i] != null) {
-                figure = figures[i];
+                fig = figures[i];
             }
         }
-        if (figure == null) {
-            throw new FigureNotFoundException("FIGURE NOT FOUND");
-        }
+        return fig;
+    }
 
+    /**
+     *
+     * @param distanse the cell which should go figure.
+     * @return if checs validate return false.
+     * @throws OccupiedWayException in the way of the figures is another figure.
+     * @throws FigureNotFoundException throws exeption, if figure is not found.
+     */
+    final boolean imposibleMove(Cell distanse) throws OccupiedWayException, FigureNotFoundException {
+        boolean result = false;
         Cell[] cellMoves;
-        cellMoves = figure.way(distanse);
-        for (int i = 0; i != positionFigure; i++) {
-            for (int j = 0; j != cellMoves.length; j++) {
-                if (!figures[i].equals(figure) && cellMoves[j].equals(figures[i].getPosition()) && cellMoves[j] != null && figures[i] != null) {
-                    throw new OccupiedWayException("IMPOSEBLI MOVE. THE POSITION OCCUPIED ANOTHER FIGURE");
+        try {
+            cellMoves = figure.way(distanse);
 
+            for (int i = 0; i != positionFigure; i++) {
+                for (int j = 0; j != cellMoves.length; j++) {
+                    if (!figures[i].equals(figure) && cellMoves[j].equals(figures[i].getPosition())
+                            && cellMoves[j] != null && figures[i] != null) {
+                        result = true;
+                        throw new OccupiedWayException("IMPOSEBLI MOVE. THE POSITION OCCUPIED ANOTHER FIGURE");
+                    } else if (figures[i].equals(figure) && !cellMoves[cellMoves.length - 1].equals(distanse)
+                            && cellMoves[j] != null && figures[i] != null) {
+                        throw new ImposibleMoveExeption("WRONG COLOR OF THE FIGURE");
+
+                    }
                 }
-
-
             }
+        } catch (ImposibleMoveExeption ex) {
+            ex.printStackTrace();
         }
-
-
-        return true;
+        return result;
     }
 
 }

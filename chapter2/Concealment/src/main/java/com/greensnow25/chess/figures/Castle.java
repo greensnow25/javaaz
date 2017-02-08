@@ -26,7 +26,7 @@ public class Castle extends Figure {
 
         Cell[] moves;
 
-        if (Math.abs(posX - destX)!= Math.abs(posY - destY)){
+        if (posX == destX || posY == destY ){
             moves = createPath(destenation);
         } else {
             throw new ImposibleMoveExeption("CASTLE IMPOSIBLE MOVE");

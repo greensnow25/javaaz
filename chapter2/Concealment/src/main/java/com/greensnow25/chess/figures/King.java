@@ -17,27 +17,18 @@ public class King extends Figure {
     @Override
     public Cell[] way(Cell destenation) throws ImposibleMoveExeption {
 
-        Cell[] moves = new Cell[2];
-        int count = 0;
-        int moveHorizontal = 0;
-        int moveDiagonal = 0;
-        int moveVertikal = 0;
+        Cell[] moves;
 
         int posX = position.getAxisX();
         int posY = position.getAxisY();
         int destX = destenation.getAxisX();
         int destY = destenation.getAxisY();
 
-        if (Math.abs(posX - destX) == 1 && Math.abs(posY - destY) == 0) {
-            moveHorizontal = 1;
-        } else if (Math.abs(posX - destX) == 0 && Math.abs(posY - destY) == 1) {
-            moveVertikal = 1;
-        } else if (Math.abs(posX - destX) == 1 && Math.abs(posY - destY) == 1) {
-            moveDiagonal = 1;
-        }
+        int xMove = Math.abs(posX - destX);
+        int yMove = Math.abs(posY - destY);
 
-        if (moveHorizontal == 1 || moveVertikal == 1 || moveDiagonal == 1) {
-            moves[count++] = new Cell(destX, destY);
+        if (xMove + yMove == 1 || xMove==yMove){
+            moves = createPath(destenation);
         } else {
             throw new ImposibleMoveExeption("King does not go well");
         }

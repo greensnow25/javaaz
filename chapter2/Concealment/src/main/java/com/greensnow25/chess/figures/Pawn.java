@@ -14,13 +14,15 @@ import com.greensnow25.chess.exeptions.OccupiedWayException;
  * @since 30.01.17.
  */
 public class Pawn extends Figure {
+    int firstMove = 2;
+   // final int color;
 
-    public Pawn(Cell position) {
-        super(position);
-
+    public Pawn(Cell position, int color) {
+        super(position,color);
+      //  this.color = color;
     }
 
-
+    // if int color = 0 then move pawn down up. else color =1 down up.
     @Override
     public Cell[] way(Cell destenation) throws ImposibleMoveExeption {
         int posX = position.getAxisX();
@@ -28,11 +30,18 @@ public class Pawn extends Figure {
         int destX = destenation.getAxisX();
         int destY = destenation.getAxisY();
 
-        Cell[] moves ;
 
-        if (posX == destX || posY != destY) {
-          moves = createPath(destenation);
 
+  //      int directionMove = color > 1 ? 1 : -1;
+
+        int rangeMove = Math.abs(posY - destY);
+        Cell[] moves;
+
+        if (posX == destX && posY != destY && firstMove==2 ) {
+            moves = createPath(destenation);
+            firstMove--;
+        }else if(posX == destX && posY != destY && firstMove!=2) {
+            moves = createPath(destenation);
         } else {
             throw new ImposibleMoveExeption("PAWN IMPOSIBLI MOVE");
         }

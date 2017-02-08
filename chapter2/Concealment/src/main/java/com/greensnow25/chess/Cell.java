@@ -17,7 +17,6 @@ public class Cell {
      * field describes axis Y.
      */
     private int axisY;
-
     /**
      * constructor of class.
      * @param axisX axis X.
@@ -27,7 +26,6 @@ public class Cell {
         this.axisX = axisX;
         this.axisY = axisY;
     }
-
     /**
      * get axis X
      * @return X.
@@ -58,6 +56,11 @@ public class Cell {
         this.axisY = axisY;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
