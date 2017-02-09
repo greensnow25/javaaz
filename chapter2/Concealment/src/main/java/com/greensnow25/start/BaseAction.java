@@ -13,11 +13,15 @@ public abstract class BaseAction implements UserAction {
      */
     private String name;
 
+    /**
+     *  keyaction.
+     */
     private int keyAction;
     /**
      * constructor of class.
      *
      * @param name Information about what the class can do.
+     * @param keyAction keyaction.
      */
     public BaseAction(String name, int keyAction) {
         this.name = name;

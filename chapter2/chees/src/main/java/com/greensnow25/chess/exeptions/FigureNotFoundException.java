@@ -6,7 +6,7 @@ package com.greensnow25.chess.exeptions;
  * @since 08.02.17.
  * @version 1.
  */
-public class FigureNotFoundException extends Exception{
+public class FigureNotFoundException extends Exception {
     /**
      * method throws exeption, if figure is not found.
      * @param msg massage.

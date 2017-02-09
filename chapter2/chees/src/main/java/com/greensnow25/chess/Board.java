@@ -14,7 +14,10 @@ import com.greensnow25.chess.figures.Figure;
  * @since 30.01.17.
  */
 public class Board {
-    Figure figure;
+    /**
+     * figure on the chess board.
+     */
+    private Figure figure;
     /**
      * of array we take coorinates from axisY.
      */
@@ -26,17 +29,19 @@ public class Board {
     /**
      * figure position in array.
      */
-    int positionFigure = 0;
+    private int positionFigure = 0;
     /**
-     *array of figures.
+     * array of figures.
      */
-    Figure[] figures = new Figure[10];
+    private Figure[] figures = new Figure[10];
     /**
      * array of cells, demonstrait the board.
      */
-    Cell[][] result = new Cell[axisX.length][axisY.length];
+    private Cell[][] result = new Cell[axisX.length][axisY.length];
+
     /**
      * method add figure on figures array.
+     *
      * @param figure that add.
      * @return figure.
      */
@@ -45,6 +50,7 @@ public class Board {
         this.figures[positionFigure++] = figure;
         return figure;
     }
+
     /**
      * method filing the board cells.
      *
@@ -68,8 +74,8 @@ public class Board {
      * @param sourse   original position figures.
      * @param distanse the position where you want to move the figure.
      * @return is action possible.
-     * @throws ImposibleMoveExeption it is impossible to move the piece because of incorrect data.
-     * @throws OccupiedWayException in the way of the figures is another figure.
+     * @throws ImposibleMoveExeption   it is impossible to move the piece because of incorrect data.
+     * @throws OccupiedWayException    in the way of the figures is another figure.
      * @throws FigureNotFoundException figure not found in sourse.
      */
     public boolean move(Cell sourse, Cell distanse) throws OccupiedWayException, FigureNotFoundException {
@@ -95,6 +101,7 @@ public class Board {
 
     /**
      * method find figure in sourse.
+     *
      * @param sourse cell boards where the figure set.
      * @return return figure if it is found.
      */
@@ -109,10 +116,9 @@ public class Board {
     }
 
     /**
-     *
      * @param distanse the cell which should go figure.
      * @return if checs validate return false.
-     * @throws OccupiedWayException in the way of the figures is another figure.
+     * @throws OccupiedWayException    in the way of the figures is another figure.
      * @throws FigureNotFoundException throws exeption, if figure is not found.
      */
     final boolean imposibleMove(Cell distanse) throws OccupiedWayException, FigureNotFoundException {
