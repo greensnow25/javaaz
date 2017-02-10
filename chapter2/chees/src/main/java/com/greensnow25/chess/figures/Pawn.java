@@ -16,6 +16,10 @@ public class Pawn extends Figure {
      * field describes the first movement of the figure.
      */
     private int firstMove = 2;
+    /**
+     * color of the figure.
+     */
+    private int color;
 
 
     /**
@@ -25,8 +29,8 @@ public class Pawn extends Figure {
      * @param color    if int color = -1 then move pawn down up. else color =1 up down.
      */
     public Pawn(Cell position, int color) {
-        super(position, color);
-
+        super(position);
+        this.color = color;
     }
 
 
@@ -61,16 +65,30 @@ public class Pawn extends Figure {
     @Override
     public Cell[] createPath(Cell destenation) throws ImposibleMoveExeption {
         Cell[] result = super.createPath(destenation);
+        boolean resl = false;
 
-        if (firstMove == 2 && result.length == 3) {
-            firstMove--;
-            return result;
-        } else if (firstMove < 2 && result.length == 2) {
-            firstMove = 0;
-            return result;
+        //condition determines the direction of travel, depending on the shape color.
+
+        if (color > 0 && position.getAxisY() < destenation.getAxisY()) {
+            resl = true;
+        } else if (color < 0 && position.getAxisY() > destenation.getAxisY()) {
+            resl = true;
         } else {
-            throw new ImposibleMoveExeption("ONLI FIRST MOVE YOU MAY MOVED FIGURE ON TWO SELS");
+            throw new ImposibleMoveExeption("PAWN WRONG COLOR");
         }
 
+        //condition determines the direction of travel, depending on the shape color.
+
+        while (resl) {
+            if (firstMove == 2 && result.length == 3) {
+                firstMove = 0;
+            } else if (firstMove <= 2 && result.length == 2) {
+                firstMove = 0;
+            } else {
+                throw new ImposibleMoveExeption("ONLI FIRST MOVE YOU MAY MOVED FIGURE ON TWO SELS");
+            }
+            resl = false;
+        }
+        return result;
     }
 }

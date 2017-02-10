@@ -23,10 +23,10 @@ public class RunChess {
      */
     public static void main(String[] args) throws ImposibleMoveExeption, OccupiedWayException, FigureNotFoundException, CloneNotSupportedException {
         Board board = new Board();
-        Pawn pawn = new Pawn(new Cell(2, 5), -1);
+        Pawn pawn = new Pawn(new Cell(2, 5), 1);
         board.addFigure(pawn);
-        board.move(pawn.getPosition(), new Cell(2, 4));
-        board.move(pawn.getPosition(), new Cell(2, 2));
+        board.move(pawn.getPosition(), new Cell(2, 6));
+      //  board.move(pawn.getPosition(), new Cell(2, 2));
         board.fillingboard();
         //     board.move(new Cell(2, 5), new Cell(2, 6));
         //      board.move(new Cell(2,3), new Cell(2,2));

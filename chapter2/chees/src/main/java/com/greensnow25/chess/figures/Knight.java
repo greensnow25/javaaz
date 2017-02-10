@@ -34,8 +34,6 @@ public class Knight extends Figure {
     public Cell[] way(Cell destenation) throws ImposibleMoveExeption {
         Cell[] move = new Cell[2];
         int count = 0;
-        int loingHorse = 0;
-        int standingHorse = 0;
 
         int posX = position.getAxisX();
         int posY = position.getAxisY();
@@ -44,15 +42,8 @@ public class Knight extends Figure {
 
         // the condition of the correctness of the movement of the figure
 
-        if (Math.abs(posX - destX) == 1
-                && Math.abs(posY - destY) == 2) {
-            standingHorse = 1;
-        } else if (Math.abs(posX - destX) == 2
-                && Math.abs(posY - destY) == 1) {
-            loingHorse = 1;
-        }
-
-        if (standingHorse == 1 || loingHorse == 1) {
+        if (Math.abs(posX-destX) + Math.abs(posY-destY) == 3
+                && posX != destX && posY != destY){
             move[count++] = new Cell(posX, posY);
             move[count++] = new Cell(destX, destY);
         } else {

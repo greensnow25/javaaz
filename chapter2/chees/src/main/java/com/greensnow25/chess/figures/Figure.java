@@ -15,21 +15,6 @@ public abstract class Figure {
      * figure position on the board.
      */
     final Cell position;
-    /**
-     * color of the figure.
-     */
-    private int color;
-
-    /**
-     * constructor of class.
-     *
-     * @param color    if int color = -1 then move pawn down up. else color =1 up down.
-     * @param position figure position on board.
-     */
-    public Figure(Cell position, int color) {
-        this.position = position;
-        this.color = color;
-    }
 
     /**
      * constructor of class.
@@ -74,13 +59,7 @@ public abstract class Figure {
         int yMove = destY > posY ? 1 : destY < posY ? -1 : 0;
 
 
-        // If we chose the color, determines the correct direction of the figure. In our case it is a pawn
 
-        if (this.color == 1) {
-            yMove = 1;
-        } else if (this.color == -1) {
-            yMove = -1;
-        }
         int counterX = Math.abs(destX - posX);
         int counterY = Math.abs(destY - posY);
 

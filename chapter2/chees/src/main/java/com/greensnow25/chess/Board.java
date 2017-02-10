@@ -34,10 +34,6 @@ public class Board {
      * array of figures.
      */
     private Figure[] figures = new Figure[10];
-    /**
-     * array of cells, demonstrait the board.
-     */
-    private Cell[][] result = new Cell[axisX.length][axisY.length];
 
     /**
      * method add figure on figures array.
@@ -57,13 +53,13 @@ public class Board {
      * @return array of Cells.
      */
     public Cell[][] fillingboard() {
-
+        Cell[][] result = new Cell[axisX.length][axisY.length];
         for (int y = 0; y != axisY.length; y++) {
             for (int x = 0; x != axisX.length; x++) {
                 result[x][y] = new Cell(axisX[x], axisY[y]);
-                System.out.print(result[x][y].getAxisX() + "" + result[x][y].getAxisY() + " ");
+                System.out.format("%d%d ",result[x][y].getAxisX(), result[x][y].getAxisY());
             }
-            System.out.println();
+            System.out.format("%s", System.getProperty("line.separator"));
         }
         return result;
     }
