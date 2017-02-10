@@ -42,8 +42,8 @@ public class Knight extends Figure {
 
         // the condition of the correctness of the movement of the figure
 
-        if (Math.abs(posX-destX) + Math.abs(posY-destY) == 3
-                && posX != destX && posY != destY){
+        if (Math.abs(posX - destX) + Math.abs(posY - destY) == 3
+                && posX != destX && posY != destY) {
             move[count++] = new Cell(posX, posY);
             move[count++] = new Cell(destX, destY);
         } else {
