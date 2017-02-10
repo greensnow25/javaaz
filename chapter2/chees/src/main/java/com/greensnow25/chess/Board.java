@@ -50,18 +50,14 @@ public class Board {
     /**
      * method filing the board cells.
      *
-     * @return array of Cells.
      */
-    public Cell[][] fillingboard() {
-        Cell[][] result = new Cell[axisX.length][axisY.length];
+    public void fillingboard() {
         for (int y = 0; y != axisY.length; y++) {
             for (int x = 0; x != axisX.length; x++) {
-                result[x][y] = new Cell(axisX[x], axisY[y]);
-                System.out.format("%d%d ",result[x][y].getAxisX(), result[x][y].getAxisY());
+                System.out.format("%d%d ",x, y);
             }
             System.out.format("%s", System.getProperty("line.separator"));
         }
-        return result;
     }
 
     /**

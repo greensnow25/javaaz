@@ -44,10 +44,7 @@ public abstract class Figure {
      * @throws ImposibleMoveExeption figure do not move that.
      */
     public Cell[] createPath(Cell destenation) throws ImposibleMoveExeption {
-
-
         int count = 0;
-
         int posX = position.getAxisX();
         int posY = position.getAxisY();
         int destX = destenation.getAxisX();
@@ -57,8 +54,6 @@ public abstract class Figure {
 
         int xMove = destX > posX ? 1 : destX < posX ? -1 : 0;
         int yMove = destY > posY ? 1 : destY < posY ? -1 : 0;
-
-
 
         int counterX = Math.abs(destX - posX);
         int counterY = Math.abs(destY - posY);
@@ -73,7 +68,6 @@ public abstract class Figure {
             posX += xMove;
             posY += yMove;
         }
-
         return moves;
     }
 
