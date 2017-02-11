@@ -19,14 +19,6 @@ public class Board {
      */
     private Figure figure;
     /**
-     * of array we take coorinates from axisY.
-     */
-    private int[] axisY = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
-    /**
-     * of array we take coorinates from axisX.
-     */
-    private int[] axisX = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
-    /**
      * figure position in array.
      */
     private int positionFigure = 0;
@@ -34,6 +26,10 @@ public class Board {
      * array of figures.
      */
     private Figure[] figures = new Figure[10];
+    /**
+     * chess board size.
+     */
+    private int size = 8;
 
     /**
      * method add figure on figures array.
@@ -48,19 +44,6 @@ public class Board {
     }
 
     /**
-     * method filing the board cells.
-     *
-     */
-    public void fillingboard() {
-        for (int y = 0; y != axisY.length; y++) {
-            for (int x = 0; x != axisX.length; x++) {
-                System.out.format("%d%d ",x, y);
-            }
-            System.out.format("%s", System.getProperty("line.separator"));
-        }
-    }
-
-    /**
      * method move figure and conducts inspections.
      *
      * @param sourse   original position figures.
@@ -70,9 +53,10 @@ public class Board {
      * @throws OccupiedWayException    in the way of the figures is another figure.
      * @throws FigureNotFoundException figure not found in sourse.
      */
-    public boolean move(Cell sourse, Cell distanse) throws OccupiedWayException, FigureNotFoundException {
+    public boolean move(Cell sourse, Cell distanse) throws OccupiedWayException, FigureNotFoundException, ImposibleMoveExeption {
         figure = findFigure(sourse);
         boolean result = imposibleMove(distanse);
+
         try {
             if (figure == null) {
                 throw new FigureNotFoundException("FIGURE NOT FOUND");
@@ -81,7 +65,6 @@ public class Board {
             }
         } catch (FigureNotFoundException | OccupiedWayException ex) {
             ex.printStackTrace();
-
         }
 
         // if conditions is true, move figure at destenation.
@@ -113,27 +96,28 @@ public class Board {
      * @throws OccupiedWayException    in the way of the figures is another figure.
      * @throws FigureNotFoundException throws exeption, if figure is not found.
      */
-    final boolean imposibleMove(Cell distanse) throws OccupiedWayException, FigureNotFoundException {
+    public boolean imposibleMove(Cell distanse) throws OccupiedWayException, FigureNotFoundException, ImposibleMoveExeption {
         boolean result = false;
         Cell[] cellMoves;
-        try {
-            cellMoves = figure.way(distanse);
+        int imposibleMoveSize = distanse.getAxisX() > distanse.getAxisY() ?
+                distanse.getAxisX() : distanse.getAxisY();
+        cellMoves = figure.way(distanse);
 
-            for (int i = 0; i != positionFigure; i++) {
-                for (int j = 0; j != cellMoves.length; j++) {
-                    if (!figures[i].equals(figure) && cellMoves[j].equals(figures[i].getPosition())
-                            && cellMoves[j] != null && figures[i] != null) {
-                        result = true;
-                        throw new OccupiedWayException("IMPOSEBLI MOVE. THE POSITION OCCUPIED ANOTHER FIGURE");
-                    } else if (figures[i].equals(figure) && !cellMoves[cellMoves.length - 1].equals(distanse)
-                            && cellMoves[j] != null && figures[i] != null) {
-                        throw new ImposibleMoveExeption("WRONG COLOR OF THE FIGURE");
+        for (int i = 0; i != positionFigure; i++) {
+            for (int j = 0; j != cellMoves.length; j++) {
 
-                    }
+                if (!figures[i].equals(figure) && cellMoves[j].equals(figures[i].getPosition())
+                        && cellMoves[j] != null && figures[i] != null) {
+                    result = true;
+                    throw new OccupiedWayException("IMPOSEBLI MOVE. THE POSITION OCCUPIED ANOTHER FIGURE");
+                } else if (imposibleMoveSize >= size) {
+                    throw new ImposibleMoveExeption("going beyond the dimensions of the chessboard");
+                } else if (figures[i].equals(figure) && !cellMoves[cellMoves.length - 1].equals(distanse)
+                        && cellMoves[j] != null && figures[i] != null) {
+                    throw new ImposibleMoveExeption("WRONG COLOR OF THE FIGURE");
+
                 }
             }
-        } catch (ImposibleMoveExeption ex) {
-            ex.printStackTrace();
         }
         return result;
     }
