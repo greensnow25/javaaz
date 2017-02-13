@@ -1,0 +1,19 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>greensnow25</groupId>
+    <artifactId>chapter3</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <parent>
+        <groupId>greensnow25</groupId>
+        <artifactId>junior</artifactId>
+        <version>1.0</version>
+
+    </parent>
+    <modules>
+        <module>Input_Output</module>
+        <module>Control_Task</module>
+        <module>Socket</module>
+    </modules>
+
+</project>

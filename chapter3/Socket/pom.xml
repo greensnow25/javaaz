@@ -1,0 +1,13 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>greensnow25</groupId>
+    <artifactId>Socket</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+    <parent>
+        <groupId>greensnow25</groupId>
+        <artifactId>chapter3</artifactId>
+        <version>1.0</version>
+
+    </parent>
+</project>
