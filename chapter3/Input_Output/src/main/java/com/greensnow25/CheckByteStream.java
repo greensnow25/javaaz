@@ -1,6 +1,9 @@
 package com.greensnow25;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * public class CheckByteStream check in that the recorded bit stream is an even number.
