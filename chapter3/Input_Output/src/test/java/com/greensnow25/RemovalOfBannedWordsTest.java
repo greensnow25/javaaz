@@ -23,9 +23,9 @@ public class RemovalOfBannedWordsTest {
     @Test
     public void dropAbuses() throws IOException {
         RemovalOfBannedWords rm = new RemovalOfBannedWords();
-        String test = "I wrote a program hello world well";
-        String result = "I wrote a program well ";
-        String[] abuse = new String[]{"hello", "world"};
+        String test = "ВасяПетяВасяКостяВася";
+        String result = "ПетяКостя";
+        String abuse = "Вася";
 
         try (ByteArrayOutputStream outer = new ByteArrayOutputStream()) {
             System.setOut(new PrintStream(outer));
