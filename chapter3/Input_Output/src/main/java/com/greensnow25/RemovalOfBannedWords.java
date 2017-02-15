@@ -10,9 +10,17 @@ import java.io.*;
  * @since 13.02.17.
  */
 public class RemovalOfBannedWords {
-
+    /**
+     * abuses words.
+     */
     private String[] abuse = new String[]{"hello", "world"};
 
+    /**
+     * method creates an input and output streams, reads and displays the message.
+     * @param in stream in.
+     * @param out stream out.
+     * @param words abuses words.
+     */
     void dropAbuses(InputStream in, OutputStream out, String[] words) {
         String test = "I wrote a program hello world well";
         try (BufferedReader brIn = new BufferedReader(new InputStreamReader(in));
@@ -28,6 +36,12 @@ public class RemovalOfBannedWords {
         }
     }
 
+    /**
+     *method removes the bad words.
+     * @param line input string.
+     * @param abuse array of bad words.
+     * @return array with out bad words.
+     */
     public String[] checkAbuse(String line, String[] abuse) {
         String[] lineWords = line.split(" ");
         int position = 0;
