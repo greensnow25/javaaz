@@ -16,28 +16,75 @@ import static org.junit.Assert.assertThat;
  */
 public class RemovalOfBannedWordsTest {
     /**
-     * method checks whether there is a forbidden word in the sentence.
+     * method find the word abuse delete it.
      *
      * @throws IOException ex.
      */
     @Test
-    public void dropAbuses() throws IOException {
+    public void whenFindTheAbuseWordThenDeleteIt() throws IOException {
         RemovalOfBannedWords rm = new RemovalOfBannedWords();
         String test = "ВасяПетяВасяКостяВася";
         String result = "ПетяКостя";
         String abuse = "Вася";
 
-        try (ByteArrayOutputStream outer = new ByteArrayOutputStream()) {
-            System.setOut(new PrintStream(outer));
+        try (ByteArrayInputStream in = new ByteArrayInputStream(test.getBytes());
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            System.setOut(new PrintStream(out));
+            rm.dropAbuses(in, out, abuse);
+            String outSting = out.toString();
+            assertThat(result, is(outSting));
 
-            InputStream inputStream = new ByteArrayInputStream(test.getBytes());
-            PrintStream printOut = System.out;
-
-            rm.dropAbuses(inputStream, printOut, abuse);
-            String out = outer.toString();
-            assertThat(result, is(out));
-
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
+
+    /**
+     * method method find the word if abusse equel null then return result.
+     *
+     * @throws IOException ex.
+     */
+    @Test
+    public void whenNoAbuseWordThenPrintLine() throws IOException {
+        RemovalOfBannedWords rm = new RemovalOfBannedWords();
+        String test = "ВасяПетяВасяКостяВася";
+        String abuse = "Даша";
+
+        try (ByteArrayInputStream in = new ByteArrayInputStream(test.getBytes());
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            System.setOut(new PrintStream(out));
+            rm.dropAbuses(in, out, abuse);
+            String outSting = out.toString();
+            assertThat(test, is(outSting));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * method method find the word abuse delete it.
+     *
+     * @throws IOException ex.
+     */
+    @Test
+    public void whenAllLineIsAbuseWordThenDeleteAllLine() throws IOException {
+        RemovalOfBannedWords rm = new RemovalOfBannedWords();
+        String test = "ВасяВасяВася";
+        String result = "";
+        String abuse = "Вася";
+
+        try (ByteArrayInputStream in = new ByteArrayInputStream(test.getBytes());
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            System.setOut(new PrintStream(out));
+            rm.dropAbuses(in, out, abuse);
+            String outSting = out.toString();
+            assertThat(result, is(outSting));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
 }
