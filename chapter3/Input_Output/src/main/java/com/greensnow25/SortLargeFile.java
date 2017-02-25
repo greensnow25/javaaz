@@ -81,7 +81,7 @@ public class SortLargeFile {
              RandomAccessFile tempTwo = new RandomAccessFile(userDir + path + "\\temptwo.txt", "rw");) {
 
             String one;
-            String two = tempTwo.readLine();
+            String two = tempTwo.readLine() ;
 
 
             RandomAccessFile big = tempOne.length()-1 > tempTwo.length()-1 ? tempOne : tempTwo;
