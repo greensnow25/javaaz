@@ -1,8 +1,6 @@
 package com.greensnow25;
 
 import java.io.*;
-import java.util.RandomAccess;
-import java.util.Scanner;
 
 /**
  * public class  .
@@ -14,95 +12,179 @@ import java.util.Scanner;
 public class SortLargeFile {
     public static void main(String[] args) throws IOException {
 
-        SortLargeFile sort = new SortLargeFile("\\chapter3\\Input_Output\\src\\main\\java\\com\\greensnow25");
+        SortLargeFile sort = new SortLargeFile();
         sort.sortFile();
-        sort.split();
-        sort.merge();
-
     }
 
-    public SortLargeFile(String path) throws FileNotFoundException {
-        this.path = path;
-    }
+//    /**
+//     * constructor of the class.
+//     * @param path to file.
+//     * @throws FileNotFoundException file does not exist.
+//     */
+//    public SortLargeFile(String path) throws FileNotFoundException {
+//        this.path = path;
+//    }
 
+    /**
+     * the directory in which the application was launched
+     */
     private final String userDir = System.getProperty("user.dir");
-    private String path;
-    private RandomAccessFile fileSourse;
-    String separator = System.getProperty("line.separator");
-    private RandomAccessFile tempOne;
-    private RandomAccessFile tempTwo;
-    String one1;
-    String two2;
+    /**
+     * path to the file.
+     */
+    private String path ="\\chapter3\\Input_Output\\src\\main\\java\\com\\greensnow25\\";
+    /**
+     *the transfer carriage.
+     */
+    private final String separator = System.getProperty("line.separator");
+    /**
+     *variable defines the maximum length of the line in the first file.
+     */
+    private int resultOne = 0;
+    /**
+     *variable defines the maximum length of the line in the second file.
+     */
+    private int resultTwo = 0;
+    /**
+     *a pointer to a file for later use.
+     */
+    private int whereYouSplit = 0;
+    /**
+     * a flag indicating that the file is sorted.
+     */
+    private boolean endSort = true;
+    RandomAccessFile sourse;
+    RandomAccessFile destenation;
 
 
-    public void sortFile() throws IOException {
-
-    }
-
-    String line;
-    String tempLine;
-
+    /**
+     *method splits into two series of image file.
+     * @throws IOException an attempt to write to a file.
+     */
     public void split() throws IOException {
-
-
+         String line;
+         String tempLine = "";
         boolean firstLine = false;
         int count = 2;
-        try (RandomAccessFile fileSourse = new RandomAccessFile(userDir + path + "\\test.txt", "rw");
-             RandomAccessFile tempOne = new RandomAccessFile(userDir + path + "\\tempOne.txt", "rw");
-             RandomAccessFile tempTwo = new RandomAccessFile(userDir + path + "\\temptwo.txt", "rw");) {
+        try (RandomAccessFile fileSourse = new RandomAccessFile(userDir + path + "test.txt", "r");
+             RandomAccessFile tempOne = new RandomAccessFile(userDir + path + "tempOne.txt", "rw");
+             RandomAccessFile tempTwo = new RandomAccessFile(userDir + path + "temptwo.txt", "rw");
+             RandomAccessFile fileSourseOne = new RandomAccessFile(userDir + path + "testOne.txt", "rw")) {
 
+            RandomAccessFile whereSplit = whereYouSplit == 0 ? fileSourse : fileSourseOne;
 
-            while ((line = fileSourse.readLine()) != null) {
+            while ((line = whereSplit.readLine()) != null) {
                 if (!firstLine) {
                     firstLine = true;
-                } else if (tempLine.length() >= line.length() && tempLine != null) {
-                    count++;
-                }
-                if (count % 2 == 0) {
-                    tempOne.writeBytes(line);
-                    tempOne.writeBytes(separator);
+                } else if (tempLine.length() > line.length()) {
+                        count++;
+                    }
+                    if (count % 2 == 0) {
+                        tempOne.writeBytes(line);
+                        tempOne.writeBytes(separator);
+                        resultOne = maxLenght(resultOne, line);
 
-
-                } else if (count % 2 != 0) {
-                    tempTwo.writeBytes(line);
-                    tempTwo.writeBytes(separator);
-                }
+                    } else if (count % 2 != 0) {
+                        tempTwo.writeBytes(line);
+                        tempTwo.writeBytes(separator);
+                        resultTwo = maxLenght(resultTwo, line);
+                    }
                 tempLine = line;
-            }
-
+                }
+            fileSourseOne.setLength(0);
         }
-
-
     }
 
-    public void merge() throws IOException {
+    /**
+     * method uses an external sort, and merges the data in the destination file.
+     * @throws IOException an attempt to write to a file.
+     */
+    public RandomAccessFile merge() throws IOException {
+       RandomAccessFile result = null;
         try (RandomAccessFile fileSourseOne = new RandomAccessFile(userDir + path + "\\testOne.txt", "rw");
              RandomAccessFile tempOne = new RandomAccessFile(userDir + path + "\\tempOne.txt", "rw");
-             RandomAccessFile tempTwo = new RandomAccessFile(userDir + path + "\\temptwo.txt", "rw");) {
+             RandomAccessFile tempTwo = new RandomAccessFile(userDir + path + "\\temptwo.txt", "rw")) {
 
             String one;
-            String two = tempTwo.readLine() ;
+            String last;
+            boolean inerExit;
+            RandomAccessFile small = resultOne < resultTwo ? tempOne : tempTwo;
+            RandomAccessFile big = resultOne > resultTwo ? tempOne : tempTwo;
+            String two = big.readLine();
 
+            while ((one = small.readLine()) != null) {
+                inerExit = true;
+                while (inerExit) {
 
-            RandomAccessFile big = tempOne.length()-1 > tempTwo.length()-1 ? tempOne : tempTwo;
+                    if (one.length() < two.length()) {
+                        fileSourseOne.writeBytes(one);
+                        fileSourseOne.writeBytes(separator);
+                        inerExit = false;
 
+                    } else if (two.length() < one.length() && two != null) {
+                        fileSourseOne.writeBytes(two);
+                        fileSourseOne.writeBytes(separator);
+                        two = big.readLine();
 
-            while ((one = big.readLine()) != null) {
-                tempOne.seek(0);
-                if (one.length() < two.length()) {
-                    fileSourseOne.writeBytes(one);
-                    fileSourseOne.writeBytes(separator);
-
-
-                } else if (two.length() < one.length()) {
-                    fileSourseOne.writeBytes(two);
-                    fileSourseOne.writeBytes(separator);
-                    two = tempTwo.readLine();
+                    } else if (two.length() == one.length()) {
+                        fileSourseOne.writeBytes(one);
+                        fileSourseOne.writeBytes(separator);
+                        fileSourseOne.writeBytes(two);
+                        fileSourseOne.writeBytes(separator);
+                        inerExit = false;
+                        if ((two = big.readLine()) != null) {
+                        }
+                    }
                 }
             }
-
+            if (one == null || two == null) {
+                fileSourseOne.writeBytes(two);
+                fileSourseOne.writeBytes(separator);
+            }
+            while ((last = big.readLine()) != null) {
+                fileSourseOne.writeBytes(last);
+                fileSourseOne.writeBytes(separator);
+            }
+            if (tempOne.length() == 0 || tempTwo.length() == 0) {
+                endSort = false;
+                result =fileSourseOne;
+            }
+            whereYouSplit = 1;
+            resultOne = 0;
+            resultTwo =0;
+            tempOne.setLength(0);
+            tempTwo.setLength(0);
         }
+        return result;
     }
 
+    /**
+     *method sort the file.
+     * @throws IOException ex.
+     */
+    public RandomAccessFile sortFile() throws IOException {
+       RandomAccessFile result = null;
+        while (endSort) {
+            split();
+           result = merge();
+        }
+        return result;
+    }
+
+    /**
+     *method finds the longest string.
+     * @param one max value.
+     * @param line value to test.
+     * @return max value.
+     */
+    public int maxLenght(int one, String line) {
+        int result;
+        if (one >= line.length()) {
+            result = one;
+        } else {
+            result = line.length();
+        }
+        return result;
+    }
 }
 
