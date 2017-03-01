@@ -41,7 +41,7 @@ public class SortLargeFileTest {
         String temp;
         String lastLine = "";
         File sourse = new File(userDir + path + "test.txt");
-        File dest = new File(userDir + path + "testOne.txt");
+        File dest = new File(userDir + path + "dest.txt");
         try (RandomAccessFile write = new RandomAccessFile(sourse, "rw");
              RandomAccessFile read = new RandomAccessFile(dest, "rw")) {
             for (String line : testo) {
@@ -51,6 +51,7 @@ public class SortLargeFileTest {
             sort.sortFile(sourse, dest);
 
             while ((temp = read.readLine()) != null) {
+
                 if (lastLine.length() > temp.length()) {
                     result = false;
                 }

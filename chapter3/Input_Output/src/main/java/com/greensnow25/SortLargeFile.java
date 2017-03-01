@@ -39,6 +39,14 @@ public class SortLargeFile {
      * a flag indicating that the file is sorted.
      */
     private boolean endSort = true;
+    /**
+     * first temp file.
+     */
+    File firstTmpFile;
+    /**
+     * second temp file.
+     */
+    File secondTmpFile;
 
     /**
      * method splits into two series of image file.
@@ -46,16 +54,18 @@ public class SortLargeFile {
      * @param sourse sourse file.
      * @throws IOException an attempt to write to a file.
      */
-    public void split(File sourse) throws IOException {
+    public void split(File sourse, File dest) throws IOException {
 
         String line;
         String tempLine = "";
         boolean firstLine = false;
         int count = 2;
+        firstTmpFile = File.createTempFile("one", ".tmp");
+        secondTmpFile = File.createTempFile("two", ".tmp");
         try (RandomAccessFile fileSourse = new RandomAccessFile(sourse, "rw");
-             RandomAccessFile tempOne = new RandomAccessFile(userDir + path + "tempOne.txt", "rw");
-             RandomAccessFile tempTwo = new RandomAccessFile(userDir + path + "temptwo.txt", "rw");
-             RandomAccessFile fileSourseOne = new RandomAccessFile(userDir + path + "testOne.txt", "rw")) {
+             RandomAccessFile tempOne = new RandomAccessFile(firstTmpFile, "rw");
+             RandomAccessFile tempTwo = new RandomAccessFile(secondTmpFile, "rw");
+             RandomAccessFile fileSourseOne = new RandomAccessFile(dest, "rw")) {
 
             RandomAccessFile whereSplit = whereYouSplit == 0 ? fileSourse : fileSourseOne;
 
@@ -87,11 +97,12 @@ public class SortLargeFile {
      * @param dest destinstion file.
      * @throws IOException an attempt to write to a file.
      */
-    public RandomAccessFile merge(File dest) throws IOException {
+    public RandomAccessFile merge(File sourse, File dest) throws IOException {
         RandomAccessFile result = null;
+
         try (RandomAccessFile fileSourseOne = new RandomAccessFile(dest, "rw");
-             RandomAccessFile tempOne = new RandomAccessFile(userDir + path + "\\tempOne.txt", "rw");
-             RandomAccessFile tempTwo = new RandomAccessFile(userDir + path + "\\temptwo.txt", "rw")) {
+             RandomAccessFile tempOne = new RandomAccessFile(firstTmpFile, "rw");
+             RandomAccessFile tempTwo = new RandomAccessFile(secondTmpFile, "rw")) {
 
             String one;
             String last;
@@ -157,9 +168,11 @@ public class SortLargeFile {
     public RandomAccessFile sortFile(File sourse, File dest) throws IOException {
         RandomAccessFile result = null;
         while (endSort) {
-            split(sourse);
-            result = merge(dest);
+            split(sourse, dest);
+            result = merge(dest, dest);
         }
+        firstTmpFile.deleteOnExit();
+        secondTmpFile.deleteOnExit();
         return result;
     }
 
