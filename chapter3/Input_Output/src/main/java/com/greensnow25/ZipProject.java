@@ -20,7 +20,7 @@ public class ZipProject {
         ZipProject zipProject = new ZipProject();
         zipProject.makeZipArhive(zipProject.path);
         // zipProject.w();
-      //  zipProject.toZipArhive(zipProject.toZipFilesPath, zipProject.toZirFilesNAme);
+        //  zipProject.toZipArhive(zipProject.toZipFilesPath, zipProject.toZirFilesNAme);
 
         //  zipProject.createDirectory(zipProject.path,zipProject.zout);
 
@@ -41,8 +41,6 @@ public class ZipProject {
     String[] toZipFilesPath = new String[30];
     String[] toZirFilesNAme = new String[toZipFilesPath.length];
 
-    File[] files;
-
 
     String separator = System.getProperty("line.separator");
 
@@ -50,21 +48,18 @@ public class ZipProject {
 
     public void makeZipArhive(String path) throws IOException {
         file = new File(path);
-        files = file.listFiles();
+        zipName = new File("D:\\chapter.zip");
 
 
-        for (File filed : files) {
-            if (filed.isFile()) {
-                compareFileNameToPattern(filed, pattern);
-
-            } else if (filed.isDirectory()) {
-                makeZipArhive(filed.getPath());
-
-            }
+        try (FileOutputStream fout = new FileOutputStream(zipName);
+             ZipOutputStream zout = new ZipOutputStream(fout)) {
+            toZipArhive(zout, file);
+            zout.close();
         }
+
     }
 
-    public void compareFileNameToPattern(File file, String pattern) {
+    public boolean compareFileNameToPattern(File file, String pattern) {
 
         String fileName = file.getName();
         boolean result = fileName.contains(pattern);
@@ -72,6 +67,7 @@ public class ZipProject {
             toZirFilesNAme[position] = file.getName();
             toZipFilesPath[position++] = file.getAbsolutePath();
         }
+        return result;
     }
 
     public void w() {
@@ -83,40 +79,60 @@ public class ZipProject {
         }
     }
 
-    public void toZipArhive(String[] toZipFilesPath, String[] toZipFilesNames,ZipOutputStream zoutZ, File file) throws IOException {
-
-        this.zipName = new File("D:\\chapter.zip");
-        try (FileOutputStream fout = new FileOutputStream(zipName);
-             ZipOutputStream zout = new ZipOutputStream(fout)) {
-
-            byte[] buffer = new byte[1024];
-
-            zout.setLevel(Deflater.DEFAULT_COMPRESSION);
+    public void toZipArhive(ZipOutputStream zout, File file) throws IOException {
 
 
-            for (int i = 0; toZipFilesPath[i] != null; i++) {
-                zout.putNextEntry(new ZipEntry(toZipFilesNames[i]));
-                try (FileInputStream fin = new FileInputStream(toZipFilesPath[i])) {
+        File[] files = file.listFiles();
+
+        byte[] buffer = new byte[1024];
+
+        zout.setLevel(Deflater.DEFAULT_COMPRESSION);
+        for (File filed : files) {
+            boolean res = false;
+            if (filed.isFile()) {
+                if (compareFileNameToPattern(filed, pattern)) {
+                    res = true;
+                }
+
+            } else if (filed.isDirectory()) {
+                zout.putNextEntry(new ZipEntry(filed.getName()));
+                try (FileInputStream fin = new FileInputStream(filed.getAbsolutePath())) {
                     int lennght;
                     while ((lennght = fin.read(buffer)) > -1) {
                         zout.write(buffer, 0, lennght);
                     }
-                    zout.closeEntry();
+                    // zout.closeEntry();
+
                 }
 
+                toZipArhive(zout, filed);
+                res = true;
+                continue;
 
             }
 
+            if (res) {
+                zout.putNextEntry(new ZipEntry(filed.getName()));
+                try (FileInputStream fin = new FileInputStream(filed.getAbsolutePath())) {
+                    int lennght;
+                    while ((lennght = fin.read(buffer)) > -1) {
+                        zout.write(buffer, 0, lennght);
+                    }
+                   // zout.closeEntry();
+
+                }
+
+            }
         }
     }
 
-    public void createDirectory(File file, ZipOutputStream zout) throws IOException {
+    public void createDirectoryOrFile(String path, ZipOutputStream zout) throws IOException {
         String[] qqq = new String[20];
         String[] dirNAme = new String[20];
         int count = 0;
         int countOne = 0;
 
-
+    }
 
 //            File startFile = new File(path);
 //            File[] files = startFile.listFiles();
@@ -154,8 +170,7 @@ public class ZipProject {
 //            }
 
 
-
-    }
-
-
 }
+
+
+
