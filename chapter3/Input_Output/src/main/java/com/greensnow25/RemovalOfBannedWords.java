@@ -18,6 +18,7 @@ public class RemovalOfBannedWords {
      * @param in       stream in.
      * @param out      stream out.
      * @param badWords abuse word.
+     * @throws IOException ex.
      */
     void dropAbuses(InputStream in, OutputStream out, String badWords) throws IOException {
         char[] badWordsArray = badWords.toCharArray();

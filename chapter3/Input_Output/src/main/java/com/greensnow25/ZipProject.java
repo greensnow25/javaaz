@@ -30,7 +30,7 @@ public class ZipProject {
     ZipOutputStream zout1;
     FileOutputStream fout1;
     File file;
-    String path = "D:\\javaaz\\javaaz\\chapter3";
+    String path = "D:\\temp";//javaaz\\javaaz\\chapter3";
     //  String zipName;
 
     String[] dir = new String[10];
@@ -48,7 +48,7 @@ public class ZipProject {
 
     public void makeZipArhive(String path) throws IOException {
         file = new File(path);
-        zipName = new File("D:\\chapter.zip");
+        zipName = new File("D:\\temp\\chapter.zip");
 
 
         try (FileOutputStream fout = new FileOutputStream(zipName);
