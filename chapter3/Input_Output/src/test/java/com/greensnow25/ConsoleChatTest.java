@@ -14,11 +14,26 @@ import static org.junit.Assert.*;
 
 
 public class ConsoleChatTest {
-    ConsoleChat chat;
-    String[] randomWords = new String[]{"джава ", "привет ", "модуль ", "планктон ", "овчарка ", "добрый ", "козленок "};
-    String[] answers = new String[]{"hello", "wait", "dsfefw", "resume", "lets start", "stop"};
-   // Input input;
+    /**
+     * class object.
+     */
+    private ConsoleChat chat;
+    /**
+     * random words.
+     */
+    private String[] randomWords = new String[]{"джава ", "привет ", "модуль ", "планктон ", "овчарка ", "добрый ", "козленок "};
+    /**
+     * input answers.
+     */
+    private String[] answers = new String[]{"hello", "wait", "dsfefw", "resume", "lets start", "stop"};
+    /**
+     * input system.
+     */
     StubInput stubInput;
+
+    /**
+     * method call before testing.
+     */
     @Before
     public void beforeTest() {
         this.stubInput = new StubInput(answers);
@@ -26,12 +41,22 @@ public class ConsoleChatTest {
 
     }
 
+    /**
+     * The method checks to see if the file was created.
+     *
+     * @throws Exception file not found.
+     */
     @Test
     public void whenCreateTextFileReturnNotNull() throws Exception {
         File file = chat.createTextFile(randomWords);
         assertNotNull(file);
     }
 
+    /**
+     * The method generates a random word and compares it to a word in the file.
+     *
+     * @throws Exception ex.
+     */
     @Test
     public void generateRandomWord() throws Exception {
         File file = chat.createTextFile(randomWords);
@@ -43,26 +68,33 @@ public class ConsoleChatTest {
                     break;
                 }
             }
-
         }
         assertThat(word, is(tmp));
     }
 
+    /**
+     * testing chat.
+     *
+     * @throws Exception ex.
+     */
     @Test
-    public void chat() throws Exception {
+    public void whenRunChatThenReturnTrue() throws Exception {
 
         boolean res = true;
         chat.createTextFile(randomWords);
 
         res = chat.chat(stubInput);
         assertTrue(!res);
-
-
     }
 
+    /**
+     * testing how program quit to the method.
+     *
+     * @throws Exception ex.
+     */
     @Test
     public void whenenterResumeThenContinueTheProgramm() throws Exception {
-        String[] resume = new String[]{ "resume"};
+        String[] resume = new String[]{"resume"};
         StubInput sbOne = new StubInput(resume);
         boolean res = false;
         chat.waitResume(sbOne);

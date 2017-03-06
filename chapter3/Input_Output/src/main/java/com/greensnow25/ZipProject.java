@@ -55,12 +55,13 @@ public class ZipProject {
 
     public void makeZipArhive(String path) throws IOException {
         file = new File(path);
-        zipName = new File("D:\\temp\\chapter.zip");
+        zipName = new File("D:\\chapter.zip");
+
 
 
         try (FileOutputStream fout = new FileOutputStream(zipName);
              ZipOutputStream zout = new ZipOutputStream(fout)) {
-            toZipArhive(zout, file);
+            toZipArhive(zout, file, file);
             zout.close();
         }
 
@@ -86,10 +87,12 @@ public class ZipProject {
         }
     }
 
-    public void toZipArhive(ZipOutputStream zout, File file) throws IOException {
+    public void toZipArhive(ZipOutputStream zout, File parentDir, File childDir) throws IOException {
+        if (parentDir == null || !parentDir.exists()) {
+            return;
+        }
 
-
-        File[] files = file.listFiles();
+        File[] files = childDir.listFiles();
 
         byte[] buffer = new byte[1024];
 
@@ -102,80 +105,32 @@ public class ZipProject {
                 }
 
             } else if (filed.isDirectory()) {
-                zout.putNextEntry(new ZipEntry(filed.getName()));
-                try (FileInputStream fin = new FileInputStream(filed.getAbsolutePath())) {//&????????????
-                    int lennght;
-                    while ((lennght = fin.read(buffer)) > -1) {
-                        zout.write(buffer, 0, lennght);
-                    }
-                    // zout.closeEntry();
 
-                }
-
-                toZipArhive(zout, filed);
                 res = true;
+                toZipArhive(zout, filed, parentDir);
+
                 continue;
 
             }
 
             if (res) {
-                zout.putNextEntry(new ZipEntry(filed.getName()));
+
+                String name = filed.getAbsolutePath().replace(parentDir.getAbsolutePath(),"");
+                zout.putNextEntry(new ZipEntry(name));
                 try (FileInputStream fin = new FileInputStream(filed.getAbsolutePath())) {
                     int lennght;
+
                     while ((lennght = fin.read(buffer)) > -1) {
                         zout.write(buffer, 0, lennght);
+                        continue;
                     }
-                   // zout.closeEntry();
+
 
                 }
 
             }
         }
     }
-
-    public void createDirectoryOrFile(String path, ZipOutputStream zout) throws IOException {
-        String[] qqq = new String[20];
-        String[] dirNAme = new String[20];
-        int count = 0;
-        int countOne = 0;
-
-    }
-
-//            File startFile = new File(path);
-//            File[] files = startFile.listFiles();
-//
-//            for (File fileZ : files) {
-//                qqq[countOne++] = fileZ.getAbsolutePath();
-//            }
-//            for (int i = 0; ; i++) {
-//                File fileDest = new File(pathFileName);
-//                if (fileDest.getParent().startsWith(path)) {
-//                    dirNAme[count++] = fileDest.getName();
-//                    pathFileName = fileDest.getParent();
-//                    //   String name = fileDest.getName();
-//                    System.out.println(fileDest.getParent());
-//                } else {
-//                    break;
-//                }
-//
-//            }
-
-//            for (int i = 0; i != qqq.length; i++) {
-//                for (int j = 0; j != dirNAme.length; j++) {
-//                    if (qqq[i].equals(dirNAme[j])) {
-//                        zout.putNextEntry(new ZipEntry(dirNAme[j]));
-//                      //  createDirectory(toZipFilesPath[i], zout, fout);
-//                        try (FileInputStream fin = new FileInputStream(toZipFilesPath[i])) {
-//                            int lennght;
-//                            while ((lennght = fin.read(buffer)) > -1) {
-//                                zout.write(buffer, 0, lennght);
-//                            }
-//                            zout.closeEntry();
-//                        }
-//                    }
-//                }
-//            }
-
 
 }
 

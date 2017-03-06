@@ -18,6 +18,10 @@ import java.util.Random;
  * @since 06.03.17.
  */
 public class ConsoleChat {
+    public static void main(String[] args) {
+        ConsoleChat chat = new ConsoleChat();
+        chat.chat(new ConsoleInput());
+    }
 
     /**
      * default constructor.
@@ -100,23 +104,27 @@ public class ConsoleChat {
         boolean res = true;
         String randomWord;
         try {
-            randomFrazes = createTextFile(randomWords);
-            do {
-                word = input.answer();
-                randomWord = generateRandomWord();
-                if (word.equals("wait")) {
-                    waitResume(input);
-                } else if (word.equals("stop")) {
-                    res = false;
-                } else {
-                    System.out.println(randomWord);
-                }
-            } while (res);
+
+
+            try (PrintWriter pw = new PrintWriter(new File("D:\\log.txt"))) {
+                randomFrazes = createTextFile(randomWords);
+                do {
+                    word = input.answer();
+                    randomWord = generateRandomWord();
+                    if (word.equals("wait")) {
+                        waitResume(input);
+                    } else {
+                        pw.write(randomWord);
+                    }
+                } while (!word.equals("stop"));
+           res = false;
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         randomFrazes.deleteOnExit();
         return res;
+
     }
 
     /**
