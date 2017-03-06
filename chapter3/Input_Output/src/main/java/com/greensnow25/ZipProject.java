@@ -19,22 +19,29 @@ public class ZipProject {
 
         ZipProject zipProject = new ZipProject();
         zipProject.makeZipArhive(zipProject.path);
-        // zipProject.w();
-        //  zipProject.toZipArhive(zipProject.toZipFilesPath, zipProject.toZirFilesNAme);
 
-        //  zipProject.createDirectory(zipProject.path,zipProject.zout);
 
     }
 
+    /**
+     * arhive file.
+     */
     File zipName;
-    ZipOutputStream zout1;
-    FileOutputStream fout1;
+    /**
+     * file path.
+     */
     File file;
+    /**
+     * path to directore whose ned zip.
+     */
     String path = "D:\\temp";//javaaz\\javaaz\\chapter3";
-    //  String zipName;
-
-    String[] dir = new String[10];
+    /**
+     * position on array.
+     */
     int position = 0;
+    /**
+     * patte
+     */
     String pattern = ".java";
 
 
@@ -96,7 +103,7 @@ public class ZipProject {
 
             } else if (filed.isDirectory()) {
                 zout.putNextEntry(new ZipEntry(filed.getName()));
-                try (FileInputStream fin = new FileInputStream(filed.getAbsolutePath())) {
+                try (FileInputStream fin = new FileInputStream(filed.getAbsolutePath())) {//&????????????
                     int lennght;
                     while ((lennght = fin.read(buffer)) > -1) {
                         zout.write(buffer, 0, lennght);
