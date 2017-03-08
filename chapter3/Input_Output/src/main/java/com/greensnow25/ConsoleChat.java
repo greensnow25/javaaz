@@ -30,14 +30,6 @@ public class ConsoleChat {
 
     }
 
-    /**
-     * constructor of class.
-     *
-     * @param input input system.
-     */
-    public ConsoleChat(Input input) {
-        this.input = input;
-    }
 
     /**
      * words array, of then generate random answers.
@@ -51,6 +43,15 @@ public class ConsoleChat {
      * input system.
      */
     private Input input;
+    /**
+     * constructor of class.
+     *
+     * @param input input system.
+     */
+    public ConsoleChat(Input input) {
+        this.input = input;
+    }
+
 
     /**
      * method gnerate the temp file.
