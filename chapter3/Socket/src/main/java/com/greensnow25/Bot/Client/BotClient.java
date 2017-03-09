@@ -33,7 +33,7 @@ public class BotClient {
     public void client() throws IOException {
         InetAddress inetAddress = InetAddress.getByName(host);
         try {
-            socket = new Socket(inetAddress, port);
+            this.socket = new Socket(inetAddress, port);
             this.runClient();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -44,24 +44,25 @@ public class BotClient {
 
 
     public void runClient() throws IOException {
-        InputStream in = this.socket.getInputStream();
-        OutputStream out = this.socket.getOutputStream();
+
 
         try (
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                BufferedReader dIn = new BufferedReader(new InputStreamReader(in));
-                DataOutputStream dataOut = new DataOutputStream(out)) {
-            String line = null;
+                DataInputStream dataIn = new DataInputStream(this.socket.getInputStream());
+                DataOutputStream dataOut = new DataOutputStream(this.socket.getOutputStream());
+             //   DataInputStream dataIn = new DataInputStream(in)){
+        ){
+            String line;
 
             do {
                 line = br.readLine();
                 dataOut.writeUTF(line);
+                    dataOut.flush();
 
+              System.out.println("server request : " + line);
+              String request =   dataIn.readUTF();
 
-                System.out.println("server request : " + line);
-                dIn.readLine();
-
-                System.out.println("response from the server : " + dIn.readLine());
+                System.out.println("response from the server : " + request);
             } while (!line.equals("quit"));
 
         }

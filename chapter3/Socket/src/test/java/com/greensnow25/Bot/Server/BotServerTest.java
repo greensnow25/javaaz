@@ -50,7 +50,7 @@ public class BotServerTest {
      */
     @Test
     public void whenEnterExitThenExecuitQuit() throws Exception {
-        String input = String.format("quit%s",SEP);
+        String input = "quit";//String.format("quit%s",SEP);
         String result = String.format("Hello%s", SEP);
         this.runServer(input,result);
 

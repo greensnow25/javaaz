@@ -13,7 +13,7 @@ import java.net.Socket;
  */
 public class BotServer {
     public static void main(String[] args) throws IOException {
-       Socket socket = new Socket();
+        Socket socket = new Socket();
         BotServer botServer = new BotServer(socket);
         botServer.botServer();
     }
@@ -35,22 +35,24 @@ public class BotServer {
     public void botServer() throws IOException {
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("waiting for conections...");
-        socket = serverSocket.accept();
+        this.socket = serverSocket.accept();
         System.out.println("conecting esteblished");
         runServer();
-
+        serverSocket.close();
+        socket.close();
 
     }
 
     public void runServer() {
 
-        try (InputStream in = this.socket.getInputStream();
-             OutputStream out = this.socket.getOutputStream();
-             DataInputStream dIn = new DataInputStream(in);
-             PrintWriter dOut = new PrintWriter(out, true);) {
+        try (DataInputStream dIn = new DataInputStream(this.socket.getInputStream());
+             // PrintWriter dOut = new PrintWriter(out, true);
+             DataOutputStream dataOut = new DataOutputStream(this.socket.getOutputStream())) {
 
             String line = null;
+
             int position = 0;
+
             do {
 
                 line = dIn.readUTF();
@@ -58,13 +60,12 @@ public class BotServer {
                 if (position == randomWords.length) {
                     position = 0;
                 }
-                dOut.println(randomWords[position++]);
-                dOut.flush();
+
+                dataOut.writeUTF(randomWords[position++] + System.getProperty("line.separator"));
 
 
             }
             while (!line.equals("quit"));
-            dOut.println(line);
 
 
         } catch (IOException e) {
