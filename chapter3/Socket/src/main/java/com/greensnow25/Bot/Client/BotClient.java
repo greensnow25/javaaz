@@ -17,39 +17,53 @@ import java.net.UnknownHostException;
 public class BotClient {
 
     public static void main(String[] args) throws IOException {
-        BotClient botClient = new BotClient();
-        botClient.runClient();
+        Socket so = new Socket();
+        BotClient botClient = new BotClient(so);
+        botClient.client();
     }
 
-    private String host = "127.0.0.1";
-    private int port = 8189;
+    private final String host = "127.0.0.1";
+    private final int port = 8189;
+    private Socket socket;
 
-    public void runClient() throws IOException {
-        Socket socketClient = null;
+    public BotClient(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void client() throws IOException {
         InetAddress inetAddress = InetAddress.getByName(host);
         try {
-            socketClient = new Socket(inetAddress, port);
-            System.out.println("conecning to the server with ip : " + inetAddress + "  port  " + port);
-            InputStream in = socketClient.getInputStream();
-            OutputStream out = socketClient.getOutputStream();
-
-
-            try (DataInputStream dIn = new DataInputStream(in);
-                 DataOutputStream dOut = new DataOutputStream(out);
-                 BufferedReader readerKeyboard = new BufferedReader(new InputStreamReader(System.in));) {
-                String line;
-                do {
-                    line = readerKeyboard.readLine();
-                    System.out.println("server request : " + line);
-                    dOut.writeUTF(line);
-
-                    System.out.println("response from the server : " + dIn.readUTF());
-                } while (!line.equals("quit"));
-            }
+            socket = new Socket(inetAddress, port);
+            this.runClient();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            socketClient.close();
+            socket.close();
+        }
+    }
+
+
+    public void runClient() throws IOException {
+        InputStream in = this.socket.getInputStream();
+        OutputStream out = this.socket.getOutputStream();
+
+        try (
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                BufferedReader dIn = new BufferedReader(new InputStreamReader(in));
+                DataOutputStream dataOut = new DataOutputStream(out)) {
+            String line = null;
+
+            do {
+                line = br.readLine();
+                dataOut.writeUTF(line);
+
+
+                System.out.println("server request : " + line);
+                dIn.readLine();
+
+                System.out.println("response from the server : " + dIn.readLine());
+            } while (!line.equals("quit"));
+
         }
     }
 }

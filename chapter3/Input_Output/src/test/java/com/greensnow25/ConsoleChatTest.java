@@ -1,9 +1,6 @@
 package com.greensnow25;
 
-import com.greensnow25.ConsoleChatLibery.ConsoleInput;
-import com.greensnow25.ConsoleChatLibery.Input;
 import com.greensnow25.ConsoleChatLibery.StubInput;
-import jdk.internal.util.xml.impl.ReaderUTF8;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,10 +15,7 @@ public class ConsoleChatTest {
      * class object.
      */
     private ConsoleChat chat;
-    /**
-     * random words.
-     */
-    private String[] randomWords = new String[]{"джава ", "привет ", "модуль ", "планктон ", "овчарка ", "добрый ", "козленок "};
+
     /**
      * input answers.
      */
@@ -48,7 +42,7 @@ public class ConsoleChatTest {
      */
     @Test
     public void whenCreateTextFileReturnNotNull() throws Exception {
-        File file = chat.createTextFile(randomWords);
+        File file = chat.createTextFile();
         assertNotNull(file);
     }
 
@@ -59,7 +53,7 @@ public class ConsoleChatTest {
      */
     @Test
     public void generateRandomWord() throws Exception {
-        File file = chat.createTextFile(randomWords);
+        File file = chat.createTextFile();
         String word = chat.generateRandomWord();
         String tmp;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -81,9 +75,7 @@ public class ConsoleChatTest {
     public void whenRunChatThenReturnTrue() throws Exception {
 
         boolean res = true;
-        chat.createTextFile(randomWords);
-
-        res = chat.chat(stubInput);
+        res = chat.chat();
         assertTrue(!res);
     }
 
@@ -96,7 +88,6 @@ public class ConsoleChatTest {
     public void whenenterResumeThenContinueTheProgramm() throws Exception {
         String[] resume = new String[]{"resume"};
         StubInput sbOne = new StubInput(resume);
-        boolean res = false;
         chat.waitResume(sbOne);
         assertTrue(true);
 

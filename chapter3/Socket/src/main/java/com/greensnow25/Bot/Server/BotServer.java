@@ -53,7 +53,7 @@ public class BotServer {
             int position = 0;
             do {
 
-                line = dIn.readLine();
+                line = dIn.readUTF();
                 System.out.println("word from client " + line);
                 if (position == randomWords.length) {
                     position = 0;
@@ -64,6 +64,7 @@ public class BotServer {
 
             }
             while (!line.equals("quit"));
+            dOut.println(line);
 
 
         } catch (IOException e) {

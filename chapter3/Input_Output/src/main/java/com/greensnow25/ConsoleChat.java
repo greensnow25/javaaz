@@ -18,23 +18,11 @@ import java.util.Random;
  * @since 06.03.17.
  */
 public class ConsoleChat {
-    public static void main(String[] args) {
-        ConsoleChat chat = new ConsoleChat();
-        chat.chat(new ConsoleInput());
-    }
-
-    /**
-     * default constructor.
-     */
-    public ConsoleChat() {
-
-    }
-
 
     /**
      * words array, of then generate random answers.
      */
-    private String[] randomWords = new String[]{"джава ", "привет ", "модуль ", "планктон ", "овчарка ", "добрый ", "козленок "};
+    private final String[] randomWords = new String[]{"джава ", "привет ", "модуль ", "планктон ", "овчарка ", "добрый ", "козленок "};
     /**
      * generated file.
      */
@@ -43,6 +31,7 @@ public class ConsoleChat {
      * input system.
      */
     private Input input;
+
     /**
      * constructor of class.
      *
@@ -52,23 +41,21 @@ public class ConsoleChat {
         this.input = input;
     }
 
-
     /**
      * method gnerate the temp file.
      *
-     * @param randomWords array of words.
      * @return generated file comprising random frazes.
      * @throws IOException ex.
      */
-    public File createTextFile(String[] randomWords) throws IOException {
+    public File createTextFile() throws IOException {
         String separator = System.getProperty("line.separator");
-        File randomFrazes = File.createTempFile("randomFrazes", ".txt");
+        this.randomFrazes = File.createTempFile("randomFrazes", ".txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(randomFrazes))) {
-            for (int i = 0; i != randomWords.length; i++) {
-                bw.write(randomWords[i] + separator);
+            for (int i = 0; i != this.randomWords.length; i++) {
+                bw.write(this.randomWords[i] + separator);
             }
         }
-        return randomFrazes;
+        return this.randomFrazes;
     }
 
     /**
@@ -78,10 +65,9 @@ public class ConsoleChat {
      * @throws IOException ex.
      */
     public String generateRandomWord() throws IOException {
-        File file = createTextFile(randomWords);
         String word = "";
         int len = randomWords.length;
-        try (BufferedReader bof = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader bof = new BufferedReader(new FileReader(this.randomFrazes))) {
             Random random = new Random();
             int number = random.nextInt(len);
             for (int i = 0; i != len; i++) {
@@ -97,10 +83,10 @@ public class ConsoleChat {
     /**
      * method run chat.
      *
-     * @param input input system.
      * @return boolean using for testing.
      */
-    public boolean chat(Input input) {
+    public boolean chat() {
+        String sep = System.getProperty("line.separator");
         String word = "";
         boolean res = true;
         String randomWord;
@@ -108,17 +94,18 @@ public class ConsoleChat {
 
 
             try (PrintWriter pw = new PrintWriter(new File("D:\\log.txt"))) {
-                randomFrazes = createTextFile(randomWords);
+                randomFrazes = createTextFile();
                 do {
                     word = input.answer();
                     randomWord = generateRandomWord();
+
                     if (word.equals("wait")) {
                         waitResume(input);
                     } else {
                         pw.write(randomWord);
                     }
                 } while (!word.equals("stop"));
-           res = false;
+                res = false;
             }
         } catch (IOException ex) {
             ex.printStackTrace();
