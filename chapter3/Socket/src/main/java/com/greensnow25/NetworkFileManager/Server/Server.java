@@ -100,6 +100,10 @@ public class Server {
                     this.file = up.goOver();
                     System.out.println(file.getAbsolutePath());
                 } else if (line.equals("down")) {
+                    dataOut.writeUTF("Enter parent directory.");
+
+                    answerChild = dataIn.readUTF();
+
 
                 } else if (line.equals("download")) {
                     dataOut.writeUTF("write full path to file what you would like download");

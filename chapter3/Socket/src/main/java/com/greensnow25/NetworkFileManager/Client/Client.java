@@ -76,7 +76,7 @@ public class Client {
                     int len;
                     int count = 0;
                     byte[] buffer = new byte[1024];
-                    
+
                     while ((len = dataIn.read(buffer)) != -1) {
                         if (count == 1) {
                             downfi.write(buffer, 0, len);
@@ -90,7 +90,10 @@ public class Client {
                     }
                     pw.println(dataIn.readUTF());
 
-                } else {
+                }else if(answer.equals("upload")){
+
+                }
+                else {
                     dataOut.writeUTF(answer);
                 }
 
