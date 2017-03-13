@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.net.Socket;
 
 public interface ActionWithFile {
-    public void makeAction(String newFilePath, Socket socket) throws IOException;
+    public void makeAction(File filepaht, Socket socket, long lenght, String answer) throws IOException;
 }

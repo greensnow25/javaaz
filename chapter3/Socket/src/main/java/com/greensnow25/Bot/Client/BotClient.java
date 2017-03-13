@@ -1,11 +1,8 @@
 package com.greensnow25.Bot.Client;
 
-import com.greensnow25.Bot.Server.BotServer;
-
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * public class BotClient.
@@ -22,14 +19,31 @@ public class BotClient {
         botClient.client();
     }
 
+    /**
+     * server ip.
+     */
     private final String host = "127.0.0.1";
+    /**
+     * conection port.
+     */
     private final int port = 8189;
+    /**
+     * socket.
+     */
     private Socket socket;
 
+    /**
+     * class constructir.
+     * @param socket this.socket.
+     */
     public BotClient(Socket socket) {
         this.socket = socket;
     }
 
+    /**
+     * method conect clieent with server.
+     * @throws IOException ex.
+     */
     public void client() throws IOException {
         InetAddress inetAddress = InetAddress.getByName(host);
         try {
@@ -42,25 +56,26 @@ public class BotClient {
         }
     }
 
-
+    /**
+     * Method exchanges messages with the server.
+     * @throws IOException ex.
+     */
     public void runClient() throws IOException {
 
 
-        try (
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 DataInputStream dataIn = new DataInputStream(this.socket.getInputStream());
-                DataOutputStream dataOut = new DataOutputStream(this.socket.getOutputStream());
-             //   DataInputStream dataIn = new DataInputStream(in)){
-        ){
+                DataOutputStream dataOut = new DataOutputStream(this.socket.getOutputStream())) {
             String line;
 
             do {
+                System.out.println("Enter message to server:");
                 line = br.readLine();
                 dataOut.writeUTF(line);
-                    dataOut.flush();
+                dataOut.flush();
 
-              System.out.println("server request : " + line);
-              String request =   dataIn.readUTF();
+                System.out.println("server request : " + line);
+                String request = dataIn.readUTF();
 
                 System.out.println("response from the server : " + request);
             } while (!line.equals("quit"));

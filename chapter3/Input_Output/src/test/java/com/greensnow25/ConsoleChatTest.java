@@ -66,32 +66,12 @@ public class ConsoleChatTest {
         assertThat(word, is(tmp));
     }
 
-    /**
-     * testing chat.
-     *
-     * @throws Exception ex.
-     */
     @Test
-    public void whenRunChatThenReturnTrue() throws Exception {
-
-        boolean res = true;
-        res = chat.chat();
-        assertTrue(!res);
-    }
-
-    /**
-     * testing how program quit to the method.
-     *
-     * @throws Exception ex.
-     */
-    @Test
-    public void whenenterResumeThenContinueTheProgramm() throws Exception {
-        String[] resume = new String[]{"resume"};
-        StubInput sbOne = new StubInput(resume);
-        chat.waitResume(sbOne);
-        assertTrue(true);
-
-
+    public void whenMethodRunWellThenReturnFalse(){
+        boolean result;
+               result = chat.chat();
+        //значение result приходит false, но тест не проходит((.
+        assertFalse(result);
     }
 
 }

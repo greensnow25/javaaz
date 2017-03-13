@@ -22,16 +22,29 @@ public class BotServer {
      * socket port.
      */
     private int port = 8189;
-
+    /**
+     * socket.
+     */
     private Socket socket;
+    /**
+     * answers to client.
+     */
+    private final String[] randomWords = new String[]{"Hello", "how are you", "Smart Bot"};
 
-
+    /**
+     * class constructor.
+     *
+     * @param socket socket.
+     */
     public BotServer(Socket socket) {
         this.socket = socket;
     }
 
-    private String[] randomWords = new String[]{"Hello", "how are you", "Smart Bot"};
-
+    /**
+     * run server.
+     *
+     * @throws IOException ex.
+     */
     public void botServer() throws IOException {
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("waiting for conections...");
@@ -46,28 +59,20 @@ public class BotServer {
     public void runServer() {
 
         try (DataInputStream dIn = new DataInputStream(this.socket.getInputStream());
-             // PrintWriter dOut = new PrintWriter(out, true);
              DataOutputStream dataOut = new DataOutputStream(this.socket.getOutputStream())) {
 
-            String line = null;
-
+            String line;
             int position = 0;
 
             do {
-
                 line = dIn.readUTF();
                 System.out.println("word from client " + line);
                 if (position == randomWords.length) {
                     position = 0;
                 }
-
                 dataOut.writeUTF(randomWords[position++] + System.getProperty("line.separator"));
-
-
             }
             while (!line.equals("quit"));
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }

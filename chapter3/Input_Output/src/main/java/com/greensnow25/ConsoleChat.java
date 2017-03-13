@@ -18,6 +18,11 @@ import java.util.Random;
  * @since 06.03.17.
  */
 public class ConsoleChat {
+    public static void main(String[] args) {
+        ConsoleInput con = new ConsoleInput();
+        ConsoleChat co = new ConsoleChat(con);
+        co.chat();
+    }
 
     /**
      * words array, of then generate random answers.
@@ -87,29 +92,36 @@ public class ConsoleChat {
      */
     public boolean chat() {
         String sep = System.getProperty("line.separator");
-        String word = "";
+        String word;
         boolean res = true;
         String randomWord;
-        try {
 
+        File file = new File("D:\\log.txt");
+        try (PrintWriter pw = new PrintWriter(file);
+             PrintWriter writer = new PrintWriter(System.out, true)) {
+            randomFrazes = createTextFile();
+            writer.println("Welcome to chat:");
+            do {
+                writer.print(String.format("Enter youmessage%s", sep));
+                writer.flush();
+                word = input.answer();
+                randomWord = generateRandomWord();
+                writer.println(String.format("Answer in another direction : " + randomWord));
+                writer.flush();
+                pw.write(word + sep + randomWord + sep);
 
-            try (PrintWriter pw = new PrintWriter(new File("D:\\log.txt"))) {
-                randomFrazes = createTextFile();
-                do {
-                    word = input.answer();
-                    randomWord = generateRandomWord();
+                if (word.equals("wait")) {
+                    this.waitResume(input);
+                    pw.println("resume" + sep);
+                }
 
-                    if (word.equals("wait")) {
-                        waitResume(input);
-                    } else {
-                        pw.write(randomWord);
-                    }
-                } while (!word.equals("stop"));
-                res = false;
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            } while (!word.equals("stop"));
+            res = false;
+            System.out.println("Attention !! Your chat log is located at:" + file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         randomFrazes.deleteOnExit();
         return res;
 
@@ -122,17 +134,15 @@ public class ConsoleChat {
      * @return boolean for testing.
      * @throws IOException ex.
      */
-    public boolean waitResume(Input input) throws IOException {
-        boolean res = false;
+    public void waitResume(Input input) throws IOException {
+
         String word;
         do {
+            System.out.println("Enter resume to continue");
             word = input.answer();
-            if (word.equals("resume")) {
-                res = true;
-            }
 
-        } while (!res);
-        return res;
+        } while (!word.equals("resume"));
+
     }
 
 }

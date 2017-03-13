@@ -7,35 +7,39 @@ import java.io.*;
 import java.net.Socket;
 
 public class DownlodFile implements ActionWithFile {
-    public static void main(String[] args) {
-        DownlodFile downlodFile = new DownlodFile();
-        //downlodFile.makeAction();
-    }
+//    public static void main(String[] args) {
+//        DownlodFile downlodFile = new DownlodFile();
+//        //downlodFile.makeAction();
+//    }
 
 
     @Override
-    public void makeAction(String newFilePath, Socket socket) throws IOException {
+    public void makeAction(File filePath, Socket socket, long lenght, String answer) throws IOException {
 
-        File file = new File(newFilePath);
 
-        BufferedOutputStream bis = null;
         try {
-             bis = new BufferedOutputStream(new FileOutputStream(file));
-            BufferedInputStream bisSocket = new BufferedInputStream(socket.getInputStream());
-            BufferedOutputStream bosSocket = new BufferedOutputStream(socket.getOutputStream());
+
+            FileOutputStream bis = new FileOutputStream(filePath);
+            DataInputStream bisSocket = new DataInputStream(socket.getInputStream());
+            DataOutputStream bosSocket = new DataOutputStream(socket.getOutputStream());
 
             int len;
             byte[] buffer = new byte[2048];
-            while((len = bisSocket.read(buffer))>0 ){
-                bis.write(buffer,0,len);
+            while ((len = bisSocket.read(buffer)) != -1) {
+                bis.write(buffer, 0, len);
+                bosSocket.writeUTF(answer);
+                long langFile = bisSocket.readLong();
+
+                if (len == (int) langFile) {
+                    break;
+
+                }
             }
-        }
-        catch (FileNotFoundException e) {
+
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            bis.close();
         }
 
     }
