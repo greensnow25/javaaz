@@ -1,50 +1,69 @@
 package com.greensnow25.NetworkFileManager.Server;
-/**
- * Перед реализацией в коде. Составить каркас приложения на интерфейсах. С описанием.
- * 1. Разработать клиент серверное приложение на сокетах.
- * 2. Серверная часть должна реализовывать следующее апи
- * - получить список корневого каталога. Корневой каталог задается при запуске сервера.
- * - перейти в подкаталог.
- * - спуститься в родительский каталог
- * - скачать файл
- * - загрузить файл.
- * 3. Клиент должен это апи уметь вызывать.
- * <p>
- * 4. настройки портов и адреса считывать с app.properties
- */
-
 
 import com.greensnow25.NetworkFileManager.LIbrery.Classes.BaseAction;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
 
-import static java.lang.String.valueOf;
-
+/**
+ * public class server/
+ *
+ * @author greensnow25.
+ * @version 2.
+ * @since 16.03.17.
+ */
 public class Server {
     public static void main(String[] args) throws IOException {
 
-        Server server = new Server("D:\\");
+        Server server = new Server();
         server.starServer();
         server.runAplication();
 
     }
 
-    private final int port = 2000;
+    /**
+     * port for conection.
+     */
+    private int port;
+    /**
+     * socket
+     */
     private Socket socket;
-
-
-    private File fileChild;
+    /**
+     * start directory.
+     */
     private String root;
-    private File file;
 
-    public Server(String filePath) {
+    /**
+     * load properties.
+     */
+    public void properties() throws IOException {
+        Properties properties = new Properties();
 
-        this.root = filePath;
+
+        try (FileInputStream fileIn = new FileInputStream(new File("").getAbsolutePath()
+                + File.separator + "chapter3\\Socket\\src\\main\\java\\resourses"
+                + File.separator + "app.resurses.properties")) {
+            properties.load(fileIn);
+            this.root = properties.getProperty("rootDir");
+            String port = properties.getProperty("port");
+            this.port = Integer.parseInt(port);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * run server
+     *
+     * @throws IOException ex.
+     */
     private void starServer() throws IOException {
+        this.properties();
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("conection wait...");
@@ -56,18 +75,22 @@ public class Server {
         }
     }
 
-
+    /**
+     * run application.
+     *
+     * @throws IOException ex.
+     */
     public void runAplication() throws IOException {
 
-        try(BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(this.socket.getOutputStream(),true)){
-            BaseAction baseAction = new BaseAction(socket.getInputStream(), socket.getOutputStream(),root );
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true)) {
+            BaseAction baseAction = new BaseAction(socket.getInputStream(), socket.getOutputStream(), root);
             String line;
-          do{
-              line = in.readLine();
-              System.out.println(line);
-          }while (!line.equals("stop"));
-
+            baseAction.filing();
+            do {
+                line = in.readLine();
+                baseAction.select(line);
+            } while (!line.equals("stop"));
         }
     }
 }

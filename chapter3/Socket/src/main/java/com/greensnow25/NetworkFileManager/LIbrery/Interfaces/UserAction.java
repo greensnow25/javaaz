@@ -1,5 +1,6 @@
 package com.greensnow25.NetworkFileManager.LIbrery.Interfaces;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -9,23 +10,22 @@ import java.io.OutputStream;
 public interface UserAction {
     /**
      * key.
-      * @return key.
+     *
+     * @return key.
      */
-    int key();
+    String key();
 
     /**
      * info.
+     *
      * @return info.
      */
     String info();
 
     /**
      * what can we do.
-     * @param in inputStrean.
-     * @param out outputStream.
-     * @param rootDir dir.
      */
-    void makeAction(InputStream in, OutputStream out, String rootDir);
+    void makeAction() throws IOException;
 
 
 }

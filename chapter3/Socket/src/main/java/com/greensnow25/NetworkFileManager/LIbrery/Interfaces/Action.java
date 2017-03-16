@@ -1,8 +1,6 @@
 package com.greensnow25.NetworkFileManager.LIbrery.Interfaces;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * Created by greensnow25 on 13.03.2017.
@@ -11,7 +9,7 @@ public abstract class Action implements UserAction {
     /**
      * key.
      */
-    private int key;
+    private String key;
     /**
      * information, what can we do.
      */
@@ -21,7 +19,7 @@ public abstract class Action implements UserAction {
      * key of action.
      * @return key.
      */
-    public int key() {
+    public String key() {
         return this.key;
     }
 
@@ -38,17 +36,15 @@ public abstract class Action implements UserAction {
      * @param key key.
      * @param info info.
      */
-    public Action(int key, String info) {
+    public Action(String key, String info) {
         this.key = key;
         this.info = info;
     }
 
     /**
-     * mace actions.
-     * @param in inputStream.
-     * @param out outputStream.
-     * @param rootDir root directory.
+     * make actions.
      */
-    public abstract void makeAction(InputStream in, OutputStream out, String rootDir);
+    public abstract void makeAction() throws IOException;
+
 
 }
