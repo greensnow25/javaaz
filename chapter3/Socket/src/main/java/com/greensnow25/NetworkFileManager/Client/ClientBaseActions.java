@@ -1,17 +1,18 @@
-package com.greensnow25.NetworkFileManager.LIbrery.Classes;
+package com.greensnow25.NetworkFileManager.Client;
 
 import com.greensnow25.NetworkFileManager.LIbrery.Interfaces.Action;
 
 import java.io.*;
+import java.net.Socket;
 
 /**
- * public class BaseAction, contain all actions of network file manager.
+ * public class clientBase.
  *
  * @author greensnow25.
- * @version 2.
- * @siense 15.03.2017.
+ * @version 1.
+ * @since 16.03.17
  */
-public class BaseAction {
+public class ClientBaseActions {
     /**
      * inputStream.
      */
@@ -21,47 +22,49 @@ public class BaseAction {
      */
     private OutputStream output;
     /**
-     * root Directory.
-     */
-    private String rootDir;
-    /**
      * write to server.
      */
     private PrintWriter printWriter;
     /**
      * read from client.
      */
-    private BufferedReader br;
+    private BufferedReader brFromServer;
     /**
      * Action base.
      */
     private Action[] actions = new Action[6];
+    /**
+     * sout.
+     */
+    private PrintWriter println;
+    /**
+     * keyboard entered.
+     */
+    private BufferedReader fromKeyboard;
 
     /**
      * class constructor.
      *
-     * @param input   from client.
-     * @param output  to client.
-     * @param rootDir current directory.
+     * @param input  from client.
+     * @param output to client.
      */
-    public BaseAction(InputStream input, OutputStream output, String rootDir) {
+    public ClientBaseActions(InputStream input, OutputStream output) {
         this.input = input;
         this.output = output;
-        this.rootDir = rootDir;
-        this.br = new BufferedReader(new InputStreamReader(input));
+        this.brFromServer = new BufferedReader(new InputStreamReader(input));
         this.printWriter = new PrintWriter(output, true);
+        this.println = new PrintWriter(System.out, true);
+        this.fromKeyboard = new BufferedReader(new InputStreamReader(System.in));
+
     }
 
-    /**
-     * filling base action.
-     */
     public void filing() {
         int position = 0;
         actions[position++] = this.new ShowDirectory("show", "Show directory");
         actions[position++] = this.new ToParentDirectory("goParent", "Go up to the directory above");
         actions[position++] = this.new ToChildDirectory("goChild", "Move to the directory level below");
-        actions[position++] = this.new DownloadFileFromClientToServer("uFile", "Download file from client to serer");
-        actions[position++] = this.new DownloadFileFromServerToClient("dFile", "Download file from server to client");
+        actions[position++] = this.new DownloadFileFromClientToServer("dFile", "Download file from client to serer");
+        actions[position++] = this.new DownloadFileFromServerToClient("uFile", "Download file from server to client");
         actions[position++] = this.new Help("help", "Displays the user action menu");
     }
 
@@ -80,7 +83,8 @@ public class BaseAction {
             }
         }
         if (!bad) {
-            printWriter.println("Bad comand try again.");
+            println.println(brFromServer.readLine());
+
         }
 
     }
@@ -105,24 +109,13 @@ public class BaseAction {
          */
         @Override
         public void makeAction() {
-            char[] lineToChar = rootDir.toCharArray();
-            StringBuilder sb = new StringBuilder();
-            boolean val = true;
-            if (lineToChar.length == 3) {
-                printWriter.println("You already in the root directory");
-                sb.delete(0, sb.length());
-            } else {
-                for (int i = lineToChar.length - 1; i > 0; i--) {
-                    sb.append(lineToChar[i]);
-                    if (lineToChar[i] == '\\') {
-                        sb.reverse();
-                        rootDir = rootDir.replace(sb.toString(), "");
-                        sb.delete(0, sb.length());
-                        printWriter.println("done");
-                        break;
-                    }
-                }
+            try {
+                println.println(brFromServer.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+
         }
     }
 
@@ -145,12 +138,10 @@ public class BaseAction {
         @Override
         public void makeAction() {
 
-            String lineName;
             try {
-                lineName = br.readLine();
-                rootDir = rootDir + "\\" + lineName;
-                printWriter.println("current directory: " + rootDir);
-
+                println.println("enter child dir");
+                printWriter.println(fromKeyboard.readLine());
+                println.println(brFromServer.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -175,9 +166,13 @@ public class BaseAction {
 
         @Override
         public void makeAction() throws IOException {
-            String answer = br.readLine();
-            File file = new File(rootDir + "\\" + answer);
-            answer = br.readLine();
+            println.println("Exemple : D:\\doc.txt  ");
+            println.println("Enter full file name for downloading to server: ");
+            String answer = fromKeyboard.readLine();
+
+            File file = new File(answer);
+            printWriter.println(file.getName());
+            // brFromServer.readLine();
             try (FileInputStream fileIn = new FileInputStream(file)) {
 
                 long l = file.length();
@@ -191,6 +186,8 @@ public class BaseAction {
                     output.flush();
 
                 }
+                println.println(brFromServer.readLine());
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 System.out.println("File does not exist.");
@@ -217,29 +214,35 @@ public class BaseAction {
 
         @Override
         public void makeAction() throws IOException {
-            String answer = br.readLine();
+            println.println("Exemple : doc.txt  ");
+            println.println("Enter full file name for downloading to client: ");
+            String answer = fromKeyboard.readLine();
+            printWriter.println(answer);
+            println.println("Enter the full path directory in which you want to save the file");
+            println.println("For exemple : D:\\temp\\");
+            String saveDir = fromKeyboard.readLine();
+            printWriter.println("ok");
+            File file = new File(saveDir + answer);
 
-            File file = new File("D:\\" + answer);
-            try (FileOutputStream fileOut = new FileOutputStream(file)) {
-                String lenght = br.readLine();
-                long fileLenght = Long.parseLong(lenght);
-                int len;
-                int total = 0;
+            try (FileOutputStream fw = new FileOutputStream(file)) {
+
+                String lenght = brFromServer.readLine();
+                long lengh = Long.parseLong(lenght);
                 boolean exit = true;
+
+                int len;
+                long totalLenght = 0;
                 byte[] buffer = new byte[1024 * 100];
                 while (exit) {
                     len = input.read(buffer);
-                    fileOut.write(buffer, 0, len);
-                    total += len;
-                    if (total == fileLenght) {
+                    fw.write(buffer, 0, len);
+                    totalLenght += len;
+                    if (totalLenght == lengh) {
                         exit = false;
                     }
+
                 }
-                printWriter.println("The file is located at" + file.getAbsolutePath());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("File successfully downloaded.");
             }
         }
     }
@@ -263,13 +266,11 @@ public class BaseAction {
          * The method sends the client a list of files contained in the directory.
          */
         @Override
-        public void makeAction() {
-            File file = new File(rootDir);
-            int len = file.list().length;
-            printWriter.println(len);
-            for (String files : file.list()) {
-
-                printWriter.println(files);
+        public void makeAction() throws IOException {
+            String answer = brFromServer.readLine();
+            int len = Integer.parseInt(answer);
+            for (int i = 0; i != len; i++) {
+                println.println(brFromServer.readLine());
             }
         }
     }
@@ -290,14 +291,12 @@ public class BaseAction {
         }
 
         @Override
-        public void makeAction() {
-            printWriter.println(actions.length);
-            for (int i = 0; i != actions.length; i++) {
-                if (actions[i] != null) {
-                    printWriter.println(actions[i].info());
-                }
+        public void makeAction() throws IOException {
+            String answer = brFromServer.readLine();
+            int len = Integer.parseInt(answer);
+            for (int i = 0; i != len; i++) {
+                println.println(brFromServer.readLine());
             }
         }
     }
-
 }

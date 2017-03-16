@@ -87,10 +87,10 @@ public class Server {
             BaseAction baseAction = new BaseAction(socket.getInputStream(), socket.getOutputStream(), root);
             String line;
             baseAction.filing();
-            do {
+            while (socket.isConnected()) {
                 line = in.readLine();
                 baseAction.select(line);
-            } while (!line.equals("stop"));
+            }
         }
     }
 }
