@@ -27,7 +27,15 @@ public class FileSearch {
     /**
      * run application.
      */
-    
+    /**
+     * 4. Программа должна собираться в jar и запускаться через java -jar find.jar -d c:/ -n *.txt -m -o log.txt
+     Ключи
+     -d - директория в которая начинать поиск.
+     -n - имя файл, маска, либо регулярное выражение.
+     -m - искать по макс, либо -f - полное совпадение имени. -r регулярное выражение.
+     -o - результат записать в файл.
+     5. Программа должна записывать результат в файл.
+     */
     public void run() {
         File file = new File("D:\\fileSearch.txt");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -77,5 +85,6 @@ public class FileSearch {
         boolean write = file.getName().contains(sb);
         return write;
     }
+
 
 }
