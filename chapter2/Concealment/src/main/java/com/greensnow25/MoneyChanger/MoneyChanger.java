@@ -54,15 +54,14 @@ public class MoneyChanger {
      * The method demonstrates all possible ways of exchanging money.
      */
     public void giveMeMyMoney() {
-        for (int i = saveCheck.length - 1; i >= 0; i--) {
-            for (int j = 0; j != coins.length; j++) {
-                if (saveCheck[i] > coins[j]) {
-                    int repetition = saveCheck[i] / coins[j];
-                    balance = saveCheck[i] - coins[j] * repetition;
-                    saveCheck = arrayFilling(repetition, coins[j], i);
+        for (int i = this.saveCheck.length - 1; i >= 0; i--) {
+            for (int j = 0; j != this.coins.length; j++) {
+                if (this.saveCheck[i] > this.coins[j]) {
+                    int repetition = this.saveCheck[i] / this.coins[j];
+                    this.balance = this.saveCheck[i] - this.coins[j] * repetition;
+                    this.saveCheck = arrayFilling(repetition, this.coins[j], i);
                     printAraray();
                     giveMeMyMoney();
-                    pos++;
                 }
             }
         }
@@ -76,12 +75,12 @@ public class MoneyChanger {
      * @param position       position on array.
      */
     public void addBalance(int repeat, int coinRepetition, int position) {
-        for (int i = position; i != saveCheck.length; i++) {
+        for (int i = position; i != this.saveCheck.length; i++) {
             if (repeat > 0) {
-                saveCheck[i] = coinRepetition;
+                this.saveCheck[i] = coinRepetition;
                 repeat--;
                 if (repeat == 0) {
-                    pos = 1;
+                    this.pos = 1;
                     break;
                 }
             }
@@ -98,9 +97,9 @@ public class MoneyChanger {
      */
     public int[] arrayFilling(int repetition, int coinRepetition, int position) {
         int count = repetition;
-        for (int i = position; i != saveCheck.length; i++) {
+        for (int i = position; i != this.saveCheck.length; i++) {
             if (repetition > 0) {
-                saveCheck[i] = coinRepetition;
+                this.saveCheck[i] = coinRepetition;
                 repetition--;
                 if (repetition == 0) {
                     break;
@@ -109,18 +108,18 @@ public class MoneyChanger {
         }
         if (pos == 0) {
             for (int j = 0; j != coins.length; j++) {
-                if (balance > coins[j]) {
-                    int repeat = balance / coins[j];
-                    addBalance(repeat, coins[j], count);
+                if (this.balance > this.coins[j]) {
+                    int repeat = this.balance / this.coins[j];
+                    addBalance(repeat, this.coins[j], count);
                     break;
                 }
             }
         }
         if (!isSum()) {
-            for (int q = 0; q != saveCheck.length; q++) {
+            for (int q = 0; q != this.saveCheck.length; q++) {
 
-                if (saveCheck[q] == 0) {
-                    saveCheck[q] = 1;
+                if (this.saveCheck[q] == 0) {
+                    this.saveCheck[q] = 1;
                     if (isSum()) {
                         break;
                     }
@@ -137,12 +136,12 @@ public class MoneyChanger {
      */
     public boolean isSum() {
         int sum = 0;
-        for (int i = 0; i != saveCheck.length; i++) {
-            if (saveCheck[i] != 0) {
-                sum += saveCheck[i];
+        for (int i = 0; i != this.saveCheck.length; i++) {
+            if (this.saveCheck[i] != 0) {
+                sum += this.saveCheck[i];
             }
         }
-        if (sum == money) {
+        if (sum == this.money) {
             return true;
         }
         return false;
