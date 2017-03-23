@@ -14,5 +14,5 @@ public interface CalculatorAction {
      * @param two number.
      * @return result.
      */
-    int makeAction(int one, int two);
+    double makeAction(double one, double two);
 }

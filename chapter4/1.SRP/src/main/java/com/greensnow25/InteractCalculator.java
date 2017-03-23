@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 public class InteractCalculator {
     /**
      * main.
+     *
      * @param args args.
      */
     public static void main(String[] args) {
@@ -26,15 +27,15 @@ public class InteractCalculator {
     /**
      * number one.
      */
-    private int one;
+    private double one;
     /**
      * number two.
      */
-    private int two;
+    private double two;
     /**
      * result of operations.
      */
-    private int result;
+    private double result;
     /**
      * input line split to symbols.
      */
@@ -50,7 +51,7 @@ public class InteractCalculator {
     /**
      * pattern for search.
      */
-    private final String patt = "([+-/*]{1})(\\d+$)";
+    private final String patt = "([-]?\\d+(\\.\\d*)?)?([+-/*]{1})([-]?\\d+(\\.\\d*)?)";
     /**
      * bad command flag.
      */
@@ -59,6 +60,10 @@ public class InteractCalculator {
      * array from actions with numbers.
      */
     private CalculatorAction[] actions = new CalculatorAction[4];
+    /**
+     * class object.
+     */
+    private Calculator calculator;
 
     /**
      * class constructor.
@@ -67,6 +72,7 @@ public class InteractCalculator {
      */
     public InteractCalculator(Input input) {
         this.input = input;
+        this.calculator = new Calculator();
     }
 
     /**
@@ -83,56 +89,34 @@ public class InteractCalculator {
     /**
      * @param line input line.
      * @param patt pattern for search.
-     * @return false if make operation from two numbers, and true if
      * make operation with one numbers.
      */
-    public boolean compareAndSplit(String line, String patt) {
-
+    public void assignValues(String line, String patt) {
         Pattern pattern = Pattern.compile(patt);
-
         Matcher matcher = pattern.matcher(line);
 
         if (matcher.find()) {
-            operationName = matcher.group(1);
-
-            symbols = line.split("\\" + operationName);
-            if (symbols[0].equals("") && symbols.length != 3) {
-                badCommand = false;
-                return true;
+            operationName = matcher.group(3);
+            if (matcher.group(1) != null) {
+                one = Double.parseDouble(matcher.group(1));
+            } else {
+                one = result;
             }
+            two = Double.parseDouble(matcher.group(4));
         } else {
-            badCommand = true;
+            System.out.println("bad command. try again ");
         }
-        return false;
     }
 
     /**
      * method selected an action and assign values.
-     * @param addToResult where to add.
      */
-    public void choice(boolean addToResult) {
-        if (!badCommand) {
-            if (addToResult) {
-                this.one = this.result;
-                two = Integer.parseInt(symbols[1]);
-
-            } else if (symbols.length == 3) {
-                one = -Integer.parseInt(symbols[1]);
-                two = Integer.parseInt(symbols[2]);
-            } else if (!addToResult) {
-                one = Integer.parseInt(symbols[0]);
-                two = Integer.parseInt(symbols[1]);
-
+    public void choice() {
+        for (Operations names : Operations.values()) {
+            if (names.operation.equals(operationName)) {
+                actions[names.ordinal()].makeAction(one, two);
+                break;
             }
-            for (Operations names : Operations.values()) {
-                if (names.operation.equals(operationName)) {
-                    actions[names.ordinal()].makeAction(one, two);
-                    break;
-                }
-
-            }
-        } else {
-            System.out.println("bad command try again.");
         }
     }
 
@@ -145,55 +129,57 @@ public class InteractCalculator {
         System.out.println("push y for exit. ");
         while (!(line = input.answer("")).equals("y")) {
 
-            boolean addToResult = compareAndSplit(line, this.patt);
-            this.choice(addToResult);
-
-            System.out.printf(" = %d%s", result, System.getProperty("line.separator"));
+            assignValues(line, this.patt);
+            this.choice();
+            System.out.print(String.format("result = %.2f%s", result, System.getProperty("line.separator")));
         }
     }
 
     /**
      * inner class Add.
      */
-    public class Add implements CalculatorAction {
+    private class Add implements CalculatorAction {
 
         @Override
-        public int makeAction(int one, int two) {
-
-            return result = one + two;
+        public double makeAction(double one, double two) {
+            calculator.add(one, two);
+            return result = calculator.result;
         }
     }
 
     /**
      * inner class Sub.
      */
-    public class Sub implements CalculatorAction {
+    private class Sub implements CalculatorAction {
 
         @Override
-        public int makeAction(int one, int two) {
-            return result = one - two;
+        public double makeAction(double one, double two) {
+            calculator.substract(one, two);
+            return result = calculator.result;
         }
     }
 
     /**
      * iner class Split.
      */
-    public class Split implements CalculatorAction {
+    private class Split implements CalculatorAction {
 
         @Override
-        public int makeAction(int one, int two) {
-            return result = one / two;
+        public double makeAction(double one, double two) {
+            calculator.div(one, two);
+            return result = calculator.result;
         }
     }
 
     /**
      * inner class Multiply.
      */
-    public class Multiply implements CalculatorAction {
+    private class Multiply implements CalculatorAction {
 
         @Override
-        public int makeAction(int one, int two) {
-            return result = one * two;
+        public double makeAction(double one, double two) {
+            calculator.multiple(one, two);
+            return result = calculator.result;
         }
     }
 
@@ -224,6 +210,7 @@ public class InteractCalculator {
 
         /**
          * enum cons.
+         *
          * @param operation key.
          */
         Operations(String operation) {
@@ -237,7 +224,7 @@ public class InteractCalculator {
      *
      * @return result.
      */
-    public int getResult() {
+    public double getResult() {
         return result;
     }
 }
