@@ -9,8 +9,12 @@ import java.util.Scanner;
  * @version 1.
  * @since 20.03.2017.
  */
-public class ConsolInput implements Input{
+public class ConsolInput implements Input {
+    /**
+     * object of type scanner.
+     */
     private Scanner sc = new Scanner(System.in);
+
     @Override
     public String answer(String question) {
 

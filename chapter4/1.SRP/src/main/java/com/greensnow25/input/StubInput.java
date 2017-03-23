@@ -13,15 +13,16 @@ public class StubInput implements Input {
      */
     private String[] answers;
     /**
-     * position
+     * position.
      */
     private int position = 0;
 
     /**
      * class constructor.
+     *
      * @param line answers.
      */
-    public StubInput(String[] line){
+    public StubInput(String[] line) {
         this.answers = line;
     }
 

@@ -7,9 +7,10 @@ package com.greensnow25.input;
  * @version 1.
  * @since 20.03.2017.
  */
-public interface Input{
+public interface Input {
     /**
      * input.
+     *
      * @param question questint.
      * @return answer.
      */

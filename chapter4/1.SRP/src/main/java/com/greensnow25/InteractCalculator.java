@@ -3,7 +3,6 @@ package com.greensnow25;
 import com.greensnow25.input.ConsolInput;
 import com.greensnow25.input.Input;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,10 +14,15 @@ import java.util.regex.Pattern;
  * @since 19.03.2017.
  */
 public class InteractCalculator {
+    /**
+     * main.
+     * @param args args.
+     */
     public static void main(String[] args) {
         InteractCalculator interactCalculator = new InteractCalculator(new ConsolInput());
-        interactCalculator.choice();
+        interactCalculator.run();
     }
+
     /**
      * number one.
      */
@@ -46,7 +50,11 @@ public class InteractCalculator {
     /**
      * pattern for search.
      */
-    private final String patt = "\\s*[+-/*]\\s*";
+    private final String patt = "([+-/*]{1})(\\d+$)";
+    /**
+     * bad command flag.
+     */
+    private boolean badCommand = false;
     /**
      * array from actions with numbers.
      */
@@ -79,32 +87,38 @@ public class InteractCalculator {
      * make operation with one numbers.
      */
     public boolean compareAndSplit(String line, String patt) {
+
         Pattern pattern = Pattern.compile(patt);
+
         Matcher matcher = pattern.matcher(line);
+
         if (matcher.find()) {
-            operationName = matcher.group();
-            symbols = pattern.split(line);
-            if (symbols[0].equals("")) {
+            operationName = matcher.group(1);
+
+            symbols = line.split("\\" + operationName);
+            if (symbols[0].equals("") && symbols.length != 3) {
+                badCommand = false;
                 return true;
             }
+        } else {
+            badCommand = true;
         }
         return false;
     }
 
     /**
-     * choice operation.
+     * method selected an action and assign values.
+     * @param addToResult where to add.
      */
-    public void choice() {
-        filling();
-        String line;
-        while (!(line = input.answer("")).equals("y")) {
-
-            boolean addToResult = compareAndSplit(line, this.patt);
-
+    public void choice(boolean addToResult) {
+        if (!badCommand) {
             if (addToResult) {
                 this.one = this.result;
                 two = Integer.parseInt(symbols[1]);
 
+            } else if (symbols.length == 3) {
+                one = -Integer.parseInt(symbols[1]);
+                two = Integer.parseInt(symbols[2]);
             } else if (!addToResult) {
                 one = Integer.parseInt(symbols[0]);
                 two = Integer.parseInt(symbols[1]);
@@ -117,7 +131,24 @@ public class InteractCalculator {
                 }
 
             }
-            System.out.println(" =  " + result);
+        } else {
+            System.out.println("bad command try again.");
+        }
+    }
+
+    /**
+     * choice operation.
+     */
+    public void run() {
+        filling();
+        String line;
+        System.out.println("push y for exit. ");
+        while (!(line = input.answer("")).equals("y")) {
+
+            boolean addToResult = compareAndSplit(line, this.patt);
+            this.choice(addToResult);
+
+            System.out.printf(" = %d%s", result, System.getProperty("line.separator"));
         }
     }
 
@@ -170,12 +201,31 @@ public class InteractCalculator {
      * enum of operations.
      */
     enum Operations {
+        /**
+         * add.
+         */
         ADD("+"),
+        /**
+         * sub.
+         */
         SUB("-"),
+        /**
+         * split.
+         */
         SPLIT("/"),
+        /**
+         * myltiply.
+         */
         MYLTIPLY("*");
-        public String operation;
+        /**
+         * kind of operation.
+         */
+        private String operation;
 
+        /**
+         * enum cons.
+         * @param operation key.
+         */
         Operations(String operation) {
             this.operation = operation;
         }
@@ -184,6 +234,7 @@ public class InteractCalculator {
 
     /**
      * get result.
+     *
      * @return result.
      */
     public int getResult() {
