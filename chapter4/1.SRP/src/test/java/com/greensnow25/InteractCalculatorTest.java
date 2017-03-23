@@ -40,7 +40,7 @@ public class InteractCalculatorTest {
     public void whenAddThenAddNumber() {
         answers = new String[]{"2+3", "y"};
         preparation(answers);
-        assertThat(interactCalculator.getResult(), is(5));
+        assertThat(interactCalculator.getResult(), is(5d));
 
     }
 
@@ -51,7 +51,7 @@ public class InteractCalculatorTest {
     public void whenAddSecondTimeThenAToResult() {
         answers = new String[]{"2+3", "+5", "y"};
         preparation(answers);
-        assertThat(interactCalculator.getResult(), is(10));
+        assertThat(interactCalculator.getResult(), is(10d));
     }
 
     /**
@@ -62,7 +62,7 @@ public class InteractCalculatorTest {
         answers = new String[]{"2+3", "+5", "4+3", "y"};
         preparation(answers);
 
-        assertThat(interactCalculator.getResult(), is(7));
+        assertThat(interactCalculator.getResult(), is(7d));
     }
 
     /**
@@ -73,7 +73,7 @@ public class InteractCalculatorTest {
         answers = new String[]{"2-3", "+5", "y"};
         preparation(answers);
 
-        assertThat(interactCalculator.getResult(), is(4));
+        assertThat(interactCalculator.getResult(), is(4d));
     }
 
     /**
@@ -84,7 +84,7 @@ public class InteractCalculatorTest {
         answers = new String[]{"12/3", "y"};
         preparation(answers);
 
-        assertThat(interactCalculator.getResult(), is(4));
+        assertThat(interactCalculator.getResult(), is(4d));
     }
 
     /**
@@ -95,7 +95,7 @@ public class InteractCalculatorTest {
         answers = new String[]{"2*3", "y"};
         preparation(answers);
 
-        assertThat(interactCalculator.getResult(), is(6));
+        assertThat(interactCalculator.getResult(), is(6d));
     }
 
     /**
@@ -106,6 +106,6 @@ public class InteractCalculatorTest {
         answers = new String[]{"-2-3", "y"};
         preparation(answers);
 
-        assertThat(interactCalculator.getResult(), is(-5));
+        assertThat(interactCalculator.getResult(), is(-5d));
     }
 }
