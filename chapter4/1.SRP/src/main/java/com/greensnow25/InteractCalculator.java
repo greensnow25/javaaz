@@ -20,7 +20,7 @@ public class InteractCalculator {
      * @param args args.
      */
     public static void main(String[] args) {
-        InteractCalculator interactCalculator = new InteractCalculator(new ConsolInput());
+        InteractCalculator interactCalculator = new Trigonometry(new ConsolInput());
         interactCalculator.run();
     }
 
@@ -37,10 +37,6 @@ public class InteractCalculator {
      */
     private double result;
     /**
-     * input line split to symbols.
-     */
-    private String[] symbols;
-    /**
      * input system.
      */
     private Input input;
@@ -53,13 +49,9 @@ public class InteractCalculator {
      */
     private final String patt = "([-]?\\d+(\\.\\d*)?)?([+-/*]{1})([-]?\\d+(\\.\\d*)?)";
     /**
-     * bad command flag.
-     */
-    private boolean badCommand = false;
-    /**
      * array from actions with numbers.
      */
-    private CalculatorAction[] actions = new CalculatorAction[4];
+    private CalculatorAction[] actions = new CalculatorAction[8];
     /**
      * class object.
      */
