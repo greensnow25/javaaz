@@ -24,7 +24,7 @@ public enum OperationsOnse{
     SUB("-") {
         @Override
         public double makeAction(double one, double two) {
-            calculator.add(one,two);
+            calculator.substract(one,two);
             return calculator.result;
         }
     },

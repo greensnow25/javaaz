@@ -13,8 +13,20 @@ import java.util.regex.Pattern;
  * @since 23.03.2017.
  */
 public class Trigonometry extends InteractCalculator {
-    private double result;
-    String pattern  ="(\\w+[^0-9]+){1}(\\d*)";
+    /**
+     * pattern.
+     */
+    private String pattern = "(\\w+[^0-9]+){1}(\\d*)";
+    /**
+     * operation name.
+     */
+    private String operationName;
+    /**
+     * number.
+     */
+    private String two;
+
+
     /**
      * class constructor.
      *
@@ -24,7 +36,34 @@ public class Trigonometry extends InteractCalculator {
         super(input);
     }
 
+    @Override
+    public boolean extend(String line) {
+        Pattern patt = Pattern.compile(this.pattern);
+        Matcher matcher = patt.matcher(line);
+        if (matcher.find()) {
+            operationName = matcher.group(1);
+            two = matcher.group(2);
+            return true;
+        } else {
 
+        }
+        return false;
+    }
 
+    @Override
+    public void choice() {
+        boolean res = false;
+        for (TrigonometricOperations operations : TrigonometricOperations.values()) {
+            if (operations.getName().equals(operationName)) {
+                setResult(operations.makeTrigOper(Double.parseDouble(two)));
+                operationName = null;
+                res = true;
+                break;
+            }
+        }
+        if (!res) {
+            super.choice();
+        }
 
+    }
 }

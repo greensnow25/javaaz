@@ -20,7 +20,7 @@ public class InteractCalculator {
      * @param args args.
      */
     public static void main(String[] args) {
-        InteractCalculator interactCalculator = new InteractCalculator(new ConsolInput());
+        InteractCalculator interactCalculator = new Trigonometry(new ConsolInput());
         interactCalculator.run();
     }
 
@@ -49,10 +49,6 @@ public class InteractCalculator {
      * pattern for search.
      */
     private final String patt = "([-]?\\d+(\\.\\d*)?)?([+-/*]{1})([-]?\\d+(\\.\\d*)?)";
-    /**
-     * array from actions with numbers.
-     */
-    private CalculatorAction[] actions = new CalculatorAction[8];
 
     /**
      * class constructor.
@@ -63,8 +59,6 @@ public class InteractCalculator {
         this.input = input;
 
     }
-
-
 
     /**
      * @param line input line.
@@ -83,11 +77,21 @@ public class InteractCalculator {
                 this.one = result;
             }
             this.two = Double.parseDouble(matcher.group(4));
-        } else {
-
+        } else if (!this.extend(line)) {
+            System.out.println("Bad command try again ");
         }
+
     }
 
+    /**
+     * extend application.
+     *
+     * @param line line.
+     * @return boolean.
+     */
+    public boolean extend(String line) {
+        return false;
+    }
 
     /**
      * method selected an action and assign values.
@@ -95,7 +99,7 @@ public class InteractCalculator {
     public void choice() {
         for (OperationsOnse names : OperationsOnse.values()) {
             if (names.getOperation().equals(operationName)) {
-              result = names.makeAction(one,two);
+                result = names.makeAction(one, two);
                 break;
             }
         }
@@ -111,7 +115,7 @@ public class InteractCalculator {
 
             assignValues(line, this.patt);
             this.choice();
-            System.out.print(String.format("result = %.2f%s", result, System.getProperty("line.separator")));
+            System.out.print(String.format(" = %.2f%s", result, System.getProperty("line.separator")));
         }
     }
 
@@ -125,21 +129,11 @@ public class InteractCalculator {
         return result;
     }
 
-    public double getOne() {
-        return one;
-    }
-
-    public void setOne(double one) {
-        this.one = one;
-    }
-
-    public double getTwo() {
-        return two;
-    }
-
-    public void setTwo(double two) {
-        this.two = two;
-    }
+    /**
+     * set result.
+     *
+     * @param result res.
+     */
 
     public void setResult(double result) {
         this.result = result;
