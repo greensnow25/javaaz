@@ -111,6 +111,7 @@ public class ControlQuality {
         String fullName;
         this.currentDay = input.answer("Enter current day");
         do {
+            System.out.println("Example : fish bass 27.03.2017 25.04.2018 120");
             fullName = input.answer("Enter product: type, name,createDate, expaireDate, prise");
             if (enterFood(fullName)) {
                 int percents = checkDate();
