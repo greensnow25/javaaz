@@ -15,9 +15,9 @@ public class Meat extends Food {
      * @param expaireDate date.
      * @param createDate  date.
      * @param prise       prise.
-     ** @param discount    discount.
+     *                    * @param discount    discount.
      */
-    public Meat(String name, String expaireDate, String createDate, String prise, String discount) {
-        super(name, expaireDate, createDate, prise, discount);
+    public Meat(String name, String createDate, String expaireDate, String prise, String discount) {
+        super(name, createDate, expaireDate, prise, discount);
     }
 }

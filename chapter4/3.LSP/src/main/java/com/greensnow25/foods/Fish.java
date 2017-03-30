@@ -17,8 +17,8 @@ public class Fish extends Food {
      * @param prise       prise.
      * @param discount    discount.
      */
-    public Fish(String name, String expaireDate, String createDate, String prise, String discount) {
-        super(name, expaireDate, createDate, prise, discount);
+    public Fish(String name, String createDate, String expaireDate, String prise, String discount) {
+        super(name, createDate, expaireDate, prise, discount);
     }
 
 }

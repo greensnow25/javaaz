@@ -1,8 +1,13 @@
 package com.greensnow25;
 
-import com.greensnow25.input.StubInput;
+import com.greensnow25.foods.Fish;
+import com.greensnow25.foods.Food;
+import com.greensnow25.foods.Fruit;
+import com.greensnow25.foods.Meat;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.text.ParseException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -42,174 +47,87 @@ public class ControlQualityTest {
     public void beforeTheTest() {
         this.controlQuality = new ControlQuality();
         this.shop = new Shop();
-        this.warehouse = new Warehouse();
         this.trash = new Trash();
+        this.warehouse = new Warehouse();
+        this.addPlaces();
+        this.addProducts();
+    }
+
+    public void addPlaces() {
+        controlQuality.addPlaces(this.shop);
+        controlQuality.addPlaces(this.trash);
+        controlQuality.addPlaces(this.warehouse);
+    }
+
+    public void addProducts() {
+        // to shop, with discount.
+        controlQuality.addFoods(new Fruit("apple", "10.01.17", "10.04.17", "15", null));
+        //warehause.
+        controlQuality.addFoods(new Fish("bass", "27.03.2017", "25.04.2018", "120", null));
+        //to shop with out discount.
+        controlQuality.addFoods(new Meat("chicken", "10.03.17", "30.04.17", "50", null));
+        //to trash.
+        controlQuality.addFoods(new Meat("cow", "30.02.17", "30.03.17", "80", null));
     }
 
     /**
-     * test enter correct name.
+     * move to shop
      */
     @Test
-    public void whenEnterFullNameCorrectThenReturnTrue() {
-        String fullName = "fish bass 27.03.2017 25.04.2018 120";
-        boolean res = controlQuality.enterFood(fullName);
+    public void whenRunApplicationMoveAppleToShop() throws ParseException {
 
-        assertTrue(res);
+        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+
+        assertThat(shop.getFood()[0].getName(), is("apple"));
 
     }
 
     /**
-     * enter inccorectly name.
+     * move to shop with discount.
      */
     @Test
-    public void whenEnterFullNameInccorectlyThenReturnTrue() {
-        String fullName = "fish  27.03.2017 25.04.2018 120";
-        boolean res = controlQuality.enterFood(fullName);
+    public void whenRunApplicationMoveAppleToShopWithDiscount() throws ParseException {
 
-        assertFalse(res);
+        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+
+        assertThat(shop.getFood()[0].getDisscount(), is("30%"));
 
     }
 
     /**
-     * test move food to warehouse.
+     * move to shop with out discount.
      */
     @Test
-    public void whenEnterLess25PercentsThenReturnWarehouse() {
-        int date = 24;
-        Place place = controlQuality.productDestination(date);
-        assertThat(warehouse instanceof Warehouse, is(place instanceof Warehouse));
+    public void whenRunApplicationMoveAppleToShopWithOutDiscount() throws ParseException {
+
+        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+
+        assertNull(shop.getFood()[1].getDisscount());
+
     }
 
     /**
-     * test move food to shop.
+     * move to warehouse.
      */
     @Test
-    public void whenEnterLess75AndMore25PercentsThenReturnShop() {
-        int date = 54;
-        Place place = controlQuality.productDestination(date);
-        assertThat(shop instanceof Shop, is(place instanceof Shop));
+    public void whenRunApplicationMoveAppleToWarehause() throws ParseException {
+
+        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+
+        assertThat(warehouse.getFood()[0].getName(), is("bass"));
+
     }
 
     /**
-     * test move food to shop with discount.
+     * move to warehouse.
      */
     @Test
-    public void whenEnterMore75PercentsThenReturnShop() {
-        int date = 84;
-        String[] line = new String[]{"10"};
-        ControlQuality control = new ControlQuality(new StubInput(line));
-        Place place = control.productDestination(date);
-        assertThat(shop instanceof Shop, is(place instanceof Shop));
+    public void whenRunApplicationMoveAppleToTrash() throws ParseException {
+
+        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+
+        assertThat(trash.getFood()[0].getName(), is("cow"));
+
     }
 
-    /**
-     * test move food to shop with discount.check discount.
-     */
-    @Test
-    public void whenEnterMore75PercentsThenCheckDiscount() {
-        int date = 84;
-        String[] line = new String[]{"10"};
-        ControlQuality control = new ControlQuality(new StubInput(line));
-        control.productDestination(date);
-
-        assertThat(control.getDiscount(), is("10"));
-    }
-
-    /**
-     * test move food to trash.
-     */
-    @Test
-    public void whenEnterMore100PercentsThenReturnTrash() {
-        int date = 102;
-        Place place = controlQuality.productDestination(date);
-        assertThat(trash instanceof Trash, is(place instanceof Trash));
-    }
-
-    /**
-     * test correct date.
-     */
-    @Test
-    public void whenCorrectDateEntryThenReturnTrue() {
-        String[] current = new String[]{"10", "04", "2017"};
-        String[] nextDate = new String[]{"15", "04", "2017"};
-        boolean res = controlQuality.validDate(current, nextDate);
-        assertTrue(res);
-    }
-
-    /**
-     * test incorrect date.
-     */
-    @Test
-    public void whenIncorrectDateEntryReturnFalse() {
-        String[] current = new String[]{"10", "04", "2017"};
-        String[] nextDate = new String[]{"15", "03", "2017"};
-        boolean res = controlQuality.validDate(current, nextDate);
-        assertFalse(res);
-    }
-
-    /**
-     * check sumDates.
-     */
-    @Test
-    public void whenEnterDatesThenReturnSumOfDaysEnteringTheGap() {
-        String[] current = new String[]{"10", "04", "2017"};
-        String[] nextDate = new String[]{"15", "04", "2017"};
-        int res = controlQuality.sumDays(current, nextDate);
-        assertThat(res, is(5));
-    }
-
-    /**
-     * check name on Warehouse.
-     */
-    @Test
-    public void whenAddFoodMoveItInThePlaceShopCheckName() {
-        String[] answers = new String[]{"05.04.2017", "fish bass 27.03.2017 25.04.2018 120", "exit"};
-        ControlQuality control = new ControlQuality(new StubInput(answers));
-        control.run();
-        assertThat(control.getWarehouse().getFood()[0].getName(), is("bass"));
-    }
-
-    /**
-     * check create date.
-     */
-    @Test
-    public void whenAddFoodMoveItInThePlaceShopCheckCreateDate() {
-        String[] answers = new String[]{"05.04.2017", "fish bass 27.03.2017 25.04.2018 120", "exit"};
-        ControlQuality control = new ControlQuality(new StubInput(answers));
-        control.run();
-        assertThat(control.getWarehouse().getFood()[0].getCreateDate(), is("27.03.2017"));
-    }
-
-    /**
-     * check expaire date.
-     */
-    @Test
-    public void whenAddFoodMoveItInThePlaceShopCheckExpaireDate() {
-        String[] answers = new String[]{"05.04.2017", "fish bass 27.03.2017 25.04.2018 120", "exit"};
-        ControlQuality control = new ControlQuality(new StubInput(answers));
-        control.run();
-        assertThat(control.getWarehouse().getFood()[0].getExpaireDate(), is("25.04.2018"));
-    }
-
-    /**
-     * check prise.
-     */
-    @Test
-    public void whenAddFoodMoveItInThePlaceShopCheckPrise() {
-        String[] answers = new String[]{"05.04.2017", "fish bass 27.03.2017 25.04.2018 120", "exit"};
-        ControlQuality control = new ControlQuality(new StubInput(answers));
-        control.run();
-        assertThat(control.getWarehouse().getFood()[0].getPrise(), is("120"));
-    }
-
-    /**
-     * if food move to warehouse then discount equels null .
-     */
-    @Test
-    public void whenAddFoodMoveItInThePlaceShopCheckDiscountEquelsNull() {
-        String[] answers = new String[]{"05.04.2017", "fish bass 27.03.2017 25.04.2018 120", "exit"};
-        ControlQuality control = new ControlQuality(new StubInput(answers));
-        control.run();
-        assertNull(control.getWarehouse().getFood()[0].getDisscount());
-    }
 }

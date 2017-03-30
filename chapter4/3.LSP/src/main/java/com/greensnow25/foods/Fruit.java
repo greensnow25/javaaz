@@ -17,7 +17,7 @@ public class Fruit extends Food {
      * @param prise       prise.
      * @param discount    discount.
      */
-    public Fruit(String name, String expaireDate, String createDate, String prise, String discount) {
-        super(name, expaireDate, createDate, prise, discount);
+    public Fruit(String name,  String createDate,String expaireDate, String prise, String discount) {
+        super(name,  createDate,expaireDate, prise, discount);
     }
 }

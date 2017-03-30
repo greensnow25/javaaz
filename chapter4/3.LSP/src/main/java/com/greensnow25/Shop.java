@@ -1,6 +1,9 @@
 package com.greensnow25;
 
+import com.greensnow25.countingDays.CountingDays;
 import com.greensnow25.foods.Food;
+
+import java.text.ParseException;
 
 /**
  * public class Shop.
@@ -44,6 +47,20 @@ public class Shop implements Place {
      */
     public void addFood(Food food) {
         this.food[position++] = food;
+    }
+
+    @Override
+    public boolean canAdd(Food food) throws ParseException {
+        boolean res = false;
+        int count = new CountingDays().qq(food);
+        if(count>25 && count<75){
+        res = true;
+        }else if(count>75&& count<100){
+            food.setDisscount("30%");
+            res = true;
+        }
+
+        return res;
     }
 
 }

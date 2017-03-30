@@ -1,6 +1,9 @@
 package com.greensnow25;
 
+import com.greensnow25.countingDays.CountingDays;
 import com.greensnow25.foods.Food;
+
+import java.text.ParseException;
 
 /**
  * public class Trash.
@@ -29,11 +32,17 @@ public class Trash implements Place {
         this.food[position++] = food;
     }
 
-    /**
-     * setFood.
-     * @param food food.
-     */
-    public void setFood(Food[] food) {
-        this.food = food;
+    @Override
+    public boolean canAdd(Food food) throws ParseException {
+        boolean res = false;
+        int count = new CountingDays().qq(food);
+        if (count>=100){
+            res = true;
+        }
+        return res;
+    }
+
+    public Food[] getFood() {
+        return food;
     }
 }

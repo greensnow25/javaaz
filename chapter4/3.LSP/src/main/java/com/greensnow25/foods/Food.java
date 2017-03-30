@@ -52,6 +52,7 @@ public class Food {
     public Food() {
     }
 
+
     /**
      * getName.
      *
@@ -97,5 +98,11 @@ public class Food {
         return disscount;
     }
 
-
+    /**
+     * set.
+     * @param disscount set.
+     */
+    public void setDisscount(String disscount) {
+        this.disscount = disscount;
+    }
 }
