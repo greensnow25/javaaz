@@ -1,14 +1,7 @@
 package com.greensnow25;
 
-import com.greensnow25.countingDays.CountingDays;
-import com.greensnow25.foods.Fish;
 import com.greensnow25.foods.Food;
-import com.greensnow25.foods.Fruit;
-import com.greensnow25.foods.Meat;
-
 import java.text.ParseException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * public class ControlQuality.
