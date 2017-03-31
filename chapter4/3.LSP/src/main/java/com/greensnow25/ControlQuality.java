@@ -15,25 +15,18 @@ public class ControlQuality {
      * array of storage.
      */
     private Place[] places;
-    /**
-     * array of products.
-     */
-    private Food[] foods;
+
     /**
      * position in places array.
      */
     private int position = 0;
-    /**
-     * position in food array.
-     */
-    private int coutFoods = 0;
 
     /**
      * default constructor.
      */
     public ControlQuality() {
         this.places = new Place[3];
-        this.foods = new Food[4];
+
     }
 
     /**
@@ -43,15 +36,6 @@ public class ControlQuality {
      */
     public void addPlaces(Place place) {
         this.places[position++] = place;
-    }
-
-    /**
-     * add products to the array.
-     *
-     * @param food product.
-     */
-    public void addFoods(Food food) {
-        this.foods[coutFoods++] = food;
     }
 
     /**
@@ -75,9 +59,6 @@ public class ControlQuality {
         return places;
     }
 
-    public Food[] getFoods() {
-        return foods;
-    }
 }
 
 

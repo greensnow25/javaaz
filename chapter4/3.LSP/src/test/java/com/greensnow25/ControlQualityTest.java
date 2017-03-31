@@ -1,6 +1,7 @@
 package com.greensnow25;
 
 import com.greensnow25.foods.Fish;
+import com.greensnow25.foods.Food;
 import com.greensnow25.foods.Fruit;
 import com.greensnow25.foods.Meat;
 import org.junit.Before;
@@ -36,6 +37,10 @@ public class ControlQualityTest {
      * class object.
      */
     private ControlQuality controlQuality;
+    /**
+     * food Array.
+     */
+    private Food[] foods;
 
     /**
      * before the test.
@@ -46,6 +51,7 @@ public class ControlQualityTest {
         this.shop = new Shop();
         this.trash = new Trash();
         this.warehouse = new Warehouse();
+        this.foods = new Food[4];
         this.addPlaces();
         this.addProducts();
     }
@@ -57,14 +63,15 @@ public class ControlQualityTest {
     }
 
     public void addProducts() {
+        int pos = 0;
         // to shop, with discount.
-        controlQuality.addFoods(new Fruit("apple", "10.01.17", "10.04.17", "15", null));
+        foods[pos++] = new Fruit("apple", "10.01.17", "10.04.17", "15", null);
         //warehause.
-        controlQuality.addFoods(new Fish("bass", "27.03.2017", "25.04.2018", "120", null));
+        foods[pos++] = new Fish("bass", "27.03.2017", "25.04.2018", "120", null);
         //to shop with out discount.
-        controlQuality.addFoods(new Meat("chicken", "10.03.17", "30.04.17", "50", null));
+        foods[pos++] = new Meat("chicken", "10.03.17", "30.04.17", "50", null);
         //to trash.
-        controlQuality.addFoods(new Meat("cow", "30.02.17", "30.03.17", "80", null));
+        foods[pos++] = new Meat("cow", "30.02.17", "30.03.17", "80", null);
     }
 
     /**
@@ -73,7 +80,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToShop() throws ParseException {
 
-        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+        controlQuality.move(this.foods, controlQuality.getPlaces());
 
         assertThat(shop.getFood()[0].getName(), is("apple"));
 
@@ -85,7 +92,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToShopWithDiscount() throws ParseException {
 
-        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+        controlQuality.move(this.foods, controlQuality.getPlaces());
 
         assertThat(shop.getFood()[0].getDisscount(), is("30%"));
 
@@ -97,7 +104,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToShopWithOutDiscount() throws ParseException {
 
-        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+        controlQuality.move(this.foods, controlQuality.getPlaces());
 
         assertNull(shop.getFood()[1].getDisscount());
 
@@ -109,7 +116,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToWarehause() throws ParseException {
 
-        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+        controlQuality.move(this.foods, controlQuality.getPlaces());
 
         assertThat(warehouse.getFood()[0].getName(), is("bass"));
 
@@ -121,7 +128,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToTrash() throws ParseException {
 
-        controlQuality.move(controlQuality.getFoods(), controlQuality.getPlaces());
+        controlQuality.move(this.foods, controlQuality.getPlaces());
 
         assertThat(trash.getFood()[0].getName(), is("cow"));
 
