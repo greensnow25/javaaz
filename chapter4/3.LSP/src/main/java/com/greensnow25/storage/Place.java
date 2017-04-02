@@ -1,4 +1,4 @@
-package com.greensnow25;
+package com.greensnow25.storage;
 
 import com.greensnow25.foods.Food;
 

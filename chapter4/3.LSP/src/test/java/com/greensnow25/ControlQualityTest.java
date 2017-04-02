@@ -1,9 +1,15 @@
 package com.greensnow25;
 
+import com.greensnow25.decorator.Refregerator;
 import com.greensnow25.foods.Fish;
 import com.greensnow25.foods.Food;
 import com.greensnow25.foods.Fruit;
 import com.greensnow25.foods.Meat;
+import com.greensnow25.foodsCanReproduct.MeatOnce;
+import com.greensnow25.decorator.Recycling;
+import com.greensnow25.storage.Shop;
+import com.greensnow25.storage.Trash;
+import com.greensnow25.storage.Warehouse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,6 +47,14 @@ public class ControlQualityTest {
      * food Array.
      */
     private Food[] foods;
+    /**
+     * Recycle.
+     */
+    private Recycling recycling;
+    /**
+     * refregerator.
+     */
+    private Refregerator refregerator;
 
     /**
      * before the test.
@@ -51,7 +65,9 @@ public class ControlQualityTest {
         this.shop = new Shop();
         this.trash = new Trash();
         this.warehouse = new Warehouse();
-        this.foods = new Food[4];
+        this.recycling = new Recycling();
+        this.foods = new Food[6];
+        this.refregerator = new Refregerator(new Warehouse());
         this.addPlaces();
         this.addProducts();
     }
@@ -60,6 +76,8 @@ public class ControlQualityTest {
         controlQuality.addPlaces(this.shop);
         controlQuality.addPlaces(this.trash);
         controlQuality.addPlaces(this.warehouse);
+        controlQuality.addPlaces(this.recycling);
+        controlQuality.addPlaces(this.refregerator);
     }
 
     public void addProducts() {
@@ -72,6 +90,10 @@ public class ControlQualityTest {
         foods[pos++] = new Meat("chicken", "10.03.17", "30.04.17", "50", null);
         //to trash.
         foods[pos++] = new Meat("cow", "30.02.17", "30.03.17", "80", null);
+        //to recycle.
+        foods[pos++] = new MeatOnce("pig", "30.02.17", "30.03.17", "80", null, true);
+        //refregerator.
+        foods[pos++] = new Fruit("orange", "10.01.17", "10.04.18", "15", null);
     }
 
     /**
@@ -131,6 +153,30 @@ public class ControlQualityTest {
         controlQuality.move(this.foods, controlQuality.getPlaces());
 
         assertThat(trash.getFood()[0].getName(), is("cow"));
+
+    }
+
+    /**
+     * move to warehouse.
+     */
+    @Test
+    public void whenRunApplicationThenMovePIgToRecycle() throws ParseException {
+
+        controlQuality.move(this.foods, controlQuality.getPlaces());
+
+        assertThat(recycling.getFoods()[0].getName(), is("pig"));
+
+    }
+
+    /**
+     * move to refregerator.
+     */
+    @Test
+    public void whenRunApplicationThenMoveToRefregerator() throws ParseException {
+
+        controlQuality.move(this.foods, controlQuality.getPlaces());
+
+        assertThat(refregerator.getFoods()[0].getName(), is("orange"));
 
     }
 

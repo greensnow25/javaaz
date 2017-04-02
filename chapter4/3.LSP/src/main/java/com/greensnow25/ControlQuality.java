@@ -1,6 +1,8 @@
 package com.greensnow25;
 
 import com.greensnow25.foods.Food;
+import com.greensnow25.storage.Place;
+
 import java.text.ParseException;
 
 /**
@@ -25,7 +27,7 @@ public class ControlQuality {
      * default constructor.
      */
     public ControlQuality() {
-        this.places = new Place[3];
+        this.places = new Place[5];
 
     }
 
