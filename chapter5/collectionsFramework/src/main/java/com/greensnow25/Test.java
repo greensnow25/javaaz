@@ -25,7 +25,7 @@ public class Test {
     public void runAndPrint() {
         ArrayList<String> array = new ArrayList<>();
         LinkedList<String> link = new LinkedList<>();
-        TreeSet<String> tree = new TreeSet<String>();
+        TreeSet<String> tree = new TreeSet<>();
         Collection[] lists = new Collection[3];
         lists[0] = array;
         lists[1] = link;
@@ -66,12 +66,10 @@ public class Test {
     public double testRemove(Collection<String> list) {
         this.testAdd(list);
         long timeBefore = System.currentTimeMillis();
-        for (int i = list.size(); i > 0; i--) {
-            if(list instanceof TreeSet){
-                list.clear();
-
-            }
-            list.remove(0);
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
         }
         return System.currentTimeMillis() - timeBefore;
     }
