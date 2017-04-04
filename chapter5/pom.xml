@@ -12,6 +12,7 @@
     </parent>
     <modules>
         <module>collectionsFramework</module>
+        <module>generalizations</module>
 
     </modules>
 
