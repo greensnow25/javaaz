@@ -13,6 +13,7 @@
     <modules>
         <module>collectionsFramework</module>
         <module>generalizations</module>
+        <module>sort</module>
 
     </modules>
 

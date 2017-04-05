@@ -47,14 +47,10 @@ public class ConvertList {
         Iterator<Integer> iterator = list.iterator();
         for (int i = 0; i != rows; i++) {
             for (int j = 0; j != len; j++) {
-                if (count >= list.size()) {
-                    array[i][j] = 0;
+                if (iterator.hasNext()) {
+                    array[i][j] = iterator.next();
                 } else {
-                    while (iterator.hasNext()) {
-                        array[i][j] = list.get(iterator.next()-1);
-                        break;
-                    }
-
+                    array[i][j] = 0;
                 }
             }
         }
