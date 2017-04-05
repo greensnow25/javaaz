@@ -40,9 +40,9 @@ public class UserConvertTest {
      */
     @Before
     public void beforeTheTest() {
-        this.userOne = new User("Gleb", 20, "kiev");
-        this.userTvo = new User("Ivan", 30, "moscow");
-        this.userThree = new User("Vasiliy", 40, "bern");
+        this.userOne = new User(1,"Gleb", 20, "kiev");
+        this.userTvo = new User(2,"Ivan", 30, "moscow");
+        this.userThree = new User(3,"Vasiliy", 40, "bern");
         this.userConvert = new UserConvert();
 
     }

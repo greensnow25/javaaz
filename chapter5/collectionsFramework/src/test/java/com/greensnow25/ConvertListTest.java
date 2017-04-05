@@ -56,25 +56,36 @@ public class ConvertListTest {
     @Test
     public void whenTransmitListThenGetArray() {
 
-        int rows = 5;
-        int len = 2;
+        int rows = 3;
+        int len = 4;
         int count = 1;
+        int arrayLen = 10;
 
         List<Integer> list = new ArrayList<>();
-        for (int i = 1; i != 10 + 1; i++) {
+        for (int i = 1; i != arrayLen + 1; i++) {
             list.add(i - 1, i);
         }
 
         int expected[][] = new int[rows][len];
         for (int i = 0; i != rows; i++) {
             for (int j = 0; j != len; j++) {
-                expected[i][j] = count++;
+                if (count <= arrayLen) {
+                    expected[i][j] = count++;
+                } else {
+                    expected[i][j] = 0;
+                }
             }
         }
 
-        int[][] actual = this.convertList.toArray(list, 5);
+        int[][] actual = this.convertList.toArray(list, rows);
 
 
         assertThat(actual, is(expected));
     }
+
+    @Test
+    public void whenTransmitListThenGetArrayWith0() {
+
+    }
+
 }

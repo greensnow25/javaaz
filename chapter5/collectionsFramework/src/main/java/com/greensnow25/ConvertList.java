@@ -1,6 +1,7 @@
 package com.greensnow25;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -21,9 +22,9 @@ public class ConvertList {
      */
     public List<Integer> toList(int[][] array) {
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i != array.length; i++) {
-            for (int j = 0; j <= array[i].length - 1; j++) {
-                list.add(array[i][j]);
+        for (int[] i : array) {
+            for (int j : i) {
+                list.add(j);
             }
         }
         return list;
@@ -37,20 +38,23 @@ public class ConvertList {
      * @return array.
      */
     public int[][] toArray(List<Integer> list, int rows) {
-
         int count = 0;
         int len = list.size() / rows;
         if (list.size() % rows != 0) {
             len += 1;
         }
         int[][] array = new int[rows][len];
-
+        Iterator<Integer> iterator = list.iterator();
         for (int i = 0; i != rows; i++) {
             for (int j = 0; j != len; j++) {
                 if (count >= list.size()) {
                     array[i][j] = 0;
                 } else {
-                    array[i][j] = list.get(count++);
+                    while (iterator.hasNext()) {
+                        array[i][j] = list.get(iterator.next()-1);
+                        break;
+                    }
+
                 }
             }
         }

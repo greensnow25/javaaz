@@ -9,6 +9,10 @@ package com.greensnow25;
  */
 public class User {
     /**
+     * id.
+     */
+    private int id;
+    /**
      * user name.
      */
     private String name;
@@ -24,13 +28,24 @@ public class User {
     /**
      * class constructor.
      *
+     * @param id   user.
      * @param name user.
      * @param age  user.
      * @param city user.
      */
-    public User(String name, int age, String city) {
+    public User(int id, String name, int age, String city) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.city = city;
+    }
+
+    /**
+     * get.
+     *
+     * @return id.
+     */
+    public int getId() {
+        return id;
     }
 }

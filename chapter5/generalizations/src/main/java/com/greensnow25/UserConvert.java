@@ -20,11 +20,11 @@ public class UserConvert {
      * @return map.
      */
     public HashMap<Integer, User> process(List<User> list) {
-        int count = 1;
+
         HashMap<Integer, User> map = new HashMap<>();
 
         for (User user : list) {
-            map.put(count++, user);
+            map.put(user.getId(), user);
                     }
         return map;
     }
