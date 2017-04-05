@@ -44,10 +44,6 @@ public class StartUITest {
      */
     private String commentTwo = "two";
     /**
-     * array of action.
-     */
-    private String[] action = new String[]{"0", "1", "2", "3", "4", "5", "6"};
-    /**
      * second name .
      */
     private String nameTwo = "two";
