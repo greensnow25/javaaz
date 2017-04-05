@@ -3,6 +3,9 @@ package com.greensnow25.start;
 import com.greensnow25.modules.Item;
 import com.greensnow25.modules.Task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * public class MenuTracker.
  * contein inner classes whos perfoms actions from then.
@@ -24,12 +27,12 @@ public class MenuTracker {
     /**
      * array of abjects.
      */
-    private UserAction[] userActions = new UserAction[7];
+    private List<BaseAction> userActions = new ArrayList<>();
 
     /**
      * array of keys from classes.
      */
-    private int[] range = new int[userActions.length];
+    private List<Integer> range = new ArrayList<>(userActions.size());
 
     /**
      * class constructor.
@@ -46,13 +49,13 @@ public class MenuTracker {
      * filling array objects with help inner clases.
      */
     public void filling() {
-        userActions[0] = this.new AddItem("Add the item.", 0);
-        userActions[1] = this.new FindById("Find item by id.", 1);
-        userActions[2] = this.new ShowAll("Show items .", 2);
-        userActions[3] = this.new UpdateItem("Edit item.", 3);
-        userActions[4] = this.new DeleteItem("Delete item.", 4);
-        userActions[5] = this.new FindByName("Find item by name: ", 5);
-        userActions[6] = this.new AddComment("Add the comment", 6);
+        userActions.add(this.new AddItem("Add the item.", 0));
+        userActions.add(this.new FindById("Find item by id.", 1));
+        userActions.add(this.new ShowAll("Show items .", 2));
+        userActions.add(this.new UpdateItem("Edit item.", 3));
+        userActions.add(this.new DeleteItem("Delete item.", 4));
+        userActions.add(this.new FindByName("Find item by name: ", 5));
+        userActions.add(this.new AddComment("Add the comment", 6));
     }
 
     /**
@@ -61,7 +64,7 @@ public class MenuTracker {
      * @param key action number.
      */
     public void select(int key) {
-        this.userActions[key].execute(input, tracker);
+        this.userActions.get(key).execute(input, tracker);
     }
 
     /**
@@ -69,9 +72,9 @@ public class MenuTracker {
      */
     public void showkeys() {
         int position = 0;
-        for (int index = 0; index < userActions.length; index++) {
-            if (userActions[index] != null) {
-                this.range[position++] = userActions[index].key();
+        for (int index = 0; index < userActions.size(); index++) {
+            if (userActions.get(index) != null) {
+                this.range.add(position++,userActions.get(index).key());
             }
         }
     }
@@ -286,7 +289,7 @@ public class MenuTracker {
      *
      * @return array of keys from classes.
      */
-    public int[] getRange() {
+    public List<Integer> getRange() {
         return range;
     }
 }

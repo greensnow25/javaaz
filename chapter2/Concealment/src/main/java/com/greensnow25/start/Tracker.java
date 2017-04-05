@@ -1,6 +1,9 @@
 package com.greensnow25.start;
 
 import com.greensnow25.modules.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -19,7 +22,7 @@ public class Tracker {
     /**
      * array of items.
      */
-    private Item[] items = new Item[sizeArray];
+    private List<Item> items = new ArrayList<>(this.sizeArray);
 
 
     /**
@@ -39,7 +42,7 @@ public class Tracker {
      */
     public Item add(Item item) {
         item.setId(this.generateId());
-        this.items[position++] = item;
+        this.items.add(position++,item);
         return item;
     }
 
@@ -74,10 +77,10 @@ public class Tracker {
      *
      * @return array of items.
      */
-    public Item[] getAll() {
-        Item[] result = new Item[this.position];
-        for (int index = 0; index != this.position; index++) {
-            result[index] = this.items[index];
+    public List<Item> getAll() {
+        List<Item> result = new ArrayList<>();
+        for (Item item: items) {
+            result.add(item);
         }
         return result;
     }
@@ -88,9 +91,9 @@ public class Tracker {
      * @param item you want to find.
      */
     public void update(Item item) {
-        for (int index = 0; index != this.items.length; index++) {
-            if (this.items[index] != null && this.items[index].getId().equals(item.getId())) {
-                this.items[index] = item;
+        for (int index = 0; index != this.items.size(); index++) {
+            if (this.items.get(index) != null && this.items.get(index).getId().equals(item.getId())) {
+                this.items.add(index,item);
                 break;
             }
         }
@@ -103,10 +106,9 @@ public class Tracker {
      */
     public void delete(Item item) {
 
-        for (int index = 0; index != this.items.length; index++) {
-            if (this.items[index] != null && this.items[index].getId().equals(item.getId())) {
-                this.items[index] = null;
-                System.arraycopy(items, index + 1, items, index, items.length - index - 1);
+        for (Item item1 : items) {
+            if (item1.getId().equals(item.getId())) {
+                items.remove(item);
                 position--;
                 break;
             }

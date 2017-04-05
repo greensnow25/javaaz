@@ -19,11 +19,4 @@ public class Task extends Item {
 
     }
 
-    /**
-     * default constructor of class.
-     */
-   public Task() {
-
-   }
-
 }

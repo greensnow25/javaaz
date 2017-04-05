@@ -1,5 +1,7 @@
 package com.greensnow25.start;
 
+import java.util.List;
+
 /**
  *  inteface Input we use to determine the input method.
  *  @author greensnow25.
@@ -20,6 +22,6 @@ public interface Input {
      * @param range of actions.
      * @return key.
      */
-    int ask(String question, int[] range);
+    int ask(String question, List<Integer> range);
 }
 

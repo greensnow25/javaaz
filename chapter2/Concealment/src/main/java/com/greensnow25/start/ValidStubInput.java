@@ -1,5 +1,7 @@
 package com.greensnow25.start;
 
+import java.util.List;
+
 /**
  * public class ValidStubInput.
  * Emulait user actions and throw exeption if
@@ -16,12 +18,12 @@ public class ValidStubInput extends StubInput {
      *
      * @param answers arrayf of Strings.
      */
-    public ValidStubInput(String[] answers) {
+    public ValidStubInput(List<String> answers) {
         super(answers);
     }
 
     @Override
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         int valid = -1;
         boolean invalid = true;
         do {

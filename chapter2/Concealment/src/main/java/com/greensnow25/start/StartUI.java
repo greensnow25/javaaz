@@ -67,7 +67,6 @@ public class StartUI {
     public static void main(String[] args) {
         Tracker tracker = new Tracker();
         Input input = new ValidateInput();
-        //new String[]{"9", "2", "1", "2", "y"});
         new StartUI(input, tracker).choise();
     }
 

@@ -1,5 +1,7 @@
 package com.greensnow25.start;
 
+import java.util.List;
+
 /**
  * public class ConsoleInput displays a menu to the console and.
  * emulated the user's actions.
@@ -12,7 +14,7 @@ public class StubInput implements Input {
     /**
      * araay of Strings in it we write our actions.
      */
-    private String[] answers;
+    private List<String> answers;
     /**
      * position we use for emulation input.
      */
@@ -23,7 +25,7 @@ public class StubInput implements Input {
      *
      * @param answers arrayf of Strings.
      */
-    public StubInput(String[] answers) {
+    public StubInput(List<String> answers) {
 
         this.answers = answers;
     }
@@ -34,12 +36,12 @@ public class StubInput implements Input {
      */
     @Override
     public String ask(String question) {
-        return answers[position++];
+        return answers.get(position++);
     }
 
     @Override
-    public int ask(String question, int[] range) {
-        int key = Integer.valueOf(answers[position++]);
+    public int ask(String question, List<Integer> range) {
+        int key = Integer.valueOf(answers.get(position++));
         boolean invalid = false;
         int valid = -1;
         for (int value : range) {

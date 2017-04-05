@@ -1,5 +1,7 @@
 package com.greensnow25.start;
 
+import java.util.List;
+
 /**
  * pubic class ValidateInput .
  *
@@ -17,7 +19,7 @@ public class ValidateInput extends ConsoleInput {
      * @return key of actions.
      */
 
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         boolean invalid = true;
         int valid = -1;
         do {

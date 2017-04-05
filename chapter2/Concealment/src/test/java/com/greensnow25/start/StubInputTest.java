@@ -2,6 +2,9 @@ package com.greensnow25.start;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * test class trow exeption.
  *
@@ -17,9 +20,14 @@ public class StubInputTest {
      */
     @Test(expected = MenuOutExeption.class)
     public void whenTrowExeptionThenExeptionReturn() throws MenuOutExeption {
-        StubInput stubInput = new StubInput(new String[]{"1"});
-        int[] range = new int[]{0, 2, 6};
 
+        List<String> answers = new ArrayList<>();
+        answers.add("1");
+        StubInput stubInput = new StubInput(answers);
+        List<Integer> range = new ArrayList<>();
+        range.add(0);
+        range.add(2);
+        range.add(6);
         stubInput.ask("1", range);
 
     }

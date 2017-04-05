@@ -5,6 +5,8 @@ import com.greensnow25.modules.Task;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -83,8 +85,8 @@ public class TrackerTest {
     public void whenAddItemsThenSwowLengthOfArray() {
         tracker.add(task);
         tracker.add(taskOne);
-        Item[] items = tracker.getAll();
-        int result = items.length;
+        List<Item> items = tracker.getAll();
+        int result = items.size();
         assertThat(result, is(2));
 
     }

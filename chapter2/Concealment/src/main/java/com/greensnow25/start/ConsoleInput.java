@@ -1,5 +1,6 @@
 package com.greensnow25.start;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -31,7 +32,7 @@ public class ConsoleInput implements Input {
     }
 
     @Override
-    public int ask(String question, int[] range) throws MenuOutExeption {
+    public int ask(String question, List<Integer> range) throws MenuOutExeption {
         int key = Integer.valueOf(this.ask(question));
         boolean exist = false;
 
