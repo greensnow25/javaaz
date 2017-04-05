@@ -20,33 +20,13 @@ public class ConvertList {
      * @return list.
      */
     public List<Integer> toList(int[][] array) {
-        int count = 0;
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i != array.length; i++) {
-            count++;
-            for (int j = 0; j <= array[count - 1].length - 1; j++) {
+            for (int j = 0; j <= array[i].length - 1; j++) {
                 list.add(array[i][j]);
             }
         }
         return list;
-    }
-
-    /**
-     * determine array lenght.
-     *
-     * @param list list.
-     * @return langht.
-     */
-    public int sizeArray(List<Integer> list) {
-        int row = 0;
-        int large = list.size();
-        for (int i = 1; ; i++) {
-            if (Math.pow(i, 2) >= large) {
-                row = i;
-                break;
-            }
-        }
-        return row;
     }
 
     /**
@@ -57,10 +37,16 @@ public class ConvertList {
      * @return array.
      */
     public int[][] toArray(List<Integer> list, int rows) {
-        int[][] array = new int[rows][rows];
+
         int count = 0;
+        int len = list.size() / rows;
+        if (list.size() % rows != 0) {
+            len += 1;
+        }
+        int[][] array = new int[rows][len];
+
         for (int i = 0; i != rows; i++) {
-            for (int j = 0; j != rows; j++) {
+            for (int j = 0; j != len; j++) {
                 if (count >= list.size()) {
                     array[i][j] = 0;
                 } else {
