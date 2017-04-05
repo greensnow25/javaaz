@@ -20,8 +20,8 @@ public class ConvertList {
      */
     public List<Integer> convert(List<int[]> list) {
         List<Integer> res = new ArrayList<>();
-        for (int[] array : list) {
-            for (int i : array) {
+        for (int[] array:list){
+            for(int i : array){
                 res.add(i);
             }
         }
