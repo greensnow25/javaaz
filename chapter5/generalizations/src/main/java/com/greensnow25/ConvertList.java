@@ -20,10 +20,9 @@ public class ConvertList {
      */
     public List<Integer> convert(List<int[]> list) {
         List<Integer> res = new ArrayList<>();
-        for (int i = 0; i != list.size(); i++) {
-            int[] qq = list.get(i);
-            for (int j = 0; j != qq.length; j++) {
-                res.add(qq[j]);
+        for (int[] array : list) {
+            for (int i : array) {
+                res.add(i);
             }
         }
         return res;

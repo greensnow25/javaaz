@@ -14,7 +14,7 @@ import java.text.ParseException;
  * @version 1.
  * @since 31.03.2017.
  */
-public class Recycling implements Place {
+public class Recycling extends PlaceDecorator {
     /**
      * food array.
      */
@@ -25,12 +25,13 @@ public class Recycling implements Place {
      */
     private int pos = 0;
 
-    /**
-     * default constructor.
-     */
-    public Recycling() {
-        this.foods = new Food[3];
+
+
+    public Recycling(Place place) {
+        super(place);
+        this.foods = new Food[2];
     }
+
 
     /**
      * add food too recycling.
@@ -44,7 +45,7 @@ public class Recycling implements Place {
 
     @Override
     public boolean canAdd(Food food) throws ParseException {
-        boolean res = false;
+        boolean res = super.canAdd(food);
         if (food instanceof RecycleFood) {
             RecycleFood qqq = (RecycleFood) food;
             int count = new CountingDays().qq(food);

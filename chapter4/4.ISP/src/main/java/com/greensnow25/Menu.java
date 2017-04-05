@@ -40,8 +40,13 @@ public class Menu {
 private String[] names = new String[]{"name 1.", "name 2.", "name 2.1.", "name 1.1.", "name1.1.1.","name1.1.1.1.", "name1.2.1."};
 
 
+public void showMenu(){
+
+}
+
 public String[] sortArray(String[] names){
     Pattern pattern = Pattern.compile("w");
+
 
 
     return names;
