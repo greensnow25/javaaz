@@ -18,13 +18,9 @@ public class UserSort {
      * @return sorted treeSet.
      */
     public Set<User> sort(List<User> list) {
-        Collections.sort(list);
         Set<User> treeSet = new TreeSet<>();
+        treeSet.addAll(list);
 
-        Iterator<User> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            treeSet.add(iterator.next());
-        }
         return treeSet;
 
     }
