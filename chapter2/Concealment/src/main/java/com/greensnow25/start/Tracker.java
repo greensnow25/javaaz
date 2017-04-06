@@ -24,11 +24,6 @@ public class Tracker {
      */
     private List<Item> items = new ArrayList<>(this.sizeArray);
 
-
-    /**
-     * position.
-     */
-    private int position = 0;
     /**
      * const.
      */
@@ -42,7 +37,7 @@ public class Tracker {
      */
     public Item add(Item item) {
         item.setId(this.generateId());
-        this.items.add(position++,item);
+        this.items.add(item);
         return item;
     }
 
@@ -78,10 +73,7 @@ public class Tracker {
      * @return array of items.
      */
     public List<Item> getAll() {
-        List<Item> result = new ArrayList<>();
-        for (Item item: items) {
-            result.add(item);
-        }
+        List<Item> result = this.items;
         return result;
     }
 
@@ -93,7 +85,7 @@ public class Tracker {
     public void update(Item item) {
         for (int index = 0; index != this.items.size(); index++) {
             if (this.items.get(index) != null && this.items.get(index).getId().equals(item.getId())) {
-                this.items.add(index,item);
+                this.items.add(index, item);
                 break;
             }
         }
@@ -109,7 +101,6 @@ public class Tracker {
         for (Item item1 : items) {
             if (item1.getId().equals(item.getId())) {
                 items.remove(item);
-                position--;
                 break;
             }
         }
@@ -133,9 +124,6 @@ public class Tracker {
         }
         return res;
     }
-
-
-
 
 
 }

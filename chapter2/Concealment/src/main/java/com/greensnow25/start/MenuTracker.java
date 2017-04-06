@@ -71,10 +71,9 @@ public class MenuTracker {
      * mehod write keys from classes in to array.
      */
     public void showkeys() {
-        int position = 0;
         for (int index = 0; index < userActions.size(); index++) {
             if (userActions.get(index) != null) {
-                this.range.add(position++,userActions.get(index).key());
+                this.range.add(userActions.get(index).key());
             }
         }
     }
