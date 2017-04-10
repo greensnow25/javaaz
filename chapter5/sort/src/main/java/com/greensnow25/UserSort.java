@@ -32,7 +32,12 @@ public class UserSort {
      * @return sorted list.
      */
     public List<User> sortHash(List<User> list) {
-        Collections.sort(list, new SortByHashCode());
+        Collections.sort(list, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o1.hashCode() - o2.hashCode();
+            }
+        });
         return list;
     }
 
@@ -43,7 +48,15 @@ public class UserSort {
      * @return sorted list.
      */
     public List<User> sortLanght(List<User> list) {
-        Collections.sort(list, new SortByLenght());
+        Collections.sort(list, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                int one = o1.getName().length();
+                int two = o2.getName().length();
+
+                return Integer.compare(one, two);
+            }
+        });
         return list;
     }
 
