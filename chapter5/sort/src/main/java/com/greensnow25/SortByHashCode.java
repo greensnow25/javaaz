@@ -3,19 +3,15 @@ package com.greensnow25;
 import java.util.Comparator;
 
 /**
- * public class SortByAgeSmallBig.
+ * public class SortByHashCode.
  *
  * @author greensnow25.
  * @version 1.
- * @since 06.04.2017.
+ * @since 10.04.2017.
  */
-public class SortByAgeSmallBig implements Comparator<User> {
-
-
+public class SortByHashCode implements Comparator<User> {
     @Override
     public int compare(User o1, User o2) {
-
-
-        return 0;
+        return o1.hashCode() - o2.hashCode();
     }
 }

@@ -93,4 +93,51 @@ public class UserSortTest {
         assertTrue(res);
     }
 
+    /**
+     * sort by hash code.
+     */
+    @Test
+    public void whenSortListThenSortByHashCode() {
+        boolean res = true;
+        int count = 0;
+        List<User> list = this.makeList();
+        List<User> users = this.userSort.sortHash(list);
+
+        Iterator<User> iterator = users.iterator();
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+            if (count <= user.hashCode()) {
+                count = user.hashCode();
+            } else {
+                res = false;
+                break;
+            }
+            System.out.println(user.hashCode() + "  " + user.getAge() + "  " + user.getName());
+        }
+        assertTrue(res);
+    }
+
+    /**
+     * sort by length name.
+     */
+    @Test
+    public void whenSortListThenSortByLenghtName() {
+        boolean res = true;
+        int count = 0;
+        List<User> list = this.makeList();
+        List<User> users = this.userSort.sortLanght(list);
+
+        Iterator<User> iterator = users.iterator();
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+            if (count <= user.getName().length()) {
+                count = user.getName().length();
+            } else {
+                res = false;
+                break;
+            }
+            System.out.println(user.getAge() + "  " + user.getName());
+        }
+        assertTrue(res);
+    }
 }

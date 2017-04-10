@@ -25,5 +25,26 @@ public class UserSort {
 
     }
 
+    /**
+     * sort list with help Comparator. Sort by hash code.
+     *
+     * @param list no sorted list.
+     * @return sorted list.
+     */
+    public List<User> sortHash(List<User> list) {
+        Collections.sort(list, new SortByHashCode());
+        return list;
+    }
+
+    /**
+     * sort list with help Comparator. Sort by length name.
+     *
+     * @param list no sorted list.
+     * @return sorted list.
+     */
+    public List<User> sortLanght(List<User> list) {
+        Collections.sort(list, new SortByLenght());
+        return list;
+    }
 
 }
