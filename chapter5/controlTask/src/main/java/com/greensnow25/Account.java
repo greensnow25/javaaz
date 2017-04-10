@@ -11,7 +11,7 @@ public class Account {
     /**
      * amount of money
      */
-    private int value;
+    private double value;
 
     /**
      * Account number.
@@ -20,27 +20,40 @@ public class Account {
 
     /**
      * class constructor.
+     *
      * @param requisites account number.
-     * @param value money.
+     * @param value      money.
      */
-    public Account(int requisites, int value){
+    public Account(int requisites, int value) {
         this.requisites = requisites;
         this.value = value;
     }
 
-    public int getValue() {
+    /**
+     * getValue.
+     *
+     * @return value.
+     */
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    /**
+     * getValue.
+     *
+     * @param value value.
+     */
+    public void setValue(double value) {
         this.value = value;
     }
 
+    /**
+     * get requisites.
+     *
+     * @return requisites.
+     */
     public int getRequisites() {
         return requisites;
     }
 
-    public void setRequisites(int requisites) {
-        this.requisites = requisites;
-    }
 }
