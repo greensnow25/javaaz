@@ -62,7 +62,7 @@ public class ArrayIteratorTest {
     @Test
     public void whenCallHasHextThenReturnTrue() {
         boolean res = false;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             iterator.next();
         }
         res = iterator.hasNext();
@@ -73,9 +73,9 @@ public class ArrayIteratorTest {
      * hasNext return false.
      */
     @Test
-    public void whenCallHasHextMoreSixThenReturnFalse() {
-        boolean res = false;
-        for (int i = 0; i < 6; i++) {
+    public void whenCallHasHextMoreFieThenReturnFalse() {
+        boolean res;
+        for (int i = 0; i < 5; i++) {
             iterator.next();
         }
         res = iterator.hasNext();

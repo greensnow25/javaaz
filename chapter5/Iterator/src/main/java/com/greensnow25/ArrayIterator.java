@@ -39,7 +39,7 @@ public class ArrayIterator implements Iterator {
     @Override
     public boolean hasNext() {
         boolean result = true;
-        if (i == array.length && j == array[i].length) {
+        if (i == array.length-1 && j == array[i].length-1) {
             result = false;
         }
         return result;
