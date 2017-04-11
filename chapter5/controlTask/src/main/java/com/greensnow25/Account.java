@@ -47,13 +47,21 @@ public class Account {
         this.value = value;
     }
 
-    /**
-     * get requisites.
-     *
-     * @return requisites.
-     */
-    public int getRequisites() {
-        return requisites;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Account)) return false;
+
+        Account account = (Account) o;
+
+        return requisites == account.requisites;
+
     }
 
+    @Override
+    public int hashCode() {
+        return requisites;
+    }
 }

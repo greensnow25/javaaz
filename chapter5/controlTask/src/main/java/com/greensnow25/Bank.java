@@ -40,7 +40,9 @@ public class Bank {
      * @param user user.
      */
     public void removeUser(User user) {
-        this.map.remove(user);
+        if (this.map.containsKey(user)) {
+            this.map.remove(user);
+        }
     }
 
     /**
@@ -50,8 +52,10 @@ public class Bank {
      * @param account account.
      */
     public void addAccountToUser(User user, Account account) {
-        List<Account> acc = this.map.get(user);
-        acc.add(account);
+        if (this.map.containsKey(user)) {
+            List<Account> acc = this.map.get(user);
+            acc.add(account);
+        }
     }
 
     /**
@@ -61,16 +65,9 @@ public class Bank {
      * @param account account.
      */
     public void deleteAccountFromUser(User user, Account account) {
-        List<Account> acc = this.map.get(user);
-        Iterator<Account> iterator = acc.iterator();
-        while (iterator.hasNext()) {
-            Account accountOne = iterator.next();
-            if (account.getRequisites() == accountOne.getRequisites()) {
-                iterator.remove();
-                break;
-            }
+        if (this.map.containsKey(user)) {
+            this.map.get(user).remove(account);
         }
-
     }
 
     /**
@@ -80,7 +77,10 @@ public class Bank {
      * @return List.
      */
     public List<Account> getUserAccounts(User user) {
-        List<Account> account = this.map.get(user);
+        List<Account> account = null;
+        if (this.map.containsKey(user)) {
+            account = this.map.get(user);
+        }
         return account;
     }
 
@@ -96,7 +96,6 @@ public class Bank {
      */
     public boolean transferMoney(User srcUser, Account srcAccount, User dstUser, Account dstAccount, double amount) {
         boolean res = false;
-
         boolean checkFirsUserAndMoneys = this.checkUsers(srcUser, srcAccount, amount);
         boolean checkSecondUser = this.checkUsers(dstUser, dstAccount, 0);
 //If user verification is successful, we translate.
@@ -118,15 +117,17 @@ public class Bank {
      */
     public boolean checkUsers(User user, Account account, double amount) {
         boolean result = false;
-        List<Account> accOne = this.map.get(user);
-        Iterator<Account> iteratorOne = accOne.iterator();
-        while (iteratorOne.hasNext()) {
-            Account accountOne = iteratorOne.next();
-            if (accountOne.getRequisites() == account.getRequisites()) {
-                if (accountOne.getValue() >= amount) {
-                    result = true;
-                } else if (amount == 0) {
-                    result = true;
+        if (this.map.containsKey(user)) {
+            List<Account> accOne = this.map.get(user);
+            Iterator<Account> iteratorOne = accOne.iterator();
+            while (iteratorOne.hasNext()) {
+                Account accountOne = iteratorOne.next();
+                if (accountOne.equals(account)) {
+                    if (accountOne.getValue() >= amount) {
+                        result = true;
+                    } else if (amount == 0) {
+                        result = true;
+                    }
                 }
             }
         }
@@ -141,16 +142,16 @@ public class Bank {
      * @param amount  amount.
      */
     public void transferMoney(User user, Account account, double amount) {
-
-        List<Account> accOne = this.map.get(user);
-        Iterator<Account> iteratorOne = accOne.iterator();
-        while (iteratorOne.hasNext()) {
-            Account accountOne = iteratorOne.next();
-            if (accountOne.getRequisites() == account.getRequisites()) {
-                accountOne.setValue(accountOne.getValue() + amount);
+        if (this.map.containsKey(user)) {
+            List<Account> accOne = this.map.get(user);
+            Iterator<Account> iteratorOne = accOne.iterator();
+            while (iteratorOne.hasNext()) {
+                Account accountOne = iteratorOne.next();
+                if (accountOne.equals(account)) {
+                    accountOne.setValue(accountOne.getValue() + amount);
+                }
             }
         }
-
     }
 
     /**

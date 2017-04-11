@@ -15,6 +15,7 @@
         <module>generalizations</module>
         <module>sort</module>
         <module>controlTask</module>
+        <module>Iterator</module>
 
     </modules>
 

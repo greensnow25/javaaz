@@ -85,7 +85,7 @@ public class BankTest {
         Iterator<Account> iterator = accounts.iterator();
         while (iterator.hasNext()) {
             Account account = iterator.next();
-            if (account.getRequisites() == two.getRequisites()) {
+            if (account.equals(two)) {
                 result = account.getValue();
             }
         }
