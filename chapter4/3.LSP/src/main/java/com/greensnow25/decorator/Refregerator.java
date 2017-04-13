@@ -1,11 +1,12 @@
 package com.greensnow25.decorator;
 
-import com.greensnow25.countingDays.CountingDays;
 import com.greensnow25.foods.Food;
-import com.greensnow25.foods.Fruit;
+import com.greensnow25.foodsCanReproduct.RecycleFood;
 import com.greensnow25.storage.Place;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * public class Refregerator.
@@ -15,36 +16,58 @@ import java.text.ParseException;
  * @since 31.03.2017.
  */
 public class Refregerator extends PlaceDecorator {
-    private Food[] foods;
-    int pos = 0;
-    Place place;
+    /**
+     * product storage.
+     */
+    private List<Food> list;
+    /**
+     * destination for products.
+     */
+    private Place place;
 
+    /**
+     * class constructor.
+     *
+     * @param place storage place.
+     */
     public Refregerator(Place place) {
         super(place);
         this.place = place;
-
-        this.foods = new Food[3];
+        this.list = new ArrayList<>();
     }
 
+    /**
+     * add food to foods list.
+     *
+     * @param food food.
+     */
     @Override
-    public void addFood(Food food) {
-        this.foods[pos++] = food;
+    public void addFood(RecycleFood food) {
+        list.add(food);
     }
 
+    /**
+     * method check, can you add fod to the storage.
+     *
+     * @param food food.
+     * @return if can may put food on the storage return true.
+     * @throws ParseException exception.
+     */
     @Override
-    public boolean canAdd(Food food) throws ParseException {
-        boolean res = false;
-        int count = new CountingDays().qq(food);
-        if (food instanceof Fruit && count < 25) {
-            res = true;
-        } else if (count < 25) {
-            place.addFood(food);
+    public boolean canAddR(RecycleFood food) throws ParseException {
+        boolean result = false;
+        if (place.canAdd(food) && food.isFreze()) {
+            result = true;
         }
-
-        return res;
+        return result;
     }
 
-    public Food[] getFoods() {
-        return foods;
+    /**
+     * get list.
+     *
+     * @return food list.
+     */
+    public List<Food> getList() {
+        return list;
     }
 }

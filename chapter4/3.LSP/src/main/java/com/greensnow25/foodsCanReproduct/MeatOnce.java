@@ -1,5 +1,7 @@
 package com.greensnow25.foodsCanReproduct;
 
+import com.greensnow25.foods.Food;
+
 /**
  * public class MeatOnce.
  *
@@ -16,9 +18,18 @@ public class MeatOnce extends RecycleFood {
      * @param expaireDate date.
      * @param prise       prise.
      * @param discount    discount.
-     * @param canRecycle  can recycle.
      */
-    public MeatOnce(String name, String createDate, String expaireDate, String prise, String discount, boolean canRecycle) {
-        super(name, createDate, expaireDate, prise, discount, canRecycle);
+    public MeatOnce(String name, String createDate, String expaireDate, String prise, String discount) {
+        super(name, createDate, expaireDate, prise, discount);
+    }
+
+    @Override
+    public boolean isReproduct() {
+        return true;
+    }
+
+    @Override
+    public boolean isFreze() {
+        return false;
     }
 }

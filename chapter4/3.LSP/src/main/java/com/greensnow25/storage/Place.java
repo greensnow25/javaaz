@@ -21,6 +21,7 @@ public interface Place {
 
     /**
      * can add food in this storage.
+     *
      * @param food food.
      * @return if can that true.
      */

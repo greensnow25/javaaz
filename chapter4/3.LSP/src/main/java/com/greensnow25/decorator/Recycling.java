@@ -1,11 +1,12 @@
 package com.greensnow25.decorator;
 
-import com.greensnow25.countingDays.CountingDays;
 import com.greensnow25.foods.Food;
 import com.greensnow25.foodsCanReproduct.RecycleFood;
 import com.greensnow25.storage.Place;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * public class Recycling.
@@ -16,48 +17,64 @@ import java.text.ParseException;
  */
 public class Recycling extends PlaceDecorator {
     /**
-     * food array.
+     * food list..
      */
-    private Food[] foods;
+    private List<Food> foods;
+    /**
+     * destination for products.
+     */
+    private Place place;
 
     /**
-     * position in tne array.
+     * class constructor.
+     *
+     * @param place storage place.
      */
-    private int pos = 0;
-
-
-
     public Recycling(Place place) {
         super(place);
-        this.foods = new Food[2];
+        this.place = place;
+        this.foods = new ArrayList<>();
     }
 
-
     /**
-     * add food too recycling.
+     * add food to foods list.
      *
      * @param food food.
      */
     @Override
-    public void addFood(Food food) {
-        foods[pos++] = food;
+    public void addFood(RecycleFood food) {
+        foods.add(food);
+
     }
+
+    /**
+     * method check, can you add fod to the storage.
+     *
+     * @param food food.
+     * @return if can may put food on the storage return true.
+     * @throws ParseException exception.
+     */
+    @Override
+    public boolean canAddR(RecycleFood food) throws ParseException {
+        boolean result = false;
+        if (place.canAdd(food) && food.isReproduct()) {
+            result = true;
+        }
+        return result;
+    }
+
+    /**
+     * get list.
+     *
+     * @return food list.
+     */
+    public List<Food> getFoods() {
+        return foods;
+    }
+
 
     @Override
     public boolean canAdd(Food food) throws ParseException {
-        boolean res = super.canAdd(food);
-        if (food instanceof RecycleFood) {
-            RecycleFood qqq = (RecycleFood) food;
-            int count = new CountingDays().qq(food);
-            if (count > 100 && qqq.isCanRecycle()) {
-                res = true;
-            }
-        }
-
-        return res;
-    }
-
-    public Food[] getFoods() {
-        return foods;
+        return false;
     }
 }

@@ -24,16 +24,7 @@ public class Warehouse implements Place {
     private Food[] food;
 
     public Warehouse() {
-        this.food = new Food[2];
-    }
-
-    public static void main(String[] args) {
-        Warehouse wr = new Warehouse();
-
-            wr.addFood(new Fish("bass", "27.03.2017", "25.04.2018", "120", null));
-            wr.addFood(new Fish("bass1", "27.03.2017", "25.04.2018", "120", null));
-            wr.addFood(new Fish("bass2", "27.03.2017", "25.04.2018", "120", null));
-
+        this.food = new Food[0];
     }
 
     /**
@@ -44,7 +35,7 @@ public class Warehouse implements Place {
     @Override
     public void addFood(Food food) {
         if (positin == this.food.length) {
-            System.arraycopy(this.food,0,this.food = new Food[this.food.length+1],0,positin);
+            System.arraycopy(this.food, 0, this.food = new Food[this.food.length + 1], 0, positin);
             this.food[positin++] = food;
         } else {
             this.food[positin++] = food;

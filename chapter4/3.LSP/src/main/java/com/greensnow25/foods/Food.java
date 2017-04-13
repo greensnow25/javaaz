@@ -7,7 +7,7 @@ package com.greensnow25.foods;
  * @version 1.
  * @since 27.03.2017.
  */
-public class Food {
+public abstract class Food {
     /**
      * food name.
      */

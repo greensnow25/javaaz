@@ -53,9 +53,9 @@ public class Shop implements Place {
     public boolean canAdd(Food food) throws ParseException {
         boolean res = false;
         int count = new CountingDays().qq(food);
-        if(count>25 && count<75){
-        res = true;
-        }else if(count>75&& count<100){
+        if (count > 25 && count < 75) {
+            res = true;
+        } else if (count > 75 && count < 100) {
             food.setDisscount("30%");
             res = true;
         }
