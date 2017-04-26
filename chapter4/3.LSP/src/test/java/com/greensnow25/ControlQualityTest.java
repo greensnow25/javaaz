@@ -47,7 +47,7 @@ public class ControlQualityTest {
     /**
      * class object.
      */
-    private ControlQualityOnce controlQuality;
+    private ControlQualityOnce controlQualityOnce;
     /**
      * food list.
      */
@@ -78,7 +78,7 @@ public class ControlQualityTest {
      */
     @Before
     public void beforeTheTest() {
-        this.controlQuality = new ControlQualityOnce();
+        this.controlQualityOnce = new ControlQualityOnce();
         this.shop = new Shop();
         this.trash = new Trash();
         this.warehouse = new Warehouse();
@@ -102,17 +102,17 @@ public class ControlQualityTest {
      * add storage.
      */
     public void addPlaces() {
-        controlQuality.addPlaces(this.shop);
-        controlQuality.addPlaces(this.trash);
-        controlQuality.addPlaces(this.warehouse);
+        controlQualityOnce.addPlaces(this.shop);
+        controlQualityOnce.addPlaces(this.trash);
+        controlQualityOnce.addPlaces(this.warehouse);
     }
 
     /**
      * add srtorage with decorator.
      */
     public void addPleceDecor() {
-        controlQuality.addPleceDecor(this.placeRef);
-        controlQuality.addPleceDecor(this.placeRec);
+        controlQualityOnce.addPleceDecor(this.placeRef);
+        controlQualityOnce.addPleceDecor(this.placeRec);
     }
 
     /**
@@ -122,7 +122,7 @@ public class ControlQualityTest {
         //warehause.
         foods.add(new Fish("bass", "27.03.2017", "25.04.2018", "120", null));
         //to shop with out discount.
-        foods.add(new Meat("chicken", "10.03.17", "20.04.17", "50", "30%"));
+        foods.add(new Meat("chicken", "10.03.17", "30.04.17", "50", "30%"));
         //to trash.
         foods.add(new Meat("cow", "30.02.17", "30.03.17", "80", null));
         //refregerator.
@@ -134,7 +134,7 @@ public class ControlQualityTest {
      */
     public void addRecycleFoods() {
         // to shop, with discount.
-        foodsR.add(new FruitOnce("apple", "10.01.17", "10.04.19", "15", null));
+        foodsR.add(new FruitOnce("apple", "10.01.17", "30.05.19", "15", null));
         //to recycle.
         foodsR.add(new MeatOnce("pig", "30.02.17", "30.03.17", "80", null));
     }
@@ -145,7 +145,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveChickenToShop() throws ParseException {
 
-        controlQuality.move(this.foods);
+        controlQualityOnce.move(this.foods);
 
         assertThat(shop.getFood()[0].getName(), is("chicken"));
     }
@@ -156,7 +156,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToShopWithDiscount() throws ParseException {
 
-        controlQuality.move(this.foods);
+        controlQualityOnce.move(this.foods);
 
         assertThat(shop.getFood()[0].getDisscount(), is("30%"));
     }
@@ -167,7 +167,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToWarehause() throws ParseException {
 
-        controlQuality.move(this.foods);
+        controlQualityOnce.move(this.foods);
 
         assertThat(warehouse.getFood()[0].getName(), is("bass"));
     }
@@ -178,7 +178,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationMoveAppleToTrash() throws ParseException {
 
-        controlQuality.move(this.foods);
+        controlQualityOnce.move(this.foods);
 
         assertThat(trash.getFood()[0].getName(), is("cow"));
     }
@@ -189,7 +189,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationThenMoveToRefregerator() throws ParseException {
 
-        controlQuality.moveOne(foodsR);
+        controlQualityOnce.moveOne(foodsR);
 
         assertThat(refregerator.getList().get(0).getName(), is("apple"));
     }
@@ -200,7 +200,7 @@ public class ControlQualityTest {
     @Test
     public void whenRunApplicationThenMovePIgToRecycle() throws ParseException {
 
-        controlQuality.moveOne(foodsR);
+        controlQualityOnce.moveOne(foodsR);
 
         assertThat(recycling.getFoods().get(0).getName(), is("pig"));
     }

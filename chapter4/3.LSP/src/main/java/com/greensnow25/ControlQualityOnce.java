@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.
  * @since 04.04.2017.
  */
-public class ControlQualityOnce {
+public class ControlQualityOnce extends ControlQuality {
 
     /**
      * array of new storage.
@@ -45,22 +45,33 @@ public class ControlQualityOnce {
         this.place.add(place);
     }
 
+    /**
+     * place decorator.
+     *
+     * @param place place.
+     */
     public void addPleceDecor(PlaceDecorator place) {
         this.placeDecor.add(place);
     }
 
-
+    /**
+     * move Foods.
+     *
+     * @param food food.
+     * @throws ParseException ex.
+     */
     public void move(List<Food> food) throws ParseException {
-        for (Place place : this.place) {
-            for (Food foods : food) {
-                if (place.canAdd(foods)) {
-                    place.addFood(foods);
-                }
-
-            }
-        }
+        Place[] places = place.toArray(new Place[place.size()]);
+        Food[] foods = food.toArray(new Food[food.size()]);
+        super.move(foods, places);
     }
 
+    /**
+     * move recycleFood.
+     *
+     * @param foods foods.
+     * @throws ParseException ex.
+     */
     public void moveOne(List<RecycleFood> foods) throws ParseException {
         for (PlaceDecorator place : this.placeDecor) {
             for (RecycleFood food : foods) {
@@ -72,9 +83,5 @@ public class ControlQualityOnce {
             }
 
         }
-    }
-
-    public List<PlaceDecorator> getPlaces() {
-        return placeDecor;
     }
 }
