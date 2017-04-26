@@ -21,7 +21,7 @@ public abstract class PlaceDecorator implements Place {
      * storage type.
      */
     private Place place;
-
+    private List<Food>list;
     /**
      * class constructor.
      *
@@ -66,5 +66,13 @@ public abstract class PlaceDecorator implements Place {
     public boolean canAdd(Food food) throws ParseException {
         System.out.println("You need override method");
         return false;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public List<Food> getList() {
+        return list;
     }
 }

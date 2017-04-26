@@ -202,6 +202,18 @@ public class ControlQualityTest {
 
         controlQualityOnce.moveOne(foodsR);
 
-        assertThat(recycling.getFoods().get(0).getName(), is("pig"));
+        assertThat(recycling.getList().get(0).getName(), is("pig"));
+    }
+
+    /**
+     * collect Foods from storages in to fod list.
+     * @throws ParseException
+     */
+    @Test
+    public void whenResortThenReturnListAndMoveHimThen() throws ParseException {
+        controlQualityOnce.moveOne(foodsR);
+        List<Food> list = controlQualityOnce.resort(controlQualityOnce.getPlaceDecor());
+        assertThat(list, is(foodsR));
+
     }
 }

@@ -68,7 +68,7 @@ public class Recycling extends PlaceDecorator {
      *
      * @return food list.
      */
-    public List<Food> getFoods() {
+    public List<Food> getList() {
         return foods;
     }
 

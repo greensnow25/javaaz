@@ -81,7 +81,17 @@ public class ControlQualityOnce extends ControlQuality {
                     }
                 }
             }
-
         }
+    }
+    public List<Food> resort(List<PlaceDecorator> list){
+        List<Food> newList = new ArrayList<>(10);
+        for(PlaceDecorator place: list){
+         newList.addAll(newList.size(),place.getList());
+        }
+        return newList;
+    }
+
+    public List<PlaceDecorator> getPlaceDecor() {
+        return placeDecor;
     }
 }
