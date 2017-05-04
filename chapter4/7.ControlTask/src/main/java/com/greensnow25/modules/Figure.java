@@ -11,6 +11,9 @@ public abstract class Figure {
     private int axisX;
     private int axisY;
 
+    public Figure() {
+    }
+
     public Figure(int axisX, int axisY) {
         this.axisX = axisX;
         this.axisY = axisY;
@@ -22,5 +25,13 @@ public abstract class Figure {
 
     public int getAxisY() {
         return axisY;
+    }
+
+    public void setAxisX(int axisX) {
+        this.axisX = axisX;
+    }
+
+    public void setAxisY(int axisY) {
+        this.axisY = axisY;
     }
 }

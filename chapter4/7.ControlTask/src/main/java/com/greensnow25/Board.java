@@ -28,8 +28,6 @@ public class Board {
         if (figures[figure.getAxisX()][figure.getAxisY()] == null) {
             figures[figure.getAxisX()][figure.getAxisY()] = figure;
             result = true;
-        } else {
-            System.out.println("Sorry, but the current field is already taken");
         }
         return result;
     }
@@ -38,14 +36,36 @@ public class Board {
         for (int i = 0; i != figures.length; i++) {
             for (int j = 0; j != figures[i].length; j++) {
                 if (figures[i][j] == null) {
-                    System.out.println("  ");
+                    System.out.print(" | ");
                 } else if (figures[i][j] instanceof Cross) {
-                    System.out.println(" X ");
+                    System.out.print(" X ");
                 } else if (figures[i][j] instanceof Naught) {
-                    System.out.println(" O ");
+                    System.out.print(" O ");
                 }
             }
             System.out.println(System.getProperty("line.separator"));
         }
+    }
+
+    public boolean noMoves() {
+        int count = 0;
+        for (int i = 0; i != this.figures.length; i++) {
+            for (int j = 0; j != this.figures[i].length; j++) {
+                if (this.figures[i][j] == null) {
+                    count++;
+                }
+            }
+        }
+
+        return count == 0 ? true : false;
+    }
+
+
+    public Figure[][] getFigures() {
+        return figures;
+    }
+
+    public void setFigures(Figure[][] figures) {
+        this.figures = figures;
     }
 }
