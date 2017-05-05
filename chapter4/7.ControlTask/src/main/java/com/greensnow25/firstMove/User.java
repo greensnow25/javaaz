@@ -15,10 +15,20 @@ import com.greensnow25.modules.Naught;
  */
 public class User extends Player {
 
-
+    /**
+     * constructor.
+     */
     public User() {
     }
 
+    /**
+     * user make move.
+     *
+     * @param board        field fjr the game.
+     * @param input        input system.
+     * @param choiceFigure figure played by player.
+     * @return
+     */
 
     @Override
     public Figure makeMove(Board board, Input input, int choiceFigure) {
@@ -28,15 +38,15 @@ public class User extends Player {
         int axisY = input.ask("enter axis Y: ");
         if (choiceFigure == 1) {
             figure = new Cross(axisX, axisY);
-          correctAdd = board.addFigure(figure);
+            correctAdd = board.addFigure(figure);
         } else if (choiceFigure == 2) {
             figure = new Naught(axisX, axisY);
             correctAdd = board.addFigure(figure);
 
         }
-        if(!correctAdd){
+        if (!correctAdd) {
             System.out.println("Sorry, but the current field is already taken. Try again.");
-            this.makeMove(board,input,choiceFigure);
+            this.makeMove(board, input, choiceFigure);
         }
 
         return figure;

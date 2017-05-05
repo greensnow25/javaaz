@@ -20,7 +20,10 @@ import java.util.List;
  * @since 27.04.2017.
  */
 public class Game {
-
+    /**
+     * run game.
+     * @param args args.
+     */
     public static void main(String[] args) {
         Game game = new Game(new UserInput());
         game.run();
@@ -37,8 +40,10 @@ public class Game {
     /**
      * Collection of rules for the game.
      */
-    private List<RuleOne> rules;
-
+    private List<Rule> rules;
+    /**
+     *
+     */
     private final int conditionForWin;
 
     /**
@@ -68,7 +73,7 @@ public class Game {
 
         Player playerOne = new User();
         Player playerTwo = new Computer(new GenerateCompMove());
-       // who starts the game.
+        // who starts the game.
         if (playerOne.moveFirst(beginTheGame) instanceof Computer) {
             playerOne = playerTwo;
             playerTwo = new User();
@@ -98,14 +103,15 @@ public class Game {
 
     /**
      * method check conditions for victory.
-     * @param board field for the game.
-     * @param lastFigure current figure.
+     *
+     * @param board           field for the game.
+     * @param lastFigure      current figure.
      * @param conditionForWin Necessary sequence of figures necessary for victory.
-     * @return
+     * @return result.
      */
     public boolean checWin(Board board, Figure lastFigure, int conditionForWin) {
         boolean result = false;
-        for (RuleOne rule : this.rules) {
+        for (Rule rule : this.rules) {
             if (rule.check(board, lastFigure, conditionForWin)) {
                 result = true;
                 break;
@@ -115,9 +121,9 @@ public class Game {
     }
 
     /**
-     *
-     * @param board field for the game.
-     * @param fig current figure.
+     * check.
+     * @param board  field for the game.
+     * @param fig    current figure.
      * @param player Player who makes a move.
      * @return boolean.
      */

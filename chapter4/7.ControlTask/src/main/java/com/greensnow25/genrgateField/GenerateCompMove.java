@@ -1,7 +1,6 @@
 package com.greensnow25.genrgateField;
 
 import com.greensnow25.Board;
-import com.greensnow25.modules.Cross;
 import com.greensnow25.modules.Figure;
 
 /**
@@ -12,11 +11,17 @@ import com.greensnow25.modules.Figure;
  * @since 29.04.2017.
  */
 public class GenerateCompMove {
+    /**
+     * generate computer move.
+     *
+     * @param board  board.
+     * @param figure figure.
+     * @return true if done.
+     */
     public boolean generate(Board board, Figure figure) {
         boolean canAdd = false;
 
         do {
-
             int length = board.getFigures().length;
             int axisX = (int) (Math.random() * length);
             int axisY = (int) (Math.random() * length);

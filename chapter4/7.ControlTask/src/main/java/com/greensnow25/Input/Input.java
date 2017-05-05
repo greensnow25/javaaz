@@ -8,5 +8,10 @@ package com.greensnow25.Input;
  * @since 27.04.2017.
  */
 public interface Input {
+    /**
+     * input system.
+     * @param question print question.
+     * @return answer.
+     */
     int ask(String question);
 }
