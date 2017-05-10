@@ -30,8 +30,8 @@ public class EvenNumbersTest {
     @Before
     public void beforeTheTest() {
         this.array = new int[10];
-        for (int i = 0; i != array.length; i++) {
-            array[i] = i;
+        for (int i = 1; i != array.length; i++) {
+            array[i - 1] = i;
         }
         this.evenNumbers = new EvenNumbers(array);
 
@@ -41,7 +41,7 @@ public class EvenNumbersTest {
      * next test.
      */
     @Test
-    public void whenTwoCallNextThenReturnFour () {
+    public void whenTwoCallNextThenReturnFour() {
         int result = 0;
         evenNumbers.next();
         result = (Integer) evenNumbers.next();
@@ -54,13 +54,25 @@ public class EvenNumbersTest {
      * next test.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void whenFiveCallNextThenReturnExeption () {
-        for (int i =0; i<7;i++){
+    public void whenFiveCallNextThenReturnExeption() {
+        for (int i = 0; i < 7; i++) {
+            evenNumbers.next();
+        }
+    }
+
+    /**
+     * test hasNext.
+     */
+    @Test
+    public void whenCallHasNextThenReturnTrue() {
+        for (int i = 0; i < 5; i++) {
             evenNumbers.next();
         }
 
+        boolean res = evenNumbers.hasNext();
 
-
-
+        assertFalse(res);
     }
+
+
 }
