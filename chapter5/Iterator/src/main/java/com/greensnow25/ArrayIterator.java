@@ -16,7 +16,7 @@ public class ArrayIterator implements Iterator {
     /**
      * array.
      */
-    private int[][] array;
+    private final int[][] array;
     /**
      * row.
      */
@@ -38,24 +38,19 @@ public class ArrayIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        boolean result = true;
-        if (i == array.length-1 && j == array[i].length-1) {
-            result = false;
-        }
-        return result;
+
+        return i < array.length;
     }
 
     @Override
     public Object next() {
         Integer tmp = this.array[i][j];
-        if (i < array.length) {
-            if (j == array.length) {
-                j = 0;
-                i++;
-            } else {
-                tmp = array[i][j];
-                j++;
-            }
+        if (j == array[i].length - 1) {
+            j = 0;
+            i++;
+        } else {
+            tmp = array[i][j];
+            j++;
         }
         return tmp;
     }

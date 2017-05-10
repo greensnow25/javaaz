@@ -73,9 +73,9 @@ public class ArrayIteratorTest {
      * hasNext return false.
      */
     @Test
-    public void whenCallHasHextMoreFieThenReturnFalse() {
+    public void whenCallHasNextMoreFiveThenReturnFalse() {
         boolean res;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             iterator.next();
         }
         res = iterator.hasNext();
