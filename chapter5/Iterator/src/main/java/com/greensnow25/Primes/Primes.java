@@ -38,24 +38,8 @@ public class Primes implements Iterator {
      */
     @Override
     public boolean hasNext() {
+        return this.check() > 0;
 
-        for (int i = position; i != arrray.length; i++) {
-            if (arrray[i] == 2 || arrray[i] == 3) {
-                return true;
-            } else if (arrray[i] % 2 != 0) {
-                List<Integer> divi = this.createDividers(arrray[i]);
-                int size = 0;
-                for (Integer j : divi) {
-                    if (arrray[i] % j != 0) {
-                        size++;
-                    }
-                    if (size == divi.size()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -65,29 +49,9 @@ public class Primes implements Iterator {
      */
     @Override
     public Object next() {
-        Integer res = 0;
-        for (int i = position; ; i++) {
-            if (arrray[i] == 2 || arrray[i] == 3) {
-                res = arrray[i];
-                position = ++i;
-                return res;
-            } else if (arrray[i] % 2 != 0) {
-                List<Integer> divi = this.createDividers(arrray[i]);
-                int size = 0;
-                for (Integer j : divi) {
-                    if (arrray[i] % j != 0) {
-                        size++;
-                    }
-                    if (size == divi.size()) {
-                        res = arrray[i];
-                        position = ++i;
-                        return res;
+        this.check();
+        return (Integer) arrray[position++];
 
-                    }
-                }
-            }
-
-        }
     }
 
     /**
@@ -105,5 +69,33 @@ public class Primes implements Iterator {
             }
         }
         return dividers;
+    }
+
+
+    /**
+     * method move pointer on position.
+     *
+     * @return position in array.
+     */
+    public int check() {
+        for (int i = position; i != arrray.length; i++) {
+            if (arrray[i] == 2 || arrray[i] == 3) {
+                position = i;
+                return 1;
+            } else if (arrray[i] % 2 != 0) {
+                List<Integer> divi = this.createDividers(arrray[i]);
+                int size = 0;
+                for (Integer j : divi) {
+                    if (arrray[i] % j != 0) {
+                        size++;
+                    }
+                    if (size == divi.size()) {
+                        position = i;
+                        return 1;
+                    }
+                }
+            }
+        }
+        return -1;
     }
 }
