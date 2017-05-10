@@ -39,14 +39,7 @@ public class EvenNumbers implements Iterator {
     @Override
     public boolean hasNext() {
 
-        boolean result = false;
-        for (int i = value; i != array.length; i++) {
-            if (array[i] % 2 == 0) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+        return this.check() > 0;
     }
 
     /**
@@ -56,15 +49,24 @@ public class EvenNumbers implements Iterator {
      */
     @Override
     public Object next() {
-        Integer res = 0;
-        for (int i = value; ; i++) {
+        this.check();
+        return (Integer) array[value++];
+    }
+
+    /**
+     * method move pointer on position.
+     *
+     * @return position in array.
+     */
+    public int check() {
+        int res = -1;
+        for (int i = value; i != array.length; i++) {
             if (array[i] % 2 == 0) {
-                res = array[i];
-                value = ++i;
+                value = i;
+                res = 1;
                 break;
             }
         }
         return res;
     }
-
 }
