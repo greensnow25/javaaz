@@ -21,7 +21,6 @@ public class ConvertIterator implements Iterator<Integer> {
      */
     private Iterator<Integer> current;
 
-
     /**
      * constructor.
      *
@@ -31,6 +30,12 @@ public class ConvertIterator implements Iterator<Integer> {
         this.iterator = iterator;
     }
 
+    /**
+     * method return current iterator.
+     *
+     * @param iterator iterator.
+     * @return
+     */
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> iterator) {
         if (current != null && current.hasNext()) {
             return this;
@@ -42,6 +47,11 @@ public class ConvertIterator implements Iterator<Integer> {
         return this;
     }
 
+    /**
+     * method check next vavue.
+     *
+     * @return true, if iterator has next value.
+     */
     @Override
     public boolean hasNext() {
         if (current != null && current.hasNext()) {
@@ -50,6 +60,11 @@ public class ConvertIterator implements Iterator<Integer> {
         return false;
     }
 
+    /**
+     * the method returns the current value and moves the carriage one value to the right.
+     *
+     * @return current value and move carriage.
+     */
     @Override
     public Integer next() {
         Integer number = 0;

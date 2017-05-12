@@ -19,23 +19,25 @@ import static org.junit.Assert.assertTrue;
  */
 public class ConvertIteratorTest {
 
-    Iterator<Integer> itOne;
-    Iterator<Integer> itTwo;
-    Iterator<Integer> itThree;
-
+    /**
+     * class object.
+     */
     ConvertIterator convertIterator;
 
-    ArrayList<Iterator<Integer>> iterators;
-    Iterator<Iterator<Integer>> iterator;
 
+    /**
+     * method run before each the test.
+     */
     @Before
-
     public void beforeTheTest() {
-        this.itOne = Arrays.asList(1, 2, 3).iterator();
-        this.itTwo = Arrays.asList(4, 5).iterator();
-        this.itThree = Arrays.asList(6, 7, 8, 9).iterator();
-
-        this.iterator = Arrays.asList(itOne, itTwo, itThree).iterator();
+        Iterator<Integer> itOne = Arrays.asList(1, 2, 3).iterator();
+        Iterator<Integer> itTwo = Arrays.asList(4, 5).iterator();
+        Iterator<Integer> itThree = Arrays.asList(6, 7, 8, 9).iterator();
+        ArrayList<Iterator<Integer>> iterators = new ArrayList<>();
+        iterators.add(itOne);
+        iterators.add(itTwo);
+        iterators.add(itThree);
+        Iterator<Iterator<Integer>> iterator = iterators.iterator();
         this.convertIterator = new ConvertIterator(iterator);
     }
 
@@ -71,7 +73,7 @@ public class ConvertIteratorTest {
     public void whenTenCallsNextThenReturnException() {
 
         for (int i = 0; i != 10; i++) {
-             this.convertIterator.next();
+            this.convertIterator.next();
         }
     }
 
@@ -79,7 +81,7 @@ public class ConvertIteratorTest {
      * test hasNext. when call hasNext return true.
      */
     @Test
-    public void whenThreeCallsNextAndHasNextThenReturnTrue(){
+    public void whenThreeCallsNextAndHasNextThenReturnTrue() {
         boolean res = false;
         for (int i = 0; i != 2; i++) {
             this.convertIterator.next();
@@ -92,7 +94,7 @@ public class ConvertIteratorTest {
      * test hasNext. when call hasNext return false.
      */
     @Test
-    public void whenNineCallsNextAndHasNextThenReturnFalse(){
+    public void whenNineCallsNextAndHasNextThenReturnFalse() {
         boolean res = false;
         for (int i = 0; i != 9; i++) {
             this.convertIterator.next();
