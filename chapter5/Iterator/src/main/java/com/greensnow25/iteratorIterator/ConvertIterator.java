@@ -37,18 +37,12 @@ public class ConvertIterator implements Iterator<Integer> {
      * @return
      */
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> iterator) {
-        if (current != null && current.hasNext()) {
-            return this;
-        }
-        while (iterator.hasNext()) {
-            current = iterator.next();
-            break;
-        }
+
         return this;
     }
 
     /**
-     * method check next vavue.
+     * method check next value.
      *
      * @return true, if iterator has next value.
      */
@@ -71,10 +65,13 @@ public class ConvertIterator implements Iterator<Integer> {
         this.convert(this.iterator);
         if (current != null && current.hasNext()) {
             number = current.next();
+            return number;
 
         } else {
-            throw new ArrayIndexOutOfBoundsException("Out");
+            current = iterator.next();
+            this.next();
         }
+
         return number;
     }
 }

@@ -69,7 +69,7 @@ public class ConvertIteratorTest {
      * test next. when ten calls next then return Exception..
      */
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = NoSuchElementException.class)
     public void whenTenCallsNextThenReturnException() {
 
         for (int i = 0; i != 10; i++) {

@@ -16,6 +16,8 @@
         <module>sort</module>
         <module>controlTask</module>
         <module>Iterator</module>
+        <module>generic</module>
+        <module>list</module>
 
     </modules>
 
