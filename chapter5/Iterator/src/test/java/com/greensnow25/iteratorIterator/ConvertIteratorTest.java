@@ -22,7 +22,7 @@ public class ConvertIteratorTest {
     /**
      * class object.
      */
-    ConvertIterator convertIterator;
+     private ConvertIterator convertIterator;
 
 
     /**
