@@ -4,13 +4,13 @@ import java.util.*;
 import java.util.LinkedList;
 
 /**
- * public class Item.
+ * public class Node.
  *
  * @author greensnow25.
  * @version 1.
  * @since 16.05.2017.
  */
-public class Item<T> {
+public class Node<T> {
     /**
      * current element.
      */
@@ -18,11 +18,11 @@ public class Item<T> {
     /**
      * next element.
      */
-    private Item<T> next;
+    private Node<T> next;
     /**
      * previous element.
      */
-    private Item<T> previous;
+    private Node<T> previous;
 
     /**
      * constructor.
@@ -30,7 +30,7 @@ public class Item<T> {
      * @param element current element.
      * @param next next element.
      */
-    public Item(Item<T> prev, T element, Item<T> next) {
+    public Node(Node<T> prev, T element, Node<T> next) {
         this.current = element;
         this.next = next;
         this.previous = prev;
@@ -40,11 +40,11 @@ public class Item<T> {
         return current;
     }
 
-    public Item<T> getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
-    public Item<T> getPrevious() {
+    public Node<T> getPrevious() {
         return previous;
     }
 
@@ -52,11 +52,11 @@ public class Item<T> {
         this.current = current;
     }
 
-    public void setNext(Item<T> next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 
-    public void setPrevious(Item<T> previous) {
+    public void setPrevious(Node<T> previous) {
         this.previous = previous;
     }
 }

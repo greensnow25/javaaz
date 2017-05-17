@@ -18,10 +18,6 @@ public class SimpleArray<T> implements ArrayListContainer<T> {
      * position in the array.
      */
     private int index = 0;
-    /**
-     * iterator position.
-     */
-    private int position = 0;
 
     /**
      * constructor.
@@ -68,6 +64,11 @@ public class SimpleArray<T> implements ArrayListContainer<T> {
     @Override
     public Iterator iterator() {
         return new Iterator() {
+            /**
+             * iterator position.
+             */
+            private int position = 0;
+
             /**
              * method checks availability next element in the array.
              * @return true if current position less of array length.

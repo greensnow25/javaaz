@@ -16,68 +16,109 @@ public class SimpleLinkedList<T> implements ArrayListContainer<T> {
     /**
      * the first element of a given sequence.
      */
-    private Item<T> firstItem;
+    private Node<T> firstItem;
     /**
      * the last element of a given sequence.
      */
-    private Item<T> lastItem;
-
-
+    private Node<T> lastItem;
+    /**
+     * size of list.
+     */
     int size = 0;
 
+    /**
+     * constructor.
+     * <p>
+     * initialize the fields where the first and last item refer to each other.
+     */
     public SimpleLinkedList() {
-
-        this.lastItem = new Item<T>(this.firstItem, null, null);
-        this.firstItem = new Item<T>(null, null, this.lastItem);
+        this.lastItem = new Node<T>(this.firstItem, null, null);
+        this.firstItem = new Node<T>(null, null, this.lastItem);
     }
 
+    /**
+     * add node to the list.
+     *
+     * @param t node.
+     */
     @Override
     public void add(T t) {
-        Item<T> prev = lastItem;
+        Node<T> prev = lastItem;
         prev.setCurrent(t);
-        lastItem = new Item<T>(prev, null, null);
+        lastItem = new Node<T>(prev, null, null);
         prev.setNext(this.lastItem);
-      //  lastItem.setNext(firstItem);
         size++;
     }
 
+    /**
+     * get node by index.
+     *
+     * @param index in the container.
+     * @return node.
+     */
     @Override
     public T get(int index) {
-        Item<T> item = firstItem.getNext();
+        Node<T> node = firstItem.getNext();
         for (int i = 0; i != index; i++) {
-            item = this.returnCurrentItem(item);
+            node = this.returnCurrentItem(node);
         }
-        return item.getCurrent();
+        return node.getCurrent();
     }
 
-    private Item<T> returnCurrentItem(Item<T> item) {
-        return item.getNext();
+    /**
+     * Method returns a reference to the next element.
+     *
+     * @param node curent node.
+     * @return node.
+     */
+    private Node<T> returnCurrentItem(Node<T> node) {
+        return node.getNext();
 
     }
 
+    /**
+     * method return new object of Iterator.
+     *
+     * @return Iterator.
+     */
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int index = 0;
-            private Item<T> item;
+            private Node<T> node;
 
+            /**
+             * check, does next element exist.
+             *
+             * @return if exist , return true.
+             */
             @Override
             public boolean hasNext() {
                 return index < size;
             }
 
+            /**
+             * return next node from a given sequence,.
+             * if no more nodes return NPE.
+             *
+             * @return node.
+             */
             @Override
             public T next() {
+                Node<T> tmp = null;
                 if (index == 0) {
-                    item = firstItem.getNext();
+                    tmp = this.node;
+                    tmp = firstItem.getNext();
+                    this.node = tmp;
                     index++;
-                    return item.getCurrent();
+                    return tmp.getCurrent();
                 }
-                for (int i = index++; i != size; i++) {
-                    item = returnCurrentItem(item);
+                for (int i = index++; i < size; i++) {
+                    node = returnCurrentItem(node);
+                    tmp = this.node;
                     break;
                 }
-                return item.getCurrent();
+                return tmp.getCurrent();
             }
         };
     }

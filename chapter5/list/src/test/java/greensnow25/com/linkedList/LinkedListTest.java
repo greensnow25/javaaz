@@ -29,11 +29,12 @@ public class LinkedListTest {
     public void whenCallNextFourTimesThenReturnFour(){
         w= new SimpleLinkedList<String>();
         w.add("1111");
-        w.add("dwe");
-        w.add("dw");
-        w.add("12");
+        w.add("2222");
+        w.add("333");
+        w.add("444");
+        w.add("555");
         Iterator iterator = w.iterator();
-        for (int i = 0; i <7;i++){
+        for (int i = 0; i <15;i++){
             System.out.println(iterator.next());
         }
     }
