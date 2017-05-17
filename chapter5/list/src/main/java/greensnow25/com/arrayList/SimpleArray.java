@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @version 1.
  * @since 16.05.2017.
  */
-public class SimpleArray<T> implements ArrayListContainer<T> {
+public class SimpleArray<T> implements SimpleContainer<T> {
     /**
      * array of obgects.
      */

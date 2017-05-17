@@ -1,6 +1,6 @@
 package greensnow25.com.linkedList;
 
-import greensnow25.com.arrayList.ArrayListContainer;
+import greensnow25.com.arrayList.SimpleContainer;
 
 import java.util.Iterator;
 
@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @version 1.
  * @since 16.05.2017.
  */
-public class SimpleLinkedList<T> implements ArrayListContainer<T> {
+public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<T> {
 
     /**
      * the first element of a given sequence.
@@ -77,6 +77,38 @@ public class SimpleLinkedList<T> implements ArrayListContainer<T> {
     }
 
     /**
+     * remove first element.
+     *
+     * @return removable item.
+     */
+    @Override
+    public T removeFirst() {
+        Node<T> node = firstItem.getNext();
+        T res = node.getCurrent();
+        this.firstItem = node;
+        node.setCurrent(null);
+        node.setPrevious(this.lastItem);
+        this.size--;
+        return res;
+    }
+
+    /**
+     * remove last element.
+     *
+     * @return removable item.
+     */
+    @Override
+    public T removeLast() {
+        Node<T> node = lastItem.getPrevious();
+        T res = node.getCurrent();
+        lastItem = node;
+        node.setCurrent(null);
+        node.setNext(firstItem);
+        this.size--;
+        return res;
+    }
+
+    /**
      * method return new object of Iterator.
      *
      * @return Iterator.
@@ -121,5 +153,29 @@ public class SimpleLinkedList<T> implements ArrayListContainer<T> {
                 return tmp.getCurrent();
             }
         };
+    }
+
+    public Node<T> getFirstItem() {
+        return firstItem;
+    }
+
+    public Node<T> getLastItem() {
+        return lastItem;
+    }
+
+    public void setFirstItem(Node<T> firstItem) {
+        this.firstItem = firstItem;
+    }
+
+    public void setLastItem(Node<T> lastItem) {
+        this.lastItem = lastItem;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

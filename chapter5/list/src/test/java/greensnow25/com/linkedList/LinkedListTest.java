@@ -101,4 +101,43 @@ public class LinkedListTest {
             iterator.next();
         }
     }
+
+    /**
+     * test removeLast. when remove then return last element
+     */
+    @Test
+    public void whenRemoveLastThenReturnFour() {
+        assertThat(simpleLinkedList.removeLast(), is("4444"));
+    }
+
+    /**
+     * test removeLast. when remove then will change last element.
+     */
+    @Test
+    public void whenRemoveLastThenLastElementIsThree() {
+
+        simpleLinkedList.removeLast();
+
+        assertThat(simpleLinkedList.getLastItem().getPrevious().getCurrent(), is("3333"));
+    }
+
+
+    /**
+     * test removeFirst. when remove then return last element
+     */
+    @Test
+    public void whenRemoveFirstThenReturnOne() {
+        assertThat(simpleLinkedList.removeFirst(), is("1111"));
+    }
+
+    /**
+     * test removeLast. when remove then will change last element.
+     */
+    @Test
+    public void whenRemoveFirstThenLastElementIsTwo() {
+
+        simpleLinkedList.removeFirst();
+
+        assertThat(simpleLinkedList.getFirstItem().getNext().getCurrent(), is("2222"));
+    }
 }

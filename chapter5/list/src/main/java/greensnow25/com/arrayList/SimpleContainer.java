@@ -7,7 +7,7 @@ package greensnow25.com.arrayList;
  * @version 1.
  * @since 16.05.2017.
  */
-public interface ArrayListContainer<E> extends Iterable<E> {
+public interface SimpleContainer<E> extends Iterable<E> {
     /**
      * add item.
      *
