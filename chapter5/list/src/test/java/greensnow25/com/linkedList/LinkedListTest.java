@@ -1,10 +1,12 @@
 package greensnow25.com.linkedList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
 import java.util.LinkedList;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 /**
@@ -15,35 +17,88 @@ import static org.junit.Assert.*;
  * @since 16.05.2017.
  */
 public class LinkedListTest {
-    SimpleLinkedList<String> w;
-    @Test
-    public void add(){
-       w= new SimpleLinkedList<String>();
-        w.add("dw");
-        w.add("dwe");
+    /**
+     * class object.
+     */
+    private SimpleLinkedList<String> simpleLinkedList;
 
-        System.out.println(w.get(1));
+    /**
+     * before the test.
+     */
+    @Before
+    public void beforeTheTest() {
+        this.simpleLinkedList = new SimpleLinkedList<>();
+        this.simpleLinkedList.add("1111");
+        this.simpleLinkedList.add("2222");
+        this.simpleLinkedList.add("3333");
+        this.simpleLinkedList.add("4444");
     }
 
+    /**
+     * test add and get at one time.
+     * add nodes to the list, then call method
+     * get by index and return node from a given position.
+     */
     @Test
-    public void whenCallNextFourTimesThenReturnFour(){
-        w= new SimpleLinkedList<String>();
-        w.add("1111");
-        w.add("2222");
-        w.add("333");
-        w.add("444");
-        w.add("555");
-        Iterator iterator = w.iterator();
-        for (int i = 0; i <15;i++){
-            System.out.println(iterator.next());
+    public void whenAddNodesThenReturnNode() {
+
+        String res = this.simpleLinkedList.get(2);
+
+        assertThat(res, is("3333"));
+    }
+
+    /**
+     * test Iterator next. when Call four times return "4444".
+     */
+    @Test
+    public void whenCallNextFourTimesThenReturnFour() {
+
+        String res = null;
+        Iterator iterator = this.simpleLinkedList.iterator();
+
+        for (int i = 0; i < 4; i++) {
+            res = (String) iterator.next();
+        }
+
+        assertThat(res, is("4444"));
+    }
+
+    /**
+     * test hasNext() when cakk method t the beginning of the list.
+     * then return true.
+     */
+    @Test
+    public void whenCallHasNextAtTheBeginningThenReturnTrue() {
+
+        boolean res = false;
+        Iterator iterator = this.simpleLinkedList.iterator();
+
+        assertTrue(iterator.hasNext());
+    }
+
+    /**
+     * test hasNext(), when pointerbe on the end of list.
+     * then return false.
+     */
+    @Test
+    public void whenPointerLocateOnTheEndOfListThenReturnFalse() {
+        Iterator iterator = this.simpleLinkedList.iterator();
+
+        for (int i = 0; i < 4; i++) {
+            iterator.next();
+        }
+        assertFalse(iterator.hasNext());
+    }
+
+    /**
+     * when out of list range then throw NPE.
+     */
+    @Test(expected = NullPointerException.class)
+    public void whenOutOfListThenThrowNPE() {
+        Iterator iterator = this.simpleLinkedList.iterator();
+
+        for (int i = 0; i < 5; i++) {
+            iterator.next();
         }
     }
-
-
-
-
-
-
-
-
 }
