@@ -18,6 +18,7 @@
         <module>Iterator</module>
         <module>generic</module>
         <module>list</module>
+        <module>set</module>
 
     </modules>
 
