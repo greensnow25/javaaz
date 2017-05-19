@@ -64,12 +64,11 @@ public class SimpleSet<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                for (int i = this.pos; ; i++) {
                     if (objects[pos] == null) {
                         throw new NoSuchElementException("no elements");
                     }
                     return (T) objects[this.pos++];
-                }
+
             }
         };
     }
