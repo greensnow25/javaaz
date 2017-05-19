@@ -34,6 +34,8 @@ public class SimpleSetTest {
 
     /**
      * test method add(), if add success, then position on SimpleSet class equals 2.
+     */ /**
+     * test method add(), if add success, then position on SimpleSet class equals 2.
      */
     @Test
     public void whenAddOriginalElementThenItAddToTheArray() {
@@ -57,7 +59,7 @@ public class SimpleSetTest {
      * test hasNext(),when iterator call hasNext() and after pointer position be available elements then return true.
      */
     @Test
-    public void whenIteratorCallHasNextAndAfterPointerPositionBeAvailibleElementsThenReturnTrue() {
+    public void whenIteratorCallHasNextAndAfterPointerPositionBeAvailableElementsThenReturnTrue() {
         Iterator iterator = set.iterator();
         iterator.next();
         assertTrue(iterator.hasNext());
