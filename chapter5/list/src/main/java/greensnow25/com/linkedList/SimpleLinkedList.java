@@ -32,8 +32,8 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
      * initialize the fields where the first and last item refer to each other.
      */
     public SimpleLinkedList() {
-        this.lastItem = new Node<T>(this.firstItem, null, null);
-        this.firstItem = new Node<T>(null, null, this.lastItem);
+//        this.lastItem = this.new Node<T>(this.firstItem, null, null);
+//        this.firstItem = new Node<T>(null, null, this.lastItem);
     }
 
     /**
@@ -43,10 +43,14 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
      */
     @Override
     public void add(T t) {
-        Node<T> prev = lastItem;
-        prev.setCurrent(t);
-        lastItem = new Node<T>(prev, null, null);
-        prev.setNext(this.lastItem);
+        Node<T> prev = this.lastItem;
+        Node<T> newNode = new Node<>(prev, t, null);
+        lastItem = newNode;
+        if (prev == null) {
+            this.firstItem = newNode;
+        } else {
+            prev.next = newNode;
+        }
         size++;
     }
 
@@ -58,11 +62,11 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
      */
     @Override
     public T get(int index) {
-        Node<T> node = firstItem.getNext();
+        Node<T> node = firstItem;
         for (int i = 0; i != index; i++) {
             node = this.returnCurrentItem(node);
         }
-        return node.getCurrent();
+        return node.current;
     }
 
     /**
@@ -72,7 +76,7 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
      * @return node.
      */
     private Node<T> returnCurrentItem(Node<T> node) {
-        return node.getNext();
+        return node.next;
 
     }
 
@@ -83,11 +87,10 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
      */
     @Override
     public T removeFirst() {
-        Node<T> node = firstItem.getNext();
-        T res = node.getCurrent();
-        this.firstItem = node;
-        node.setCurrent(null);
-        node.setPrevious(this.lastItem);
+        Node<T> node = firstItem.next;
+        T res = firstItem.current;
+        firstItem = node;
+        node.previous = this.lastItem;
         this.size--;
         return res;
     }
@@ -99,11 +102,10 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
      */
     @Override
     public T removeLast() {
-        Node<T> node = lastItem.getPrevious();
-        T res = node.getCurrent();
+        Node<T> node = this.lastItem.previous;
+        T res = lastItem.current;
         lastItem = node;
-        node.setCurrent(null);
-        node.setNext(firstItem);
+        node.next = this.firstItem;
         this.size--;
         return res;
     }
@@ -117,7 +119,7 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int index = 0;
-            private Node<T> node;
+            private Node<T> node = null;
 
             /**
              * check, does next element exist.
@@ -137,23 +139,18 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
              */
             @Override
             public T next() {
-                Node<T> tmp = null;
-                if (index == 0) {
-                    tmp = this.node;
-                    tmp = firstItem.getNext();
-                    this.node = tmp;
-                    index++;
-                    return tmp.getCurrent();
+
+                if(index == 0){
+                    node = firstItem;
+                }else {
+                    node = node.next;
                 }
-                for (int i = index++; i < size; i++) {
-                    node = returnCurrentItem(node);
-                    tmp = this.node;
-                    break;
-                }
-                return tmp.getCurrent();
+                index++;
+                return node.current;
             }
         };
     }
+
 
     public Node<T> getFirstItem() {
         return firstItem;
@@ -163,14 +160,6 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
         return lastItem;
     }
 
-    public void setFirstItem(Node<T> firstItem) {
-        this.firstItem = firstItem;
-    }
-
-    public void setLastItem(Node<T> lastItem) {
-        this.lastItem = lastItem;
-    }
-
     public int getSize() {
         return size;
     }
@@ -178,4 +167,42 @@ public class SimpleLinkedList<T> implements SimpleContainer<T>, RemoveFirstLast<
     public void setSize(int size) {
         this.size = size;
     }
+
+
+    /**
+     * public class Node.
+     *
+     * @author greensnow25.
+     * @version 1.
+     * @since 16.05.2017.
+     */
+    private class Node<T> {
+        /**
+         * current element.
+         */
+        private T current;
+        /**
+         * next element.
+         */
+        private Node<T> next;
+        /**
+         * previous element.
+         */
+        private Node<T> previous;
+
+        /**
+         * constructor.
+         *
+         * @param prev    previous element.
+         * @param element current element.
+         * @param next    next element.
+         */
+        public Node(Node<T> prev, T element, Node<T> next) {
+            this.current = element;
+            this.next = next;
+            this.previous = prev;
+        }
+
+    }
+
 }

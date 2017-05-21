@@ -64,7 +64,7 @@ public class LinkedListTest {
     }
 
     /**
-     * test hasNext() when cakk method t the beginning of the list.
+     * test hasNext() when call method t the beginning of the list.
      * then return true.
      */
     @Test
@@ -118,7 +118,7 @@ public class LinkedListTest {
 
         simpleLinkedList.removeLast();
 
-        assertThat(simpleLinkedList.getLastItem().getPrevious().getCurrent(), is("3333"));
+        assertThat( simpleLinkedList.get(simpleLinkedList.getSize()-1), is("3333"));
     }
 
 
@@ -131,13 +131,13 @@ public class LinkedListTest {
     }
 
     /**
-     * test removeLast. when remove then will change last element.
+     * test removeFirst. when remove then will change first element.
      */
     @Test
-    public void whenRemoveFirstThenLastElementIsTwo() {
+    public void whenRemoveFirstThenFirstElementIsTwo() {
 
         simpleLinkedList.removeFirst();
 
-        assertThat(simpleLinkedList.getFirstItem().getNext().getCurrent(), is("2222"));
+        assertThat( simpleLinkedList.get(0), is("2222"));
     }
 }
