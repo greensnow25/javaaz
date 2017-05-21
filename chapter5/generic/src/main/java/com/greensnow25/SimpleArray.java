@@ -13,17 +13,17 @@ import java.util.function.DoubleSupplier;
  * @version 1.
  * @since 14.05.2017.
  */
-public class SimpleArray<T> {
+public class SimpleArray<E> {
     /**
      * list.
      */
-    private List<T> list;
+    private List<E> list;
 
     /**
      * constructor.
      */
     public SimpleArray() {
-        this.list = new ArrayList<T>(10);
+        this.list = new ArrayList<E>();
     }
 
     /**
@@ -31,8 +31,8 @@ public class SimpleArray<T> {
      *
      * @param value some value.
      */
-    public void add(T value) {
-        list.add(value);
+    public void add(E value) {
+        list.add((E)value);
     }
 
     /**
@@ -40,7 +40,7 @@ public class SimpleArray<T> {
      *
      * @param element element.
      */
-    public void delete(T element) {
+    public void delete(E element) {
         list.remove(this.search(element));
     }
 
@@ -50,10 +50,10 @@ public class SimpleArray<T> {
      * @param element    old element.
      * @param newElement new element.
      */
-    public void update(T element, T newElement) {
-        Iterator<T> it = list.iterator();
+    public void update(E element, E newElement) {
+        Iterator<E> it = list.iterator();
         while (it.hasNext()) {
-            T item = it.next();
+            E item = it.next();
             if (item.equals(element)) {
                 list.set(list.indexOf(item), newElement);
             }
@@ -66,8 +66,8 @@ public class SimpleArray<T> {
      * @param element witch you need to find.
      * @return found element.
      */
-    public T search(T element) {
-        for (T value : this.list) {
+    public E search(E element) {
+        for (E value : this.list) {
             if (value.equals(element)) {
                 return value;
             }
@@ -81,8 +81,8 @@ public class SimpleArray<T> {
      * @param index index.
      * @return Base object.
      */
-    public T get(int index) {
-        return list.get(index);
+    public E get(int index) {
+        return (E)list.get(index);
     }
 
     /**
@@ -90,7 +90,7 @@ public class SimpleArray<T> {
      *
      * @return list.
      */
-    public List<T> getList() {
+    public List getList() {
         return list;
     }
 }

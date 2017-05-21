@@ -19,13 +19,18 @@ public class UserStoreTest {
      */
     private UserStore userStore;
 
+  //  private SimpleArray<User> list;
+
+    private User userOne ;
     /**
      * before the test.
      */
     @Before
     public void beforeTheTest() {
+      //  this.list = new SimpleArray();
         this.userStore = new UserStore();
-        userStore.add(new User(12));
+        this.userOne = new User (12);
+        userStore.add(userOne);
     }
 
     /**
@@ -34,9 +39,9 @@ public class UserStoreTest {
     @Test
     public void whenAddNewItemToTheUserStoreThenReturnSameItem() {
 
-        int res = userStore.getList().get(0).getId();
+        User res = userStore.getList().get(0);
 
-        assertThat(res, is(12));
+        assertThat(res, is(this.userOne));
     }
 
     /**
@@ -46,7 +51,7 @@ public class UserStoreTest {
 
     public void whenRemoveUserFromTheStorageThenListSizeDecreasesByOne() {
 
-        userStore.remove(userStore.getList().getList().get(0));
+        userStore.remove(userOne);
 
         assertThat(userStore.getList().getList().size(), is(0));
     }
@@ -58,23 +63,9 @@ public class UserStoreTest {
 
     public void whenUpdateItemThenRenurnNewItem() {
 
-        userStore.update(userStore.getList().get(0), new User(15));
+        userStore.update((User) userStore.getList().get(0), new User(15));
 
-        assertThat(userStore.getList().get(0).getId(), is(15));
+        assertThat(userStore.getList().getList().get(0), is(15));
     }
-
-    /**
-     * When we add an extraneous class, it does not add and when the element is returned it returns null.
-     */
-    @Test
-
-    public void whenAddRoleThenRoleDoNotAdd() {
-        Role role = new Role(1);
-        userStore.add(role);
-
-        assertNull(userStore.getList().search(role));
-
-    }
-
 
 }
