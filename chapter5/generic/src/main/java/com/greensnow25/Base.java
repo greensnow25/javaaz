@@ -7,7 +7,7 @@ package com.greensnow25;
  * @version 1.
  * @since 15.05.2017.
  */
-public abstract class Base {
+public class Base {
     /**
      * id.
      */

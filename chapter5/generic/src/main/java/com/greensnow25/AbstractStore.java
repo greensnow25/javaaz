@@ -12,7 +12,7 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
     /**
      * class object.
      */
-    private SimpleArray<T> list =this.list = new SimpleArray<T>();
+    private SimpleArray<T> list = new SimpleArray<T>();
 
     public AbstractStore() {
 
@@ -25,7 +25,7 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      */
     @Override
     public void add(T value) {
-        this.list.add((T) value);
+        this.list.add( value);
     }
 
     /**
@@ -36,7 +36,7 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      */
     @Override
     public void update(T oldValue, T newValue) {
-        this.update(oldValue, newValue);
+        this.list.update(oldValue, newValue);
     }
 
     /**

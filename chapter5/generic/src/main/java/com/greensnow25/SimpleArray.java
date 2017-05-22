@@ -23,7 +23,7 @@ public class SimpleArray<E> {
      * constructor.
      */
     public SimpleArray() {
-        this.list = new ArrayList<E>();
+        this.list = new ArrayList();
     }
 
     /**
@@ -69,7 +69,7 @@ public class SimpleArray<E> {
     public E search(E element) {
         for (E value : this.list) {
             if (value.equals(element)) {
-                return value;
+                return(E) value;
             }
         }
         return null;
