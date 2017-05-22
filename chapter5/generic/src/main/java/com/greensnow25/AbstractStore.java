@@ -1,5 +1,7 @@
 package com.greensnow25;
 
+import java.util.List;
+
 /**
  * public class AbstractStore.
  *
@@ -54,8 +56,8 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      *
      * @return object.
      */
-    public SimpleArray getList() {
-        return list;
+    public SimpleArray<T> getList() {
+        return (SimpleArray<T>) list;
     }
 }
 

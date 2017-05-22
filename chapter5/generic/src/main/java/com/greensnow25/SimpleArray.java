@@ -32,7 +32,7 @@ public class SimpleArray<E> {
      * @param value some value.
      */
     public void add(E value) {
-        list.add((E)value);
+        list.add((E) value);
     }
 
     /**
@@ -69,7 +69,7 @@ public class SimpleArray<E> {
     public E search(E element) {
         for (E value : this.list) {
             if (value.equals(element)) {
-                return(E) value;
+                return (E) value;
             }
         }
         return null;
@@ -82,7 +82,7 @@ public class SimpleArray<E> {
      * @return Base object.
      */
     public E get(int index) {
-        return (E)list.get(index);
+        return (E) list.get(index);
     }
 
     /**

@@ -38,9 +38,9 @@ public class UserStoreTest {
     @Test
     public void whenAddNewItemToTheUserStoreThenReturnSameItem() {
 
-        //User res = userStore.getList().get(0);
+        User res = userStore.getList().get(0);
 
-        assertThat(userStore.getList().get(0), is(this.userOne));
+        assertThat(res, is(this.userOne));
     }
 
     /**
@@ -62,9 +62,9 @@ public class UserStoreTest {
 
     public void whenUpdateItemThenRenurnNewItem() {
 
-       userStore.update((User) userStore.getList().get(0), new User(15));
+       userStore.update(userStore.getList().get(0), new User(15));
 
-        assertThat((User)userStore.getList().getList().get(0), is(15));
+        assertThat(userStore.getList().get(0).getId(), is(15));
     }
 
 }

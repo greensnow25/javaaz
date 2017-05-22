@@ -82,11 +82,8 @@ public class CycleList<T> implements Iterable<T> {
 
             }
             size = 0;
-        }
-    } catch(
-    NullPointerException ex)
 
-    {
+    } catch(NullPointerException ex){
         ex.printStackTrace();
     }
 
