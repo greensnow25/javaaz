@@ -35,8 +35,13 @@ public class SimpleQueue<T> implements greensnow25.com.queue.Queue<T> {
      */
     @Override
     public T element() throws NoSuchElementException {
-        T element = this.linkedList.getFirstItem().getNext().getCurrent();
-        if (element == null) throw new NoSuchElementException("empty");
+        T element = null;
+        try {
+            element = this.linkedList.get(0);
+
+        } catch (NullPointerException ex) {
+            throw new NoSuchElementException("empty");
+        }
         return element;
     }
 
@@ -62,7 +67,10 @@ public class SimpleQueue<T> implements greensnow25.com.queue.Queue<T> {
      */
     @Override
     public T peek() {
-        return this.linkedList.getFirstItem().getNext().getCurrent();
+        if (linkedList.getFirstItem() == null) {
+            return null;
+        }
+        return this.linkedList.get(0);
     }
 
     /**
@@ -87,9 +95,8 @@ public class SimpleQueue<T> implements greensnow25.com.queue.Queue<T> {
      */
     @Override
     public T remove() throws NoSuchElementException {
-        T object = this.linkedList.getFirstItem().getNext().getCurrent();
-        if (object == null) throw new NoSuchElementException("empty");
-
+        if (linkedList.getFirstItem() == null) throw new NoSuchElementException("empty");
+        T object = this.linkedList.get(0);
         return object;
     }
 }

@@ -90,7 +90,7 @@ public class SimpleQueueTest {
         queue.poll();
         queue.poll();
 
-        assertThat(linkedList.getFirstItem().getNext().getCurrent(), is("3333"));
+        assertThat(linkedList.get(0), is("3333"));
     }
 
     /**

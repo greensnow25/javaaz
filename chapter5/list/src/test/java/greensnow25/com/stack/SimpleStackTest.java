@@ -1,6 +1,5 @@
 package greensnow25.com.stack;
 
-import greensnow25.com.linkedList.Node;
 import greensnow25.com.linkedList.SimpleLinkedList;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,9 +46,7 @@ public class SimpleStackTest {
     @Test
     public void whenAddElementsInTheEndOfTheListThenReturnLastElementWithOutNoRemove() {
 
-        Node res = stack.peek();
-
-        assertThat(res.getCurrent(), is("5555"));
+        assertThat(stack.peek(), is("5555"));
     }
 
     /**
@@ -60,7 +57,7 @@ public class SimpleStackTest {
 
         stack.peek();
 
-        assertThat(link.getLastItem().getPrevious().getCurrent(), is("5555"));
+        assertThat(link.get(link.getSize()-1), is("5555"));
     }
 
     /**
@@ -82,7 +79,7 @@ public class SimpleStackTest {
         for (int i = 0; i < 3; i++) {
             stack.pop();
         }
-        assertThat(link.getLastItem().getPrevious().getCurrent(), is("2222"));
+        assertThat(link.get(link.getSize()-1), is("2222"));
     }
 
     /**

@@ -1,6 +1,5 @@
 package greensnow25.com.stack;
 
-import greensnow25.com.linkedList.Node;
 import greensnow25.com.linkedList.SimpleLinkedList;
 
 /**
@@ -23,8 +22,8 @@ public class SimpleStack<T> {
      *
      * @return top element.
      */
-    public Node peek() {
-        return this.linkedList.getLastItem().getPrevious();
+    public T peek() {
+        return (T) this.linkedList.get(linkedList.getSize() - 1);
     }
 
     /**
@@ -56,13 +55,12 @@ public class SimpleStack<T> {
      */
     public int search(T object) {
         int moves = 0;
-        Node<T> node = returnCurrent(linkedList.getLastItem());
-        for (int i = 0; i != linkedList.getSize(); i++) {
-            node = returnCurrent(node);
-            moves++;
-            if (node != null && node.getCurrent().equals(object)) {
+        for (int i = linkedList.getSize()-1; i >=0; i--) {
+            T value = (T) linkedList.get(i);
+            if (value != null && value.equals(object)) {
                 return moves;
             }
+            moves++;
         }
         return -1;
 
