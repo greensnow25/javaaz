@@ -1,4 +1,4 @@
-package greensnow25.com.SimpleHashSet;
+package greensnow25.com.simpleHashSet;
 
 /**
  * public class ISimpleHashSet.

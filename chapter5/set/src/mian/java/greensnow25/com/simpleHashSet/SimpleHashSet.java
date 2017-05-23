@@ -1,9 +1,9 @@
-package greensnow25.com.SimpleHashSet;
+package greensnow25.com.simpleHashSet;
 
 import java.util.*;
 
 /**
- * public class SimpleHashSet.
+ * public class simpleHashSet.
  *
  * @author greensnow25.
  * @version 1.
