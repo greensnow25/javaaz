@@ -42,7 +42,7 @@ public class Recycling extends PlaceDecorator {
      * @param food food.
      */
     @Override
-    public void addFood(RecycleFood food) {
+    public void addFood(Food food) {
         foods.add(food);
 
     }
@@ -75,6 +75,14 @@ public class Recycling extends PlaceDecorator {
 
     @Override
     public boolean canAdd(Food food) throws ParseException {
-        return false;
+        boolean result = false;
+        if (food instanceof RecycleFood) {
+            RecycleFood recycleFood = (RecycleFood) food;
+            if (recycleFood.isReproduct()) {
+                result = true;
+            }
+            result = true;
+        }
+        return result;
     }
 }

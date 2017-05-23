@@ -36,7 +36,7 @@ public abstract class PlaceDecorator implements Place {
      *
      * @param food food.
      */
-    public abstract void addFood(RecycleFood food);
+  //  public abstract void addFood(RecycleFood food);
 
     /**
      * method check, can you add fod to the storage.

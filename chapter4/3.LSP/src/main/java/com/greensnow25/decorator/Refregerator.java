@@ -41,10 +41,10 @@ public class Refregerator extends PlaceDecorator {
      *
      * @param food food.
      */
-    @Override
-    public void addFood(RecycleFood food) {
-        list.add(food);
-    }
+ //   @Override
+ //   public void addFood(RecycleFood food) {
+  //      list.add(food);
+  //  }
 
     /**
      * method check, can you add fod to the storage.
@@ -69,5 +69,13 @@ public class Refregerator extends PlaceDecorator {
      */
     public List<Food> getList() {
         return list;
+    }
+
+    @Override
+    public boolean canAdd(Food food) throws ParseException {
+       if(food instanceof RecycleFood){
+           return this.canAddR((RecycleFood) food);
+       }
+        return false;
     }
 }

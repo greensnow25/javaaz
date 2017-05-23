@@ -66,8 +66,6 @@ public class SimpleStack<T> {
 
     }
 
-    private Node<T> returnCurrent(Node<T> object) {
-        return object.getPrevious();
-    }
+
 
 }

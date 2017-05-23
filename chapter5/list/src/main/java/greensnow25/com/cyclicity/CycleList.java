@@ -24,13 +24,6 @@ public class CycleList<T> implements Iterable<T> {
     private int size = 0;
 
     /**
-     * constructor.
-     */
-    public CycleList() {
-
-    }
-
-    /**
      * Adds a value to a list that does not have a cycle.
      *
      * @param value value to add.
@@ -39,7 +32,7 @@ public class CycleList<T> implements Iterable<T> {
         Node<T> tmp = lastNode;
         Node<T> node = new Node<>(value, null);
         lastNode = node;
-        if (firstNode == null) {
+        if (tmp == null) {
             firstNode = node;
         } else {
             tmp.next = null;
@@ -56,12 +49,12 @@ public class CycleList<T> implements Iterable<T> {
      */
     public void addToListWithCycle(T value) {
         Node<T> tmp = lastNode;
-        Node<T> node = new Node<>(value, null);
+        Node<T> node = new Node<>(value, firstNode);
         lastNode = node;
-        if (firstNode == null) {
+        if (tmp == null) {
             firstNode = node;
         } else {
-            tmp.next = null;
+            tmp.next = node;
         }
         size++;
     }
@@ -73,25 +66,28 @@ public class CycleList<T> implements Iterable<T> {
      * @return true, if have cycle.
      */
     public boolean hasCycle(Node<T> first) {
-        Iterator itOne =this.iterator();
+        Iterator itOne = this.iterator();
         Iterator itTwo = this.iterator();
         try {
-            while (true){
+            while (true) {
                 T one = (T) itOne.next();
-                T two = itTwo.
-
+                itTwo.next();
+                T two = (T) itTwo.next();
+                if (one.equals(two)) {
+                    return true;
+                }
             }
-            size = 0;
-
-    } catch(NullPointerException ex){
-        ex.printStackTrace();
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int pointer = 0;
-            private int myPointer = 0;
+            Node tmp = null;
 
             @Override
             public boolean hasNext() {
@@ -100,7 +96,6 @@ public class CycleList<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                Node tmp = null;
                 if (pointer == 0) {
                     tmp = firstNode;
                 } else {
@@ -109,27 +104,8 @@ public class CycleList<T> implements Iterable<T> {
                 pointer++;
                 return (T) tmp.value;
             }
-
-            public T myNext() {
-                Node tmp = null;
-                if (myPointer == 0) {
-                    tmp = firstNode;
-                    myPointer++;
-                }
-                for (int i = myPointer; ; i++) {
-                    tmp = tmp.next;
-                    myPointer++;
-                    if (tmp == null) {
-                        tmp = firstNode.next;
-                        myPointer = 0;
-                    } else if (myPointer % 2 == 0) {
-                        return (T) tmp.value;
-                    }
-                }
-            }
         };
     }
-
 
     /**
      * public class Node.
@@ -158,6 +134,15 @@ public class CycleList<T> implements Iterable<T> {
             this.value = value;
             this.next = next;
         }
+    }
 
+    /**
+     * getNode.
+     *
+     * @return first node.
+     */
+    public Node<T> getFirstNode() {
+        return firstNode;
     }
 }
+
