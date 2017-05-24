@@ -98,7 +98,7 @@ public class SimpleHashSet<E> implements ISimpleHashSet<E> {
             @Override
             public E next() {
                 for (; ; this.group++) {
-                    for (; pointer != set[group].length - 1; this.pointer++) {
+                    for (; pointer != set[group].length ; this.pointer++) {
                         if (set[group][pointer] != null) return (E) set[group][pointer++];
                     }
                     pointer = 0;
