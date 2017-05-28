@@ -113,7 +113,7 @@ public class SimpleMapTest {
         Iterator iterator = map.iterator();
         iterator.next();
 
-        assertThat(iterator.next(), is("test"));
+        assertThat(iterator.next(), is("test1"));
     }
 
     /**

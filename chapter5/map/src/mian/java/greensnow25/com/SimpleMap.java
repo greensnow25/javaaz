@@ -17,7 +17,7 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
     /**
      * handbook.
      */
-    private Object[][] map;
+    private Object[] map;
     /**
      * size of handbook.
      */
@@ -30,7 +30,7 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
      */
     public SimpleMap(int size) {
         this.size = size;
-        this.map = new Object[this.size][2];
+        this.map = new Object[this.size];
     }
 
     /**
@@ -43,8 +43,8 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
     @Override
     public boolean insert(K key, V value) {
         int bucket = this.giveMeBucket(key);
-        if (this.map[bucket][0] == null) {
-            this.map[bucket][0] = value;
+        if (this.map[bucket] == null) {
+            this.map[bucket] = value;
             return true;
         }
         return false;
@@ -60,7 +60,7 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
     public V get(K key) {
         int bucket = this.giveMeBucket(key);
 
-        return (V) map[bucket][0];
+        return (V) map[bucket];
     }
 
     /**
@@ -72,8 +72,8 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
     @Override
     public boolean delete(K key) {
         int bucket = this.giveMeBucket(key);
-        if (this.map[bucket][0] == null) return false;
-        this.map[bucket][0] = null;
+        if (this.map[bucket] == null) return false;
+        this.map[bucket] = null;
         return true;
     }
 
@@ -93,8 +93,8 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
              */
             @Override
             public boolean hasNext() {
-                for (int i = position + 1; i != map.length; i++) {
-                    if (map[i][0] != null) {
+                for (int i = position ; i != map.length; i++) {
+                    if (map[i] != null) {
                         return true;
                     }
                 }
@@ -110,7 +110,7 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
             public V next() {
                 while (true) {
                     if (map[position++] != null) {
-                        return (V) map[position - 1][0];
+                        return (V) map[position - 1];
                     } else if (this.position > size) {
                         throw new ArrayIndexOutOfBoundsException("out of range");
                     }
@@ -129,7 +129,7 @@ public class SimpleMap<K extends User, V> implements ISimpleMap<K, V> {
         return Math.abs(key.hashCode() % this.size);
     }
 
-    public Object[][] getMap() {
+    public Object[] getMap() {
         return map;
     }
 
