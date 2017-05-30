@@ -44,6 +44,31 @@ public class SimpleTree<E extends Comparable> implements ISimpleTree<E> {
     }
 
     /**
+     * The method checks if the tree is binary.
+     *
+     * @return true, if binary, else false.
+     */
+    @Override
+    public boolean isBinary() {
+
+        return this.recSearchBinary(this.root);
+    }
+
+    /**
+     * Recursive passage through the elements of a tree
+     * @param eNode node.
+     * @return result.
+     */
+    private boolean recSearchBinary(Node<E> eNode) {
+        boolean res = true;
+        if (eNode.children.size() > 2) return false;
+        for (Node node : eNode.children) {
+            res = this.recSearchBinary(node);
+        }
+        return res;
+    }
+
+    /**
      * method return object iterator, for the passage through the tree.
      *
      * @return Iterator.
@@ -151,7 +176,8 @@ public class SimpleTree<E extends Comparable> implements ISimpleTree<E> {
 
     /**
      * The method looks for the specified element.
-     * @param node current node.
+     *
+     * @param node   current node.
      * @param parent the object to be found.
      * @return founded object.
      */

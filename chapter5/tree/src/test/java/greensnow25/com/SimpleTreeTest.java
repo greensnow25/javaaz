@@ -29,6 +29,7 @@ public class SimpleTreeTest {
 
         this.tree = new SimpleTree<>();
         tree.add("test", "test1");
+        tree.add("test", "test2");
         tree.add("test1", "test21");
         tree.add("test1", "test11");
         tree.add("test11", "TEST23");
@@ -102,4 +103,23 @@ public class SimpleTreeTest {
 
         assertFalse(iterator.hasNext());
     }
+
+    /**
+     * The method checks if the tree is binary. return true tree is binary.
+     */
+    @Test
+    public void whenCallIsBinaryThenReturnTrue() {
+    assertTrue(tree.isBinary());
+    }
+    /**
+     * The method checks if the tree is binary. return false tree is not binary.
+     */
+    @Test
+    public void whenCallIsBinaryThenReturnFalse() {
+       tree.add("test11", "test22");
+        tree.add("test11", "test12");
+        assertFalse(tree.isBinary());
+    }
+
+
 }

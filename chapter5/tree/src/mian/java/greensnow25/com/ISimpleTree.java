@@ -7,7 +7,7 @@ package greensnow25.com;
  * @version 1.
  * @since 29.05.2017.
  */
-public interface ISimpleTree<E extends Comparable> extends Iterable<E>  {
+public interface ISimpleTree<E extends Comparable> extends Iterable<E> {
     /**
      * add element child to parent.
      * Parent can have a child list.
@@ -17,4 +17,11 @@ public interface ISimpleTree<E extends Comparable> extends Iterable<E>  {
      * @return added result.
      */
     boolean add(E parent, E child);
+
+    /**
+     * Checks tree for binary.
+     *
+     * @return true, if binary.
+     */
+    boolean isBinary();
 }
