@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 /**
@@ -20,33 +22,16 @@ public class SimpleTreeTest {
      * class object.
      */
     private SimpleTree<String> tree;
-    /**
-     * root.
-     */
-    private String root;
-
-    /**
-     * first level.
-     */
-    private String firstLevel;
-    /**
-     * second level.
-     */
-    private String secondLevel;
-
-    /**
-     * third level.
-     */
-    private String thirdLevel;
 
     @Before
 
     public void beforeTheTest() {
-        this.root = "test";
-        this.firstLevel = "Atest1";
-        this.secondLevel = "Btest2";
-        this.thirdLevel = "Ctest3";
-        this.tree = new SimpleTree<>(root);
+
+        this.tree = new SimpleTree<>();
+        tree.add("test", "test1");
+        tree.add("test1", "test21");
+        tree.add("test1", "test11");
+        tree.add("test11", "TEST23");
     }
 
     /**
@@ -54,12 +39,8 @@ public class SimpleTreeTest {
      */
     @Test
     public void whenAddThenReturnTrue() {
-        tree.add(root, "D111");
-        tree.add(root, firstLevel);
 
-        boolean res = tree.add(firstLevel, "test4");
-
-        assertTrue(res);
+        assertTrue(tree.add("test1", "test4"));
     }
 
     /**
@@ -72,35 +53,53 @@ public class SimpleTreeTest {
     }
 
     /**
+     * Test next(). If after the pointer the values ​​exist, the next element will return.
+     */
+    @Test
+    public void whenCallNextThenReturnTrue() {
+
+        Iterator iterator = tree.iterator();
+        iterator.next();
+
+        assertThat(iterator.next(), is("test1"));
+    }
+
+    /**
+     * Test next(). If after the pointer the values is no ​​exist, the exception will return.
+     */
+    @Test(expected = NoSuchElementException.class)
+    public void whenCallNextThenReturnException() {
+
+        Iterator iterator = tree.iterator();
+        for (int i = 0; ; i++) {
+            iterator.next();
+        }
+    }
+
+    /**
      * Test hasNext(). If after the pointer the values ​​exist, the truth will return.
      */
     @Test
     public void whenCallHasNextThenReturnTrue() {
-        tree.add(root, "D111");
-        tree.add(root, firstLevel);
-        tree.add(firstLevel, "F111");
-        tree.add(firstLevel, firstLevel);
+
         Iterator iterator = tree.iterator();
         iterator.next();
-
-        assertTrue(iterator.hasNext());
-    }
-
-    @Test
-    public void ddd(){
-        SimpleTree<Integer> s = new SimpleTree<>(20);
-
-        s.add(20,10);
-        s.add(10,13);
-        s.add(10,12);
-        s.add(20,14);
-        s.add(14,3);
-
-        Iterator iterator = s.iterator();
         iterator.next();
 
         assertTrue(iterator.hasNext());
     }
 
+    /**
+     * Test hasNext(). If after the pointer the values is no ​​exist, the false will return.
+     */
+    @Test
+    public void whenCallHasNextThenReturnFalse() {
 
+        Iterator iterator = tree.iterator();
+        for (int i = 0; i != 4; i++) {
+            iterator.next();
+        }
+
+        assertFalse(iterator.hasNext());
+    }
 }

@@ -3,6 +3,7 @@ package greensnow25.com;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * public class SimpleTree.
@@ -16,11 +17,8 @@ public class SimpleTree<E extends Comparable> implements ISimpleTree<E> {
     /**
      * root.
      */
-    private Node<E> root;
+    private Node<E> root = null;
 
-    public SimpleTree(E parent) {
-        this.root = new Node<>(parent);
-    }
 
     /**
      * add element child to parent.
@@ -32,92 +30,154 @@ public class SimpleTree<E extends Comparable> implements ISimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
-        Node nodeParent = this.search(this.root, parent);
-        if (nodeParent == null) {
-            return false;
+        if (root == null) {
+            root = new Node<>(child);
         } else {
-            nodeParent.children.add(new Node<E>(child));
+            Node nodeParent = this.search(this.root, parent);
+            if (nodeParent == null) {
+                return false;
+            } else {
+                nodeParent.children.add(new Node<E>(child));
+            }
         }
         return true;
     }
 
+    /**
+     * method return object iterator, for the passage through the tree.
+     *
+     * @return Iterator.
+     */
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private Node<E> node = root;
-            private Node tmp = null;
+            /**
+             * position in the tree.
+             */
+            private E position = null;
+            /**
+             * minimal value of the tree.
+             */
             private E minValueTree = root.value;
-            Node<E> position;
+            /**
+             * maximal value of the tree.
+             */
+            private E maxValueTree = root.value;
+            /**
+             * Single use indicator.
+             */
+            boolean findMinMax = true;
 
+
+            /**
+             *The method checks for the presence of the following element.
+             * @return true if exist, else false.
+             */
             @Override
             public boolean hasNext() {
-                return this.search(this.node).value != null;
+                return this.position.compareTo(this.maxValueTree) < 0;
             }
 
+            /**
+             * method return next value after the pointer.
+             * @throws NoSuchElementException If the pointer is on the last element and an attempt.
+             *                               is made to call this method
+             * @return value.
+             */
             @Override
             public E next() {
-//                this.node = search(this.node);
-//                return node.value;
-
-                return null;
-            }
-
-            private E minValue(Node<E> min) {
-                if (this.minValueTree.compareTo(min.value) > 0) {
-                    minValueTree = (E) min.value;
-                    System.out.println(minValueTree);
+                if (findMinMax) {
+                    this.findMinValue(root);
+                    this.position = this.minValueTree;
+                    this.findMaxValue(root);
+                    this.findMinMax = false;
+                    this.position = minValueTree;
+                    return position;
                 }
-                return minValueTree;
+                if (this.position == this.maxValueTree) throw new NoSuchElementException("no elements");
+                this.position = this.nextValue(root, maxValueTree);
+
+                return this.position;
             }
 
+            /**
+             * find minimal value in the tree.
+             * @param node node.
+             */
             private void findMinValue(Node<E> node) {
                 for (Node nod : node.children) {
-                    minValueTree = (E) minValue(nod);
-                    this.findMinValue(nod);
-                    System.out.println(minValueTree);
-                }
-            }
-
-            private void nextValue(Node<E> node) {
-                E tmp = null;
-                if (minValueTree.compareTo(node.value) < -1 && position == null) {
-                    position = node;
-                }else if(minValueTree.compareTo(node)<-1 && position.value.compareTo()){
-
-                }
-
-            }
-
-            private Node search(Node<E> node) {
-                for (Node nod : node.children) {
-                    if (nod.value != null) {
-
-                        this.search(nod);
-                        System.out.println(minValueTree);
-                    } else {
-                        this.search(nod);
+                    if (this.minValueTree.compareTo(nod.value) > 0) {
+                        minValueTree = (E) nod.value;
                     }
+                    this.findMinValue(nod);
                 }
-                return null;
+            }
+
+            /**
+             * find maximum value in the tree.
+             * @param node node.
+             */
+            private void findMaxValue(Node<E> node) {
+                for (Node nod : node.children) {
+                    if (this.maxValueTree.compareTo(nod.value) < 0) {
+                        maxValueTree = (E) nod.value;
+                    }
+                    this.findMaxValue(nod);
+                }
+            }
+
+            /**
+             *The method recursively passes through the tree, and comparing all the elements.
+             *  with each other and returns, the element next by value moves the cursor one position.
+             * @param node The current element is passed to the method.
+             * @param current The closest element to the pointer.
+             * @return next value after the pointer.
+             */
+            private E nextValue(Node<E> node, E current) {
+                E res = current;
+                if (this.position.compareTo(node.value) < 0 && current.compareTo(node.value) >= 0) {
+                    res = node.value;
+                }
+                for (Node nod : node.children) {
+                    if (this.position.compareTo(nod.value) < 0 && res.compareTo(nod.value) > 0) {
+                        res = (E) nod.value;
+                    }
+                    res = (E) this.nextValue(nod, res);
+                }
+                return res;
             }
         };
     }
 
+    /**
+     * The method looks for the specified element.
+     * @param node current node.
+     * @param parent the object to be found.
+     * @return founded object.
+     */
     private Node<E> search(Node<E> node, E parent) {
         Node res = null;
-        if (node.children == null) {
-            return null;
-        } else if (node.value.equals(parent)) return node;
-        for (Node nod : node.children) {
-            if (nod.value == parent) {
-                return nod;
-            } else {
-                node = this.search(nod, parent);
+        if (node.value.compareTo(parent) == 0) {
+            res = node;
+            return res;
+        }
+        for (Node<E> nod : node.children) {
+            if (nod.value.compareTo(parent) == 0) {
+                res = nod;
+                return res;
+            } else if (this.search(nod, parent) != null) {
+                res = this.search(nod, parent);
             }
         }
         return res;
     }
 
+    /**
+     * inner class Node.
+     *
+     * @param <E> param.
+     * @author greensnow25.
+     */
     private class Node<E> {
         /**
          * children list.
@@ -128,6 +188,11 @@ public class SimpleTree<E extends Comparable> implements ISimpleTree<E> {
          */
         private E value;
 
+        /**
+         * constructor.
+         *
+         * @param value value of the node.
+         */
         public Node(E value) {
             this.children = new ArrayList<>();
             this.value = value;
