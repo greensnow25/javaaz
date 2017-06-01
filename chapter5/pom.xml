@@ -21,6 +21,7 @@
         <module>set</module>
         <module>map</module>
         <module>tree</module>
+        <module>controlTaskPro</module>
 
     </modules>
 
