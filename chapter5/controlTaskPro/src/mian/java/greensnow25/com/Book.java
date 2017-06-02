@@ -41,7 +41,7 @@ public class Book {
         this.type = type;
         this.operation = operation;
         this.prise = prise;
-        volume = volume;
+        this.volume = volume;
         this.orderId = orderId;
     }
 
