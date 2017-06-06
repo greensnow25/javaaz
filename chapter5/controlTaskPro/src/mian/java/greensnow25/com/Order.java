@@ -7,7 +7,7 @@ package greensnow25.com;
  * @version 1.
  * @since 01.06.2017.
  */
-public class Book {
+public class Order {
     /**
      * book type
      */
@@ -37,7 +37,7 @@ public class Book {
      * @param volume book volume.
      * @param orderId book id.
      */
-    public Book(String type, boolean operation, double prise, int volume, int orderId) {
+    public Order(String type, boolean operation, double prise, int volume, int orderId) {
         this.type = type;
         this.operation = operation;
         this.prise = prise;
@@ -95,4 +95,5 @@ public class Book {
                 ", orderId=" + orderId +
                 '}';
     }
+
 }

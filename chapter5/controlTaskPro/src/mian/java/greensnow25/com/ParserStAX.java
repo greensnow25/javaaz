@@ -23,8 +23,8 @@ public class ParserStAX {
 
     private String path = "D:\\java video\\orders.xml";
 
-    private HashMap<String, Book> map;
-    Book book;
+    private HashMap<String, Order> map;
+    Order order;
 
     public ParserStAX() {
         this.xmlInputFactory = XMLInputFactory.newInstance();
@@ -41,13 +41,13 @@ public class ParserStAX {
                 String value = reader.getLocalName();
                 if (value.equals("AddOrder")) {
                     String id = reader.getAttributeValue(4);
-                    book = new Book(reader.getAttributeValue(0)
+                    order = new Order(reader.getAttributeValue(0)
                             , reader.getAttributeValue(1).equals("BUY")
                             , Double.parseDouble(reader.getAttributeValue(2))
                             , Integer.parseInt(reader.getAttributeValue(3))
                             , Integer.parseInt(id));
-                    map.put(id, book);
-                    book = null;
+                    map.put(id, order);
+                    order = null;
                 } else if (value.equals("DeleteOrder")) {
                     map.remove(Integer.parseInt(reader.getAttributeValue(1)));
                 }
