@@ -6,7 +6,7 @@
     <version>1.0</version>
     <parent>
         <groupId>greensnow25</groupId>
-        <artifactId>chapter5</artifactId>
+        <artifactId>chapter6</artifactId>
         <version>1.0</version>
 
     </parent>

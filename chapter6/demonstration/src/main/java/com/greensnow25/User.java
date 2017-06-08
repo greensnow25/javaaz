@@ -40,10 +40,13 @@ public class User {
     }
 
     public static void main(String[] args) {
+        double start= System.currentTimeMillis();
         new User().info();
-        for (int i = 0; i != 5000; i++) {
+        for (int i = 0; i != 6000; i++) {
             new User("Mike", i);
         }
         new User().info();
+        double finish = System.currentTimeMillis();
+        System.out.println((finish - start)/1000);
     }
 }
