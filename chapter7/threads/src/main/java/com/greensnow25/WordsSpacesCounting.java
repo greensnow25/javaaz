@@ -1,5 +1,6 @@
 package com.greensnow25;
 
+import java.util.concurrent.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,12 +20,14 @@ public class WordsSpacesCounting {
      * separator.
      */
     private final String separator = System.getProperty("line.separator");
-
-    private Thread one;
-
-    private Thread two;
-
+    /**
+     * Thread delay time.
+     */
     private long wait;
+    /**
+     * ExecutorService .
+     */
+    private ExecutorService service;
 
     /**
      * constructor.
@@ -33,7 +36,7 @@ public class WordsSpacesCounting {
      */
     public WordsSpacesCounting(String line) {
         this.line = line;
-        this.wait = 1000;
+        this.wait = 1L;
     }
 
     /**
@@ -69,36 +72,65 @@ public class WordsSpacesCounting {
     /**
      * Method run threads.
      */
-    public void runThreads() {
-        this.one = new Thread(new Runnable() {
+    public void runThreads() throws InterruptedException {
+        this.service = Executors.newFixedThreadPool(1);
+        service.submit(new CountSpaces());
+        service.submit(new CountWords());
+        service.submit(new Runnable() {
             @Override
             public void run() {
-                if (one.isInterrupted()) {
-                    return;
+                label:
+                while (true) {
+                    if (Thread.currentThread().isInterrupted()) {
+                        System.out.println("THREAD INTERRUPTED");
+                        break label;
+                    }
                 }
-                System.out.printf("%s %d%s", "Number of words", countWords(), separator);
             }
         });
-        one.start();
-        this.two = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (two.isInterrupted()) {
-                    return;
-                }
-                System.out.printf("%s %d%s", "Number of spaces", countSpaces(), separator);
-            }
-        });
-        this.two.start();
-
-        try {
-            one.join(this.wait);
-            two.join(this.wait);
-            one.interrupt();
-            two.interrupt();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        service.shutdown();
+        if (!service.awaitTermination(this.wait, TimeUnit.SECONDS)) {
+            service.shutdownNow();
         }
+    }
+
+    /**
+     * Class counting words.
+     */
+    private class CountWords extends Thread {
+        @Override
+        public void run() {
+            if (this.isInterrupted()) {
+                return;
+            }
+            System.out.printf("%s %d%s", "Number of words", countWords(), separator);
+
+        }
+    }
+
+    /**
+     * Class counting spaces.
+     */
+    private class CountSpaces extends Thread {
+        /**
+         * run thread.
+         */
+        @Override
+        public void run() {
+            if (this.isInterrupted()) {
+                return;
+            }
+            System.out.printf("%s %d%s", "Number of spaces", countSpaces(), separator);
+
+        }
+    }
+
+    /**
+     * getExecutorServices.
+     * @return object.
+     */
+    public ExecutorService getService() {
+        return service;
     }
 
     /**
@@ -112,9 +144,14 @@ public class WordsSpacesCounting {
             System.out.println("start");
             word.runThreads();
 
-            word.two.join();
+            label:
+            while (true) {
+                if (!word.getService().isTerminated()) {
+                    break label;
+                }
+            }
             System.out.println("finish");
         }
-
+        System.out.println("MAIN END");
     }
 }
