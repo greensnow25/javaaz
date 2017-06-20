@@ -1,13 +1,13 @@
 package com.greensnow25;
 
 /**
- * public class Visibility.
+ * public class VisibilityProblemSolution.
  *
  * @author greensnow25.
  * @version 1.
- * @since 13.06.2017.
+ * @since 21.06.2017.
  */
-public class Visibility {
+public class VisibilityProblemSolution {
     /**
      * counter.
      */
@@ -28,10 +28,17 @@ public class Visibility {
 
         @Override
         public void run() {
-            for (int i = 0; i != 100_000_000; i++) {
-                count++;
+            for (int i = 0; i != 10_000_000; i++) {
+                inc();
             }
         }
+    }
+
+    /**
+     * increment.
+     */
+    public synchronized void inc (){
+        count++;
     }
 
     /**
@@ -53,7 +60,7 @@ public class Visibility {
      */
     public static void main(String[] args)  {
         long start = System.currentTimeMillis();
-        Visibility visibility = new Visibility();
+        VisibilityProblemSolution visibility = new VisibilityProblemSolution();
         visibility.runThreads();
         while (visibility.one.isAlive() || visibility.two.isAlive()) ;
 
