@@ -85,6 +85,12 @@ public class WordsSpacesCounting {
                         System.out.println("THREAD INTERRUPTED");
                         break label;
                     }
+//                    try {
+//                            Thread.sleep(100);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        break label;
+//                    }
                 }
             }
         });
