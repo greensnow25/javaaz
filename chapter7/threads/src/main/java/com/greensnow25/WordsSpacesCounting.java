@@ -87,8 +87,8 @@ public class WordsSpacesCounting {
                     }
 //                    try {
 //                            Thread.sleep(100);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
+//                        } catch (InterruptedException e) {  // если усыпляю поток, то он виснет,
+//                            e.printStackTrace();             // как можно решить дану проблему?
 //                        break label;
 //                    }
                 }
