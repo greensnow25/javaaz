@@ -8,31 +8,54 @@ package com.greensnow25;
  * @since 13.06.2017.
  */
 public class Visibility {
-    private int count;
+    /**
+     * counter.
+     */
+    private int count = 0;
+    /**
+     * first thread.
+     */
+    private Thread two;
+    /**
+     * second thread.
+     */
+    private Thread one;
 
-    public Visibility(int count) {
-        this.count = count;
-    }
+    /**
+     * create new myThread.
+     */
+    private class MyThread implements Runnable {
 
-    public void inc(){
-        count++;
-    }
-
-    public void runThread(){
-        Thread one = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                inc();
-
+        @Override
+        public void run() {
+            for (int i = 0; i != 100_000_000; i++) {
+                count++;
             }
-        });
-        one.start();
-        System.out.println(count);
+        }
     }
 
-    public static void main(String[] args) {
-        Visibility visibility = new Visibility(1);
-        visibility.runThread();
+    /**
+     * run threads.
+     */
+    public void runThreads()  {
+        this.one = new Thread(new MyThread());
+        this.two = new Thread(new MyThread());
+
+        one.start();
+        two.start();
+
+
+    }
+
+    /**
+     * main.
+     * @param args args.
+     */
+    public static void main(String[] args)  {
+        Visibility visibility = new Visibility();
+        visibility.runThreads();
+        while (visibility.one.isAlive() || visibility.two.isAlive()) ;
+
         System.out.println(visibility.count);
     }
 }
