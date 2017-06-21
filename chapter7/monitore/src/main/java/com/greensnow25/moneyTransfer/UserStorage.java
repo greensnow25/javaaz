@@ -1,6 +1,12 @@
 package com.greensnow25.moneyTransfer;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * public class UserStorage.
@@ -39,6 +45,9 @@ public class UserStorage {
         }
     }
 
+    /**
+     * print user name and balance.
+     */
     public void printUserInfo() {
         Iterator<User> it = storage.values().iterator();
         while (it.hasNext()) {
@@ -47,10 +56,22 @@ public class UserStorage {
         }
     }
 
+    public boolean transferMoney(User sender, User receiver, int amountOfMoney) throws Exception {
+        synchronized (sender) {
+            synchronized (receiver) {
+                if (sender.getAmount() < amountOfMoney) {
+                    System.out.println("Not enough money for translation");
+                    return false;
+                } else {
+                    sender.setAmount(sender.getAmount() - amountOfMoney);
+                    receiver.setAmount(receiver.getAmount() + amountOfMoney);
+                    return true;
+                }
+            }
+        }
+    }
 
     private class AddUser extends UserOperations {
-
-
         public AddUser(String info) {
             super(info);
         }
@@ -72,13 +93,9 @@ public class UserStorage {
                 }
             }
         }
-
-
     }
 
     private class RemoveUser extends UserOperations {
-
-
         public RemoveUser(String info) {
             super(info);
         }
@@ -104,8 +121,6 @@ public class UserStorage {
     }
 
     private class SetUser extends UserOperations {
-
-
         public SetUser(String info) {
             super(info);
         }
@@ -127,6 +142,9 @@ public class UserStorage {
             }
         }
     }
+    public void run(){
+
+    }
 
 
     public Map<Integer, UserOperations> getOperations() {
@@ -135,7 +153,6 @@ public class UserStorage {
 
     public static void main(String[] args) {
         UserStorage storage = new UserStorage();
-
-    }
+}
 
 }
