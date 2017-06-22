@@ -10,13 +10,22 @@ import java.util.*;
  * @since 21.06.2017.
  */
 public class UserStorage {
-
+    /**
+     * users storage.
+     */
     private HashMap<String, User> storage;
-
+    /**
+     * storage operations on users.
+     */
     private Map<Integer, UserOperations> operations;
+    /**
+     * keyboard input.
+     */
+    private Input input;
 
-    Input input;
-
+    /**
+     * constructor.
+     */
     public UserStorage() {
         this.storage = new HashMap<>();
         this.operations = new TreeMap<>();
@@ -41,6 +50,7 @@ public class UserStorage {
         while (it.hasNext()) {
             it.next().info();
         }
+        System.out.println("\"transfer\" - money transfer");
     }
 
     /**
@@ -49,13 +59,41 @@ public class UserStorage {
      * @param key key of operation.
      * @return true if successful.
      */
-    public boolean select(int key) {
-        return operations.get(key).doSomething();
+    public boolean select(String key) {
+        boolean res = false;
+        try {
+            if (key.equals("transfer")) {
+                String nameSender = input.ask("Enter user sender name : ");
+                String nameReceiver = input.ask("Enter user receiver name : ");
+                if (storage.containsKey(nameSender) && storage.containsKey(nameReceiver)) {
+                    res = this.transferMoney(storage.get(nameSender)
+                            , storage.get(nameReceiver)
+                            , Integer.parseInt(input.ask("transfer amount")));
+                }
+
+            } else {
+                res = operations.get(Integer.parseInt(key)).doSomething();
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid data entry, try again:");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
-
+    /**
+     * Method transfers money from one user's account to another.
+     *
+     * @param sender        sender.
+     * @param receiver      receiver.
+     * @param amountOfMoney amount of money.
+     * @return true if successful.
+     * @throws Exception Invalid data entry.
+     */
     public boolean transferMoney(User sender, User receiver, int amountOfMoney) throws Exception {
-        if (!storage.containsKey(sender) || !storage.containsKey(receiver)) {
+        if (!storage.containsKey(sender.getName()) || !storage.containsKey(receiver.getName())) {
             System.out.println("Does not exist.");
             return false;
         } else if (sender.getAmount() < amountOfMoney) {
@@ -79,25 +117,16 @@ public class UserStorage {
                 }
             }
         });
-
         one.start();
         two.start();
         return true;
-//        synchronized (sender) {
-//            synchronized (receiver) {
-//                if (sender.getAmount() < amountOfMoney) {
-//                    System.out.println("Not enough money for translation");
-//                    return false;
-//                } else {
-//                    sender.setAmount(sender.getAmount() - amountOfMoney);
-//                    receiver.setAmount(receiver.getAmount() + amountOfMoney);
-//                    return true;
-//                }
-//            }
-//        }
     }
 
+    /**
+     * inner class add user to storage.
+     */
     private class AddUser extends UserOperations {
+
         public AddUser(String info, int key) {
             super(info, key);
         }
@@ -125,6 +154,9 @@ public class UserStorage {
         }
     }
 
+    /**
+     * inner class remove user.
+     */
     private class RemoveUser extends UserOperations {
         public RemoveUser(String info, int key) {
             super(info, key);
@@ -151,17 +183,21 @@ public class UserStorage {
                 }
             }
         }
-
     }
 
+    /**
+     * inner class Set user .
+     */
     private class SetUser extends UserOperations {
         public SetUser(String info, int key) {
             super(info, key);
         }
 
         /**
-         * @param user
-         * @return
+         * set user in the storage.
+         *
+         * @param user user.
+         * @return true is successful.
          */
         @Override
         public boolean doSomething() {
@@ -181,12 +217,19 @@ public class UserStorage {
         }
     }
 
+    /**
+     * inner class show all users.
+     */
     private class ShowUsers extends UserOperations {
-
         public ShowUsers(String info, int key) {
             super(info, key);
         }
 
+        /**
+         * print users to the console.
+         *
+         * @return true.
+         */
         @Override
         public boolean doSomething() {
             Iterator<User> it = storage.values().iterator();
@@ -198,7 +241,10 @@ public class UserStorage {
         }
     }
 
-    public void runOperations() {
+    /**
+     * run program.
+     */
+    public void run() {
 
         String answer;
         this.addOperations();
@@ -206,19 +252,18 @@ public class UserStorage {
         while (true) {
             answer = input.ask("Make a choice: ");
             if (answer.equals("exit")) break;
-            this.select(Integer.parseInt(answer));
+            this.select(answer);
         }
-
     }
 
-
-    public Map<Integer, UserOperations> getOperations() {
-        return operations;
-    }
-
+    /**
+     * psvm.
+     *
+     * @param args args.
+     */
     public static void main(String[] args) {
         UserStorage storage = new UserStorage();
-        storage.runOperations();
+        storage.run();
     }
 
 }
