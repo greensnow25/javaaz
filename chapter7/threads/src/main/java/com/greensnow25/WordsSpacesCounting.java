@@ -1,5 +1,7 @@
 package com.greensnow25;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,62 +42,31 @@ public class WordsSpacesCounting {
     }
 
     /**
-     * Method counts words.
-     *
-     * @return number of words.
-     */
-    public int countWords() {
-        int count = 0;
-        Pattern pattern = Pattern.compile("\\w*[^\\s*]");
-        Matcher matcher = pattern.matcher(line);
-        while (matcher.find()) {
-            count++;
-        }
-        return count;
-    }
-
-    /**
-     * Method counts spaces.
-     *
-     * @return number of spaces.
-     */
-    public int countSpaces() {
-        int count = 0;
-        Pattern pattern = Pattern.compile("\\s");
-        Matcher matcher = pattern.matcher(line);
-        while (matcher.find()) {
-            count++;
-        }
-        return count;
-    }
-
-    /**
      * Method run threads.
      */
     public void runThreads() throws InterruptedException {
-        this.service = Executors.newFixedThreadPool(1);
+        this.service = Executors.newFixedThreadPool(3);
         service.submit(new CountSpaces());
         service.submit(new CountWords());
         service.submit(new Runnable() {
+            /**
+             * run infinite thread.
+             */
             @Override
             public void run() {
-                label:
-                while (true) {
-                    if (Thread.currentThread().isInterrupted()) {
-                        System.out.println("THREAD INTERRUPTED");
-                        break label;
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        TimeUnit.SECONDS.sleep(100);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        System.out.println("INFINITE THREAD INTERRUPTED");
                     }
-//                    try {
-//                            Thread.sleep(100);
-//                        } catch (InterruptedException e) {  // если усыпляю поток, то он виснет,
-//                            e.printStackTrace();             // как можно решить даную проблему?
-//                        break label;
-//                    }
                 }
             }
         });
         service.shutdown();
-        if (!service.awaitTermination(this.wait, TimeUnit.SECONDS)) {
+        service.awaitTermination(this.wait, TimeUnit.SECONDS);
+        if (!service.isTerminated()) {
             service.shutdownNow();
         }
     }
@@ -106,33 +77,44 @@ public class WordsSpacesCounting {
     private class CountWords extends Thread {
         @Override
         public void run() {
-            if (this.isInterrupted()) {
-                return;
+            int count = 0;
+            Pattern pattern = Pattern.compile("\\w*[^\\s*]");
+            Matcher matcher = pattern.matcher(line);
+            while (!Thread.currentThread().isInterrupted() && matcher.find()) {
+                count++;
             }
-            System.out.printf("%s %d%s", "Number of words", countWords(), separator);
-
+            if (Thread.currentThread().isInterrupted()) {
+                System.out.println("Thread words is interrupted.");
+            }
+            System.out.printf("%s %d%s", "Number of words", count, separator);
         }
     }
 
     /**
      * Class counting spaces.
      */
-    private class CountSpaces extends Thread {
+    protected class CountSpaces extends Thread {
         /**
          * run thread.
          */
         @Override
         public void run() {
-            if (this.isInterrupted()) {
-                return;
+            int count = 0;
+            Pattern pattern = Pattern.compile("\\s");
+            Matcher matcher = pattern.matcher(line);
+            while (!Thread.currentThread().isInterrupted() && matcher.find()) {
+                count++;
             }
-            System.out.printf("%s %d%s", "Number of spaces", countSpaces(), separator);
-
+            if (Thread.currentThread().isInterrupted()) {
+                System.out.println("Thread spaces is interrupted.");
+            }
+            System.out.printf("%s %d%s", "Number of spaces", count, separator);
         }
     }
 
     /**
      * getExecutorServices.
+     *
      * @return object.
      */
     public ExecutorService getService() {
@@ -149,10 +131,9 @@ public class WordsSpacesCounting {
         for (int i = 0; i != 5; i++) {
             System.out.println("start");
             word.runThreads();
-
             label:
             while (true) {
-                if (!word.getService().isTerminated()) {
+                if (word.getService().isTerminated()) {
                     break label;
                 }
             }
@@ -160,4 +141,5 @@ public class WordsSpacesCounting {
         }
         System.out.println("MAIN END");
     }
+
 }
