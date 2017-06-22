@@ -26,10 +26,6 @@ public class WordsSpacesCounting {
      * Thread delay time.
      */
     private long wait;
-    /**
-     * ExecutorService .
-     */
-    private ExecutorService service;
 
     /**
      * constructor.
@@ -45,7 +41,7 @@ public class WordsSpacesCounting {
      * Method run threads.
      */
     public void runThreads() throws InterruptedException {
-        this.service = Executors.newFixedThreadPool(3);
+        ExecutorService service = Executors.newFixedThreadPool(3);
         service.submit(new CountSpaces());
         service.submit(new CountWords());
         service.submit(new Runnable() {
@@ -113,15 +109,6 @@ public class WordsSpacesCounting {
     }
 
     /**
-     * getExecutorServices.
-     *
-     * @return object.
-     */
-    public ExecutorService getService() {
-        return service;
-    }
-
-    /**
      * psvm.
      *
      * @param args args.
@@ -131,12 +118,7 @@ public class WordsSpacesCounting {
         for (int i = 0; i != 5; i++) {
             System.out.println("start");
             word.runThreads();
-            label:
-            while (true) {
-                if (word.getService().isTerminated()) {
-                    break label;
-                }
-            }
+            TimeUnit.MILLISECONDS.sleep(word.wait*1000+1);
             System.out.println("finish");
         }
         System.out.println("MAIN END");
