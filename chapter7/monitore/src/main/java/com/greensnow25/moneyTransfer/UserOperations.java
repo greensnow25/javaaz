@@ -9,10 +9,13 @@ package com.greensnow25.moneyTransfer;
  */
 public abstract class UserOperations {
 
+    int key;
+
     private String info;
 
-    public UserOperations(String info) {
+    public UserOperations(String info, int key) {
         this.info = info;
+        this.key = key;
     }
 
     /**
@@ -20,12 +23,16 @@ public abstract class UserOperations {
      *
      * @return true if operation is success, else false.
      */
-    public abstract boolean doSomething(User user);
+    public abstract boolean doSomething();
 
     /**
      * print info.
      */
     public void info() {
         System.out.println(this.info);
+    }
+
+    public int key(){
+        return this.key;
     }
 }
