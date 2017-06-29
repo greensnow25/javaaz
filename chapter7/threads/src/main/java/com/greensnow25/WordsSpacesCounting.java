@@ -35,7 +35,6 @@ public class WordsSpacesCounting {
     public WordsSpacesCounting(String line) {
         this.line = line;
         this.wait = 1L;
-
     }
 
     /**
