@@ -92,33 +92,19 @@ public class UserStorage {
      * @return true if successful.
      * @throws Exception Invalid data entry.
      */
-    public boolean transferMoney(User sender, User receiver, int amountOfMoney) throws Exception {
+    public synchronized boolean transferMoney(User sender, User receiver, int amountOfMoney) throws Exception {
         if (!storage.containsKey(sender.getName()) || !storage.containsKey(receiver.getName())) {
             System.out.println("Does not exist.");
             return false;
         } else if (sender.getAmount() < amountOfMoney) {
             System.out.println("Not enough money for translation");
             return false;
+        } else {
+            sender.setAmount(sender.getAmount() - amountOfMoney);
+            receiver.setAmount(receiver.getAmount() + amountOfMoney);
+            Thread.sleep(15000);
         }
 
-        Thread one = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (sender) {
-                    sender.setAmount(sender.getAmount() - amountOfMoney);
-                }
-            }
-        });
-        Thread two = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (receiver) {
-                    receiver.setAmount(receiver.getAmount() + amountOfMoney);
-                }
-            }
-        });
-        one.start();
-        two.start();
         return true;
     }
 
@@ -134,7 +120,6 @@ public class UserStorage {
         /**
          * add user to the storage.
          *
-         * @param user
          * @return true if success.
          */
         @Override
@@ -144,6 +129,7 @@ public class UserStorage {
                 int amount = Integer.parseInt(input.ask("Enter the amount of money in your account"));
                 synchronized (storage) {
                     if (storage.containsKey(name)) {
+                        System.out.println("User already exist.");
                         return false;
                     } else {
                         storage.put(name, new User(name, amount));
@@ -165,7 +151,6 @@ public class UserStorage {
         /**
          * remove user from storage.
          *
-         * @param user user.
          * @return true is successful.
          */
         @Override
@@ -196,7 +181,6 @@ public class UserStorage {
         /**
          * set user in the storage.
          *
-         * @param user user.
          * @return true is successful.
          */
         @Override

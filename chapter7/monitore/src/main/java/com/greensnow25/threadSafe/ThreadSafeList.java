@@ -100,8 +100,9 @@ public class ThreadSafeList<T> implements SimpleContainer<T> {
 
     public int length(){
         synchronized (this){
-            for(int i = 0;i!)
+         //   for(int i = 0;i!)
         }
+        return 0;
     }
 
     /**
