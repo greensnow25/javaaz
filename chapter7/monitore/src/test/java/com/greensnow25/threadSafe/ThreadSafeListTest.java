@@ -41,7 +41,11 @@ public class ThreadSafeListTest {
         one.join();
         two.join();
 
-        assertThat(threadSafeList.getArray().length, is(20_000));
+        assertThat(threadSafeList.length(), is(20_000));
+    }
+
+    public void whenCallIteratorNextReturnValue() {
+        
     }
 
     private Thread createThread(int range) {

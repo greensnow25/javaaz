@@ -1,6 +1,7 @@
 package com.greensnow25.threadSafe;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
 /**
@@ -19,6 +20,10 @@ public class ThreadSafeList<T> implements SimpleContainer<T> {
      * position in the array.
      */
     private int index = 0;
+    /**
+     * modification counter.
+     */
+    private int modCount = 0;
 
     /**
      * constructor.
@@ -79,9 +84,9 @@ public class ThreadSafeList<T> implements SimpleContainer<T> {
              * @return true if current position less of array length.
              */
             @Override
-            public boolean hasNext() {
+            public synchronized boolean hasNext() {
 
-                return position <= array.length - 1;
+                return position <= length();
             }
 
             /**
@@ -92,17 +97,31 @@ public class ThreadSafeList<T> implements SimpleContainer<T> {
             @Override
             public Object next() {
                 synchronized (this) {
+                    if (position > length()) {
+                        throw new NoSuchElementException("no more elements");
+                    }
                     return array[position++];
                 }
             }
         };
     }
 
-    public int length(){
-        synchronized (this){
-         //   for(int i = 0;i!)
+    /**
+     * The length of an array of objects that is not null.
+     *
+     * @return count.
+     */
+    public int length() {
+        int count = 0;
+        synchronized (this) {
+            for (int i = 0; i != array.length; i++) {
+                if (array[i] != null) {
+                    count++;
+                }
+            }
+            return count;
         }
-        return 0;
+
     }
 
     /**
