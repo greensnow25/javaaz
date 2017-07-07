@@ -1,2 +1,2 @@
-# javaaz
-java courses
+# Alexandr Niezhelskui
+greensnow25@yandex.ru
