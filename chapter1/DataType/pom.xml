@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>greensnow25</groupId>
     <artifactId>DataType</artifactId>
-    <version>1.0</version>
     <packaging>jar</packaging>
-    <parent>
+    <version>1.0</version>
+        <parent>
         <groupId>greensnow25</groupId>
-        <artifactId>junior1</artifactId>
+        <artifactId>chapter1</artifactId>
         <version>1.0</version>
     </parent>
 </project>
