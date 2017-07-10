@@ -14,20 +14,30 @@ import java.util.concurrent.BlockingQueue;
  */
 public class UsefulWork {
     /**
-     * blocking queue.
+     * Blocking queue.
      */
     private ArrayList<Integer> queue;
+    /**
+     * Queue capacity.
+     */
+    private static final int CAPACITY = 10;
 
     /**
      * constructor.
      */
     public UsefulWork() {
-        this.queue = new ArrayList(10);
+        this.queue = new ArrayList(CAPACITY);
     }
 
+    /**
+     * put number to the queue.
+     *
+     * @param number number.
+     * @throws InterruptedException ex.
+     */
     public void put(int number) throws InterruptedException {
         synchronized (queue) {
-            while (checkNotNull() == 10) {
+            while (checkNotNull() == CAPACITY) {
                 queue.wait();
             }
             queue.add(number);
@@ -36,6 +46,11 @@ public class UsefulWork {
         }
     }
 
+    /**
+     * get number from the queue.
+     *
+     * @throws InterruptedException ex.
+     */
     public void get() throws InterruptedException {
         synchronized (queue) {
             while (checkNotNull() == 0) {
@@ -43,11 +58,15 @@ public class UsefulWork {
             }
             int i = queue.remove(0);
             System.out.printf("%s  %d%s", "GET number:", i, System.getProperty("line.separator"));
-         //   System.arraycopy(queue, 1, queue, 0, checkNotNull());
             queue.notify();
         }
     }
 
+    /**
+     * Checks the values ​​on not null.
+     *
+     * @return the number of non null objects.
+     */
     public int checkNotNull() {
         int count = 0;
         for (Integer i : queue) {
