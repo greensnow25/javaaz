@@ -13,7 +13,9 @@ import java.util.concurrent.Executors;
  */
 public class SimpleThreadPool {
 
-
+    /**
+     * method create ThreadPool equal to the number of processors in the system.
+     */
     public void makePool() {
         int count = Runtime.getRuntime().availableProcessors();
 
@@ -21,18 +23,21 @@ public class SimpleThreadPool {
         for (int i = 0; i != 100; i++) {
             service.submit(new Work(i));
         }
-
-
-        System.out.println(count);
+        service.shutdown();
     }
 
+    /**
+     * main.
+     *
+     * @para args args.
+     */
     public static void main(String[] args) {
         SimpleThreadPool stp = new SimpleThreadPool();
         stp.makePool();
     }
 
     /**
-     * usefull
+     * inner class useful work, do something.
      */
     private class Work implements Runnable {
         /**
