@@ -15,6 +15,7 @@
         <module>jmm</module>
         <module>monitore</module>
         <module>waitNotifyNotifyAll</module>
+        <module>NonBlock</module>
 
     </modules>
 
