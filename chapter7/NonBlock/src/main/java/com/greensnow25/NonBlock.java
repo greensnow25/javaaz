@@ -27,9 +27,6 @@ public class NonBlock {
     }
 
 
-    public int compare(User left, User right) {
 
-        return left.getName().compareTo(right.getName()) == 1 ? 1 : 0 ;
-    }
 
 }
