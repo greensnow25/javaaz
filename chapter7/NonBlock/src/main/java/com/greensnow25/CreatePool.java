@@ -1,15 +1,10 @@
 package com.greensnow25;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 
 /**
  * Public class CreatePool.
@@ -19,71 +14,51 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 17.07.2017.
  */
 public class CreatePool {
+    /**
+     * class object.
+     */
     private final ExecutorService ex;
-    NonBlockHashMap nb = new NonBlockHashMap();
+    /**
+     * Non-blocking object of HashMap;
+     */
+    private NonBlockHashMap nb;
+    /**
+     * count.
+     */
     private int count = 0;
-    List<Runnable> list;
-    Lock lock = new ReentrantLock(true);
+    /**
+     * Task list.
+     */
+    private List<Runnable> list;
 
+    /**
+     * constructor.
+     */
     public CreatePool() {
-
         ex = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        this.nb = new NonBlockHashMap();
     }
 
-    public void createPool() {
+    /**
+     * @throws Exception ex.
+     */
+    public void createPool() throws InterruptedException, Exception {
         this.list = this.createTasksList();
         for (Runnable r : list) {
             ex.execute(r);
         }
         ex.shutdown();
-        try {
-            ex.awaitTermination(2, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        ex.shutdownNow();
+        ex.awaitTermination(1, TimeUnit.SECONDS);
         nb.print();
+
     }
 
-    public Thread createThread() {
-        return new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                while (true) {
-                    for (Iterator<Runnable> it = list.iterator(); it.hasNext(); ) {
-                        if (lock.tryLock()) {
-                            lock.lock();
-                            try {
-                                System.out.println(Thread.currentThread().getName());
-                                it.next().run();
-                                it.remove();
-                            } finally {
-                                lock.unlock();
-                            }
-                        }
-                    }
-                    if (list.size() == 0) {
-                        break;
-                    }
-                }
-                System.out.println("Thread die");
-            }
-        });
-    }
-
-    public void makeTwoThreads() throws InterruptedException {
-        this.list = createTasksList();
-        Thread one = createThread();
-        Thread two = createThread();
-        one.start();
-        two.start();
-        one.join();
-        two.join();
-        nb.print();
-    }
-
-    private List<Runnable> createTasksList() {
+    /**
+     * method create task list.
+     *
+     * @return task list.
+     */
+    protected List<Runnable> createTasksList() {
         List<Runnable> tasks = new ArrayList<>();
         for (int i = 0; i != 100; i++) {
             tasks.add(new Runnable() {
@@ -97,15 +72,43 @@ public class CreatePool {
         return tasks;
     }
 
+    /**
+     * generate id.
+     *
+     * @return id.
+     */
     private int generateId() {
         return count++;
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        CreatePool createPool = new CreatePool();
-         createPool.createPool();
-        //createPool.makeTwoThreads();
+    /**
+     * non- block hashMap.
+     *
+     * @return
+     */
+    public NonBlockHashMap getNb() {
+        return nb;
+    }
 
+    /**
+     * main.
+     *
+     * @param args args.
+     * @throws Exception ex.
+     */
+    public static void main(String[] args) throws Exception {
+        CreatePool createPool = new CreatePool();
+        createPool.createPool();
+
+/**
+ * testing.
+ */
+        createPool.getNb().update(22, new Task(1, "wdsdwsdwdw"));
+        System.out.println(createPool.getNb().getMap().get(22));
+        Thread.sleep(1000);
+        System.out.println(createPool.getNb().getMap().get(22).getTaskName());
+        createPool.getNb().remove(22);
+        System.out.println(createPool.getNb().getMap().get(22));
         System.out.println("main end");
 
     }

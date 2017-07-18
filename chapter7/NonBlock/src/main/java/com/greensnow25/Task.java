@@ -10,15 +10,35 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 17.07.2017.
  */
 public class Task {
+    /**
+     * Task id.
+     */
     private final int id;
+    /**
+     * Task name.
+     */
     private final String taskName;
+    /**
+     * Version control.
+     */
     private AtomicInteger version;
 
-
+    /**
+     * constructor.
+     *
+     * @param id       id.
+     * @param taskName name.
+     * @param version  version.
+     */
     public Task(int id, String taskName, int version) {
         this.id = id;
         this.taskName = taskName;
         this.version = new AtomicInteger(version);
+    }
+
+    public Task(int id, String taskName) {
+        this.id = id;
+        this.taskName = taskName;
     }
 
     public int getId() {
@@ -33,8 +53,12 @@ public class Task {
         return version;
     }
 
-    public void setVersion(AtomicInteger version) {
-        this.version = version;
+    public void setVersion(int version) {
+        if (this.version == null) {
+            this.version = new AtomicInteger(version);
+        } else {
+            this.version.set(version);
+        }
     }
 
     @Override

@@ -20,19 +20,31 @@ import java.util.function.BiFunction;
  * @since 14.07.2017.
  */
 public class NonBlockHashMap {
-
+    /**
+     * map.
+     */
     private final Map<Integer, Task> map;
-
+    /**
+     * lock.
+     */
     private final Lock lock = new ReentrantLock(true);
+    /**
+     * counter.
+     */
     private AtomicInteger atomicInteger = new AtomicInteger(1);
-    // private final ConcurrentHashMap<Integer, String> hashMap;
 
-
+    /**
+     * constructor.
+     */
     public NonBlockHashMap() {
-        //     hashMap = new ConcurrentHashMap<>();
         this.map = new HashMap<>();
     }
 
+    /**
+     * add task to the map.
+     *
+     * @param newTask new Task.
+     */
     public void add(Task newTask) {
         Lock lock = this.lock;
         cas:
@@ -49,7 +61,13 @@ public class NonBlockHashMap {
         }
     }
 
-
+    /**
+     * update the task.
+     *
+     * @param key        of task? which need to update.
+     * @param updateTask new task.
+     * @throws Exception ex.
+     */
     public void update(Integer key, Task updateTask) throws Exception {
         if (!map.containsKey(key)) {
             throw new Exception("Sorry, key does not exist.");
@@ -60,20 +78,27 @@ public class NonBlockHashMap {
         while (true) {
             local.set(task.getVersion().get());
             int oldVersion = local.get();
-            int newVersion = local.getAndIncrement();
-            if (local.compareAndSet(oldVersion, newVersion)) {
+            if (local.compareAndSet(oldVersion, oldVersion + 1)) {
                 map.computeIfPresent(key, new BiFunction<Integer, Task, Task>() {
                     @Override
                     public Task apply(Integer integer, Task task) {
-                        task.getVersion()
-                        return null;
+                        map.put(integer, updateTask);
+                        task.getVersion().getAndIncrement();
+                        map.get(integer).setVersion(oldVersion + 1);
+                        return map.get(integer);
                     }
-                })
+                });
                 break cas;
             }
         }
     }
 
+    /**
+     * remove the task by the key.
+     *
+     * @param key key.
+     * @throws InterruptedException ex.
+     */
     public void remove(int key) throws InterruptedException {
         label:
         while (true) {
@@ -88,12 +113,19 @@ public class NonBlockHashMap {
         }
     }
 
+    /**
+     * print all tasks.
+     */
     public void print() {
         for (Integer i : map.keySet()) {
             System.out.println(map.get(i));
         }
     }
 
+    /**
+     * get map.
+     * @return hashMap.
+     */
     public Map<Integer, Task> getMap() {
         return map;
     }
