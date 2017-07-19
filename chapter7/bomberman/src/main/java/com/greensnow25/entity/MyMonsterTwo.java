@@ -16,7 +16,7 @@ public class MyMonsterTwo extends Monster {
      *
      * @param name monster name.
      */
-    protected MyMonsterTwo(String name) {
+    public MyMonsterTwo(String name) {
         super(name);
     }
 
