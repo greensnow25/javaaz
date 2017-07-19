@@ -1,5 +1,6 @@
 package com.greensnow25.entity;
 
+import com.greensnow25.modules.Cell;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 /**
@@ -10,7 +11,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * @since 19.07.2017.
  */
 @Immutable
-public abstract class Monster {
+public abstract class Monster extends Entity {
     /**
      * name.
      */
@@ -18,6 +19,7 @@ public abstract class Monster {
 
     /**
      * constructor.
+     *
      * @param name monster name.
      */
     protected Monster(String name) {
@@ -27,5 +29,6 @@ public abstract class Monster {
     /**
      * method move monster.
      */
-    public abstract void move();
+    @Override
+    public abstract Cell[] move();
 }
