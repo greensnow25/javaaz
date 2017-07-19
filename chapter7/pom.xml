@@ -16,6 +16,7 @@
         <module>monitore</module>
         <module>waitNotifyNotifyAll</module>
         <module>NonBlock</module>
+        <module>bomberman</module>
 
     </modules>
 
