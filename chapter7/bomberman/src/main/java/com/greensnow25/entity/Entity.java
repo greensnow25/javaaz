@@ -10,15 +10,7 @@ import com.greensnow25.modules.Cell;
  * @since 19.07.2017.
  */
 public abstract class Entity {
-    private Cell startPosition;
 
-    public abstract Cell[] move();
+    public abstract Cell[] move(Cell currentPosition);
 
-    public Cell getStartPosition() {
-        return startPosition;
-    }
-
-    public void setStartPosition(Cell startPosition) {
-        this.startPosition = startPosition;
-    }
 }

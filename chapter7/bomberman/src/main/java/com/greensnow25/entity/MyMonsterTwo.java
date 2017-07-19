@@ -10,7 +10,6 @@ import com.greensnow25.modules.Cell;
  * @since 19.07.2017.
  */
 public class MyMonsterTwo extends Monster {
-    private final int[] num = new int[]{0, 1};
     /**
      * constructor.
      *
@@ -21,15 +20,14 @@ public class MyMonsterTwo extends Monster {
     }
 
     @Override
-    public Cell[] move() {
-        Cell cell = super.getStartPosition();
+    public Cell[] move(Cell currentPosition) {
         Cell[] moves = new Cell[4];
         int count = 0;
-        for (int i : num) {
-            for (int j : num) {
-                moves[count++] = new Cell(cell.getAxisX() + i, cell.getAxisY() + j);
-            }
-        }
+        moves[count++] = new Cell(currentPosition.getAxisX(),currentPosition.getAxisY()+1);
+        moves[count++] = new Cell(currentPosition.getAxisX(),currentPosition.getAxisY()-1);
+        moves[count++] = new Cell(currentPosition.getAxisX()+1,currentPosition.getAxisY());
+        moves[count++] = new Cell(currentPosition.getAxisX()-1,currentPosition.getAxisY());
+
         return moves;
     }
 }

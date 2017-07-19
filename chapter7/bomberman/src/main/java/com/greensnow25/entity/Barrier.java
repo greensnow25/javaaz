@@ -17,7 +17,7 @@ public class Barrier extends Entity {
      * @return
      */
     @Override
-    public Cell[] move() {
+    public Cell[] move(Cell currentPosition) {
         return null;
     }
 }

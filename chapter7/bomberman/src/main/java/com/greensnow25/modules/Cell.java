@@ -23,7 +23,6 @@ public class Cell {
     public void addNewEntity(Entity entity) {
         if (entity == null) {
             this.entity = entity;
-            entity.setStartPosition(this);
         } else {
             System.out.println("This cell already busy");
         }
@@ -44,5 +43,14 @@ public class Cell {
 
     public void setEntity(Entity entity) {
         this.entity = entity;
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "axisX=" + axisX +
+                ", axisY=" + axisY +
+                ", entity=" + entity +
+                '}';
     }
 }

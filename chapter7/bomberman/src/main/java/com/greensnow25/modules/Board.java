@@ -12,13 +12,52 @@ import com.greensnow25.entity.*;
 public class Board {
     private final Cell[][] board;
     private final int size;
-    private final int monsterCount;
     private boolean bordCreate = false;
+    private Cell[] monstersStorage;
+    private int count = 0;
 
     public Board(int size, int countMonsters) {
         this.size = size;
-        this.monsterCount = countMonsters;
+
+        monstersStorage = new Cell[countMonsters];
         this.board = new Cell[size][size];
+    }
+
+    public void makeAMove(Cell monsterPosition) {
+
+        int count = 0;
+        Cell[] possibleMoves = monsterPosition.getEntity().move(monsterPosition);
+        Cell[] cells = new Cell[possibleMoves.length];
+        for (Cell i : possibleMoves) {
+            if (this.checkOutTheBoard(i) && this.checkValidateMoves(i)) {
+                cells[count++] = i;
+            }
+        }
+        System.arraycopy(cells, 0, cells, 0, count);
+        Monster monster = (Monster) monsterPosition.getEntity();
+        monsterPosition.setEntity(null);
+        Cell newCellMonsterPosition = cells[(int) (Math.random() * cells.length)];
+        newCellMonsterPosition.setEntity(monster);
+    }
+
+    private boolean checkValidateMoves(Cell possibleMoves) {
+        boolean res = false;
+        if (possibleMoves.getEntity() == null) {
+            res = true;
+        } else if (possibleMoves.getEntity() instanceof Player) {
+            res = true;
+        }
+        return res;
+    }
+
+    private boolean checkOutTheBoard(Cell possibleMoves) {
+        boolean res = true;
+        if (possibleMoves.getAxisX() > this.size || possibleMoves.getAxisY() > this.size
+                || possibleMoves.getAxisX() < 0 || possibleMoves.getAxisY() < 0) {
+            res = false;
+        }
+
+        return res;
     }
 
     public void createAndPrintBoard() {
@@ -44,11 +83,15 @@ public class Board {
     }
 
     private void generateEntity(Entity entity) {
+
         while (true) {
             int x = this.generateRandomNumber();
             int y = this.generateRandomNumber();
             if (board[x][y].getEntity() == null) {
                 board[x][y].setEntity(entity);
+                if (entity instanceof MyMonsterTwo) {
+                    monstersStorage[count++] = board[x][y];
+                }
                 break;
             }
         }
@@ -58,11 +101,14 @@ public class Board {
         return (int) (Math.random() * this.size);
     }
 
-    private void generateEntityes() {
-        int count = monsterCount;
-        while (count != 0) {
-            generateEntity(new MyMonsterTwo(String.valueOf(count)));
-            count--;
+    private void generateEntity() {
+        int count = 0;
+        while (count != monstersStorage.length) {
+            MyMonsterTwo monster = new MyMonsterTwo(String.valueOf(count));
+            generateEntity(monster);
+
+            count++;
+
         }
         int barriers = size;
         while (barriers != 0) {
@@ -73,11 +119,21 @@ public class Board {
 
     }
 
+    public Cell[] getMonstersStorage() {
+        return monstersStorage;
+    }
+
+    public void runBoard(){
+
+    }
 
     public static void main(String[] args) {
         Board d = new Board(10, 4);
         d.createAndPrintBoard();
-        d.generateEntityes();
+        d.generateEntity();
         d.createAndPrintBoard();
+
+
+
     }
 }

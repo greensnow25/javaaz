@@ -22,7 +22,7 @@ public class MyMonsterOne extends Monster {
     }
 
     @Override
-    public Cell[] move() {
+    public Cell[] move(Cell currentPosition) {
 //        Cell cell = super.getStartPosition();
 //        Cell[] moves = new Cell[4];
 //        int count = 0;

@@ -30,5 +30,5 @@ public abstract class Monster extends Entity {
      * method move monster.
      */
     @Override
-    public abstract Cell[] move();
+    public abstract Cell[] move(Cell currentPosition);
 }
