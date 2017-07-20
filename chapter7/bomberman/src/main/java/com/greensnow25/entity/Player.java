@@ -31,6 +31,7 @@ public class Player extends Entity {
         Player player1 = (Player) player.getEntity();
         player.setEntity(null);
         board.getBoard()[x][y].setEntity(player1);
+        board.setPlayer(board.getBoard()[x][y]);
         board.getLock().unlock();
         return new Cell[]{new Cell(x, y)};
 

@@ -26,7 +26,7 @@ public class Board {
 
     public Board(int size, int countMonsters) {
         this.size = size;
-        this.BARRIER = new CyclicBarrier(countMonsters + 50);
+        this.BARRIER = new CyclicBarrier(countMonsters);
         this.lock = new ReentrantLock(true);
         monstersStorage = new Cell[countMonsters];
         this.board = new Cell[size][size];
@@ -47,27 +47,36 @@ public class Board {
         }
         System.arraycopy(cells, 0, cells, 0, count);
         MyMonsterTwo monster = (MyMonsterTwo) monsterPosition.getEntity();
-        Cell newCellMonsterPosition = cells[(int) (Math.random() * cells.length)];
+        Cell newCellMonsterPosition = cells[(int) (Math.random() * count - 1)];
+
         for (int i = 0; i != monstersStorage.length; i++) {
             if (monstersStorage[i].equals(monsterPosition)) {
                 monstersStorage[i] = newCellMonsterPosition;
+                monstersStorage[i].setEntity(monster);
                 break;
             }
         }
         monsterPosition.setEntity(null);
-        newCellMonsterPosition.setEntity(monster);
+        board[newCellMonsterPosition.getAxisX()][newCellMonsterPosition.getAxisY()].setEntity(monster);
+
 
         lock.unlock();
     }
 
     private boolean checkValidateMoves(Cell possibleMoves) {
         boolean res = false;
-        if (possibleMoves.getEntity() == null) {
-            res = true;
-        } else if (possibleMoves.getEntity() instanceof Player) {
-            res = true;
+        try {
+            if (board[possibleMoves.getAxisX()][possibleMoves.getAxisY()].getEntity() == null) {
+                res = true;
+            } else if (board[possibleMoves.getAxisX()][possibleMoves.getAxisY()].getEntity() instanceof Player) {
+                res = true;
+            }
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+        } finally {
+            return res;
         }
-        return res;
+
     }
 
     private boolean checkOutTheBoard(Cell possibleMoves) {
@@ -164,8 +173,12 @@ public class Board {
         return lock;
     }
 
+    public void setPlayer(Cell player) {
+        this.player = player;
+    }
+
     public static void main(String[] args) {
-        Board d = new Board(10, 4);
+        Board d = new Board(10, 10);
         d.createAndPrintBoard();
         d.generateEntitys();
         d.createAndPrintBoard();

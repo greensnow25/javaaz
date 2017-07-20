@@ -14,13 +14,15 @@ import java.util.concurrent.*;
  * @since 19.07.2017.
  */
 public class MoveEntity {
-    // private final CyclicBarrier cyclicBarrier;
+    private volatile boolean next;
+
     private final Board board;
-    private ExecutorService ex = Executors.newFixedThreadPool(4);
+    private ExecutorService ex;
 
     public MoveEntity(int size, int countMonsters) {
-        // cyclicBarrier = new CyclicBarrier(countMonsters+1);
-        board = new Board(size, countMonsters);
+        this.ex = Executors.newFixedThreadPool(countMonsters + 1);
+        this.board = new Board(size, countMonsters);
+        this.next = false;
     }
 
     public Runnable createThreads(Cell monster) {
@@ -43,19 +45,24 @@ public class MoveEntity {
 
 
     public void createPool() throws InterruptedException {
+
         while (true) {
             for (Cell monster : board.getMonstersStorage()) {
                 ex.execute(createThreads(monster));
             }
-
+            Thread.sleep(10);
             ex.execute(new Runnable() {
                 @Override
                 public void run() {
                     board.getPlayer().getEntity().move(board.getPlayer());
+                    next = true;
                 }
             });
-            ex.awaitTermination(10, TimeUnit.SECONDS);
+            //      ex.awaitTermination(1, TimeUnit.SECONDS);
+            while (!next) Thread.sleep(10);
+            System.out.println("wdqwdfwfw");
             board.createAndPrintBoard();
+            next = false;
 
 
         }
