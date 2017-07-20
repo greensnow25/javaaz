@@ -19,7 +19,7 @@ public class ThreadSafeList<T> implements SimpleContainer<T> {
     /**
      * position in the array.
      */
-    private int index = 0;
+    private volatile int index = 0;
     /**
      * modification counter.
      */
@@ -113,24 +113,13 @@ public class ThreadSafeList<T> implements SimpleContainer<T> {
      */
     public int length() {
         int count = 0;
-        synchronized (this) {
-            for (int i = 0; i != array.length; i++) {
-                if (array[i] != null) {
-                    count++;
-                }
+        for (int i = 0; i != array.length; i++) {
+            if (array[i] != null) {
+                count++;
             }
-            return count;
         }
-
+        return count;
     }
 
-    /**
-     * get array.
-     *
-     * @return array.
-     */
-    public Object[] getArray() {
-        return array;
-    }
 }
 

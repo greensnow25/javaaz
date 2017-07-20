@@ -2,6 +2,11 @@ package com.greensnow25.modules;
 
 import com.greensnow25.entity.*;
 
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Public class Board.
  *
@@ -10,22 +15,29 @@ import com.greensnow25.entity.*;
  * @since 19.07.2017.
  */
 public class Board {
+    private final CyclicBarrier BARRIER;
+    private Lock lock;
     private final Cell[][] board;
     private final int size;
     private boolean bordCreate = false;
     private Cell[] monstersStorage;
     private int count = 0;
+    private Cell player;
 
     public Board(int size, int countMonsters) {
         this.size = size;
-
+        this.BARRIER = new CyclicBarrier(countMonsters + 50);
+        this.lock = new ReentrantLock(true);
         monstersStorage = new Cell[countMonsters];
         this.board = new Cell[size][size];
+
     }
 
-    public void makeAMove(Cell monsterPosition) {
+    public void makeAMove(Cell monsterPosition) throws BrokenBarrierException, InterruptedException {
 
         int count = 0;
+        //  BARRIER.await();
+        lock.lock();
         Cell[] possibleMoves = monsterPosition.getEntity().move(monsterPosition);
         Cell[] cells = new Cell[possibleMoves.length];
         for (Cell i : possibleMoves) {
@@ -34,10 +46,18 @@ public class Board {
             }
         }
         System.arraycopy(cells, 0, cells, 0, count);
-        Monster monster = (Monster) monsterPosition.getEntity();
-        monsterPosition.setEntity(null);
+        MyMonsterTwo monster = (MyMonsterTwo) monsterPosition.getEntity();
         Cell newCellMonsterPosition = cells[(int) (Math.random() * cells.length)];
+        for (int i = 0; i != monstersStorage.length; i++) {
+            if (monstersStorage[i].equals(monsterPosition)) {
+                monstersStorage[i] = newCellMonsterPosition;
+                break;
+            }
+        }
+        monsterPosition.setEntity(null);
         newCellMonsterPosition.setEntity(monster);
+
+        lock.unlock();
     }
 
     private boolean checkValidateMoves(Cell possibleMoves) {
@@ -79,20 +99,22 @@ public class Board {
             }
             System.out.print(System.getProperty("line.separator"));
         }
+        System.out.print(System.getProperty("line.separator"));
         this.bordCreate = true;
     }
 
-    private void generateEntity(Entity entity) {
+    private Cell generateEntity(Entity entity) {
 
         while (true) {
             int x = this.generateRandomNumber();
             int y = this.generateRandomNumber();
             if (board[x][y].getEntity() == null) {
                 board[x][y].setEntity(entity);
+
                 if (entity instanceof MyMonsterTwo) {
                     monstersStorage[count++] = board[x][y];
                 }
-                break;
+                return board[x][y];
             }
         }
     }
@@ -101,7 +123,7 @@ public class Board {
         return (int) (Math.random() * this.size);
     }
 
-    private void generateEntity() {
+    private void generateEntitys() {
         int count = 0;
         while (count != monstersStorage.length) {
             MyMonsterTwo monster = new MyMonsterTwo(String.valueOf(count));
@@ -115,7 +137,7 @@ public class Board {
             generateEntity(new Barrier());
             barriers--;
         }
-        generateEntity(new Player());
+        this.player = generateEntity(new Player(this));
 
     }
 
@@ -123,16 +145,30 @@ public class Board {
         return monstersStorage;
     }
 
-    public void runBoard(){
+    public void runBoard() {
+        createAndPrintBoard();
+        generateEntitys();
+        createAndPrintBoard();
 
+    }
+
+    public Cell getPlayer() {
+        return player;
+    }
+
+    public Cell[][] getBoard() {
+        return board;
+    }
+
+    public Lock getLock() {
+        return lock;
     }
 
     public static void main(String[] args) {
         Board d = new Board(10, 4);
         d.createAndPrintBoard();
-        d.generateEntity();
+        d.generateEntitys();
         d.createAndPrintBoard();
-
 
 
     }
