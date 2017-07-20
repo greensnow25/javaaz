@@ -9,8 +9,13 @@ import com.greensnow25.modules.Cell;
  * @version 1.
  * @since 19.07.2017.
  */
-public abstract class Entity {
-
-    public abstract Cell[] move(Cell currentPosition);
+public interface Entity {
+    /**
+     * move object.
+     *
+     * @param currentPosition current position.
+     * @return array of all possibles moves.
+     */
+    Cell[] move(Cell currentPosition);
 
 }

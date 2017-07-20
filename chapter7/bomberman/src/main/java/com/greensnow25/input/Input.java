@@ -1,4 +1,4 @@
-package com.greensnow25;
+package com.greensnow25.input;
 
 import java.util.Scanner;
 
@@ -10,12 +10,24 @@ import java.util.Scanner;
  * @since 19.07.2017.
  */
 public class Input {
+    /**
+     * object of class scanner, use for reading from the keyboard.
+     */
     private final Scanner sc;
 
+    /**
+     * constructor.
+     */
     public Input() {
         sc = new Scanner(System.in);
     }
 
+    /**
+     * method displays question and read answer from the keyboard.
+     *
+     * @param question question.
+     * @return answer.
+     */
     public String answer(String question) {
         System.out.println(question);
         return sc.next();

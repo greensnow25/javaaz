@@ -9,7 +9,7 @@ import com.greensnow25.modules.Cell;
  * @version 1.
  * @since 19.07.2017.
  */
-public class Barrier extends Entity {
+public class Barrier implements Entity {
 
     /**
      * barrier can not move, always return null;
@@ -18,6 +18,7 @@ public class Barrier extends Entity {
      */
     @Override
     public Cell[] move(Cell currentPosition) {
+        System.out.println("Barrier can not move.");
         return null;
     }
 }

@@ -1,6 +1,6 @@
 package com.greensnow25.multithreading;
 
-import com.greensnow25.entity.MyMonsterTwo;
+
 import com.greensnow25.modules.Board;
 import com.greensnow25.modules.Cell;
 
@@ -26,18 +26,11 @@ public class MoveEntity {
     }
 
     public Runnable createThreads(Cell monster) {
-        return new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    board.makeAMove(monster);
-                } catch (BrokenBarrierException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+        return () -> {
+            try {
+                board.makeAMove(monster);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
         };
@@ -74,7 +67,7 @@ public class MoveEntity {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        MoveEntity moveEntity = new MoveEntity(10, 5);
+        MoveEntity moveEntity = new MoveEntity(10, 10);
         moveEntity.run();
     }
 

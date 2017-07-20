@@ -15,25 +15,33 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 19.07.2017.
  */
 public class Board {
-    private final CyclicBarrier BARRIER;
+    /**
+     * class object, using for correct work threads.
+     */
     private Lock lock;
     private final Cell[][] board;
     private final int size;
     private boolean bordCreate = false;
     private Cell[] monstersStorage;
+    /**
+     * counter for adding to the monsterStorage.
+     */
     private int count = 0;
+    /**
+     * class object player.
+     */
     private Cell player;
 
     public Board(int size, int countMonsters) {
         this.size = size;
-        this.BARRIER = new CyclicBarrier(countMonsters);
+
         this.lock = new ReentrantLock(true);
         monstersStorage = new Cell[countMonsters];
         this.board = new Cell[size][size];
 
     }
 
-    public void makeAMove(Cell monsterPosition) throws BrokenBarrierException, InterruptedException {
+    public void makeAMove(Cell monsterPosition) throws InterruptedException {
 
         int count = 0;
         //  BARRIER.await();
@@ -46,9 +54,9 @@ public class Board {
             }
         }
         System.arraycopy(cells, 0, cells, 0, count);
-        MyMonsterTwo monster = (MyMonsterTwo) monsterPosition.getEntity();
+        Monster monster = (Monster) monsterPosition.getEntity();
         Cell newCellMonsterPosition = cells[(int) (Math.random() * count - 1)];
-
+        board[monsterPosition.getAxisX()][monsterPosition.getAxisY()].setEntity(null);
         for (int i = 0; i != monstersStorage.length; i++) {
             if (monstersStorage[i].equals(monsterPosition)) {
                 monstersStorage[i] = newCellMonsterPosition;
@@ -56,7 +64,7 @@ public class Board {
                 break;
             }
         }
-        monsterPosition.setEntity(null);
+
         board[newCellMonsterPosition.getAxisX()][newCellMonsterPosition.getAxisY()].setEntity(monster);
 
 
@@ -72,7 +80,7 @@ public class Board {
                 res = true;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            ex.printStackTrace();
+
         } finally {
             return res;
         }
@@ -99,7 +107,7 @@ public class Board {
                         System.out.print(" * ");
                     } else if (board[i][j].getEntity() instanceof Barrier) {
                         System.out.print(" B ");
-                    } else if (board[i][j].getEntity() instanceof MyMonsterTwo) {
+                    } else if (board[i][j].getEntity() instanceof Monster) {
                         System.out.print(" M ");
                     } else {
                         System.out.print(" P ");
@@ -120,7 +128,7 @@ public class Board {
             if (board[x][y].getEntity() == null) {
                 board[x][y].setEntity(entity);
 
-                if (entity instanceof MyMonsterTwo) {
+                if (entity instanceof Monster) {
                     monstersStorage[count++] = board[x][y];
                 }
                 return board[x][y];
@@ -135,7 +143,7 @@ public class Board {
     private void generateEntitys() {
         int count = 0;
         while (count != monstersStorage.length) {
-            MyMonsterTwo monster = new MyMonsterTwo(String.valueOf(count));
+            Monster monster = new Monster(String.valueOf(count));
             generateEntity(monster);
 
             count++;
@@ -150,16 +158,17 @@ public class Board {
 
     }
 
-    public Cell[] getMonstersStorage() {
-        return monstersStorage;
-    }
-
     public void runBoard() {
         createAndPrintBoard();
         generateEntitys();
         createAndPrintBoard();
 
     }
+
+    public Cell[] getMonstersStorage() {
+        return monstersStorage;
+    }
+
 
     public Cell getPlayer() {
         return player;
@@ -175,14 +184,5 @@ public class Board {
 
     public void setPlayer(Cell player) {
         this.player = player;
-    }
-
-    public static void main(String[] args) {
-        Board d = new Board(10, 10);
-        d.createAndPrintBoard();
-        d.generateEntitys();
-        d.createAndPrintBoard();
-
-
     }
 }
