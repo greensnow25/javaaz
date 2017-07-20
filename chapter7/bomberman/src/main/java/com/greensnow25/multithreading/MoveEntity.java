@@ -14,17 +14,37 @@ import java.util.concurrent.*;
  * @since 19.07.2017.
  */
 public class MoveEntity {
+    /**
+     * indicate of user input.
+     */
     private volatile boolean next;
-
+    /**
+     * class object.
+     */
     private final Board board;
+    /**
+     * Class object.
+     */
     private ExecutorService ex;
 
+    /**
+     * constructor.
+     *
+     * @param size          size .
+     * @param countMonsters count of monsters.
+     */
     public MoveEntity(int size, int countMonsters) {
         this.ex = Executors.newFixedThreadPool(countMonsters + 1);
         this.board = new Board(size, countMonsters);
         this.next = false;
     }
 
+    /**
+     * create task.
+     *
+     * @param monster position.
+     * @return task.
+     */
     public Runnable createThreads(Cell monster) {
         return () -> {
             try {
@@ -36,14 +56,18 @@ public class MoveEntity {
         };
     }
 
-
+    /**
+     * create thread pool.
+     *
+     * @throws InterruptedException
+     */
     public void createPool() throws InterruptedException {
 
         while (true) {
             for (Cell monster : board.getMonstersStorage()) {
                 ex.execute(createThreads(monster));
             }
-            Thread.sleep(10);
+            Thread.sleep(100);
             ex.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -51,21 +75,28 @@ public class MoveEntity {
                     next = true;
                 }
             });
-            //      ex.awaitTermination(1, TimeUnit.SECONDS);
             while (!next) Thread.sleep(10);
-            System.out.println("wdqwdfwfw");
             board.createAndPrintBoard();
             next = false;
-
-
         }
     }
 
+    /**
+     * run.
+     *
+     * @throws InterruptedException ex.
+     */
     public void run() throws InterruptedException {
         board.runBoard();
         createPool();
     }
 
+    /**
+     * main.
+     *
+     * @param args args.
+     * @throws InterruptedException ex.
+     */
     public static void main(String[] args) throws InterruptedException {
         MoveEntity moveEntity = new MoveEntity(10, 10);
         moveEntity.run();
