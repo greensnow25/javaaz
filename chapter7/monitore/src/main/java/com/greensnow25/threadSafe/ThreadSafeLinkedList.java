@@ -15,11 +15,11 @@ public class ThreadSafeLinkedList<T> implements SimpleContainer<T> {
     /**
      * the first element of a given sequence.
      */
-    private Node<T> firstItem;
+    private volatile Node<T> firstItem;
     /**
      * the last element of a given sequence.
      */
-    private Node<T> lastItem;
+    private volatile Node<T> lastItem;
     /**
      * size of list.
      */
@@ -71,7 +71,7 @@ public class ThreadSafeLinkedList<T> implements SimpleContainer<T> {
     /**
      * Method returns a reference to the next element.
      *
-     * @param node curent node.
+     * @param node current node.
      * @return node.
      */
     private Node<T> returnCurrentItem(Node<T> node) {
@@ -137,9 +137,9 @@ public class ThreadSafeLinkedList<T> implements SimpleContainer<T> {
             @Override
             public synchronized T next() {
 
-                if(index == 0){
+                if (index == 0) {
                     node = firstItem;
-                }else {
+                } else {
                     node = node.next;
                 }
                 index++;
@@ -147,24 +147,6 @@ public class ThreadSafeLinkedList<T> implements SimpleContainer<T> {
             }
         };
     }
-
-
-    public Node<T> getFirstItem() {
-        return firstItem;
-    }
-
-    public Node<T> getLastItem() {
-        return lastItem;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
 
     /**
      * public class Node.
