@@ -21,7 +21,7 @@ public class CreatePool {
     /**
      * Non-blocking object of HashMap;
      */
-    private NonBlockHashMap nb;
+    private NonBlockCache nb;
     /**
      * count.
      */
@@ -36,7 +36,7 @@ public class CreatePool {
      */
     public CreatePool() {
         ex = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        this.nb = new NonBlockHashMap();
+        this.nb = new NonBlockCache();
     }
 
     /**
@@ -64,7 +64,7 @@ public class CreatePool {
             tasks.add(new Runnable() {
                 @Override
                 public void run() {
-                    nb.add(new Task(generateId(), "Tom", 1));
+                    nb.add(0, new Task(generateId(), "Tom", 1));
                     System.out.println(count);
                 }
             });
@@ -86,7 +86,7 @@ public class CreatePool {
      *
      * @return
      */
-    public NonBlockHashMap getNb() {
+    public NonBlockCache getNb() {
         return nb;
     }
 
@@ -103,6 +103,7 @@ public class CreatePool {
 /**
  * testing.
  */
+        Thread.sleep(100);
         createPool.getNb().update(22, new Task(1, "wdsdwsdwdw"));
         System.out.println(createPool.getNb().getMap().get(22));
         Thread.sleep(1000);

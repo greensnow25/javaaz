@@ -21,7 +21,7 @@ public class Task {
     /**
      * Version control.
      */
-    private AtomicInteger version;
+    private volatile int version;
 
     /**
      * constructor.
@@ -33,7 +33,7 @@ public class Task {
     public Task(int id, String taskName, int version) {
         this.id = id;
         this.taskName = taskName;
-        this.version = new AtomicInteger(version);
+        this.version = 0;
     }
 
     public Task(int id, String taskName) {
@@ -49,36 +49,12 @@ public class Task {
         return taskName;
     }
 
-    public AtomicInteger getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
-        if (this.version == null) {
-            this.version = new AtomicInteger(version);
-        } else {
-            this.version.set(version);
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Task task = (Task) o;
-
-        if (id != task.id) return false;
-        if (version != task.version) return false;
-        return taskName != null ? taskName.equals(task.taskName) : task.taskName == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (taskName != null ? taskName.hashCode() : 0);
-        result = 31 * result + (version != null ? version.hashCode() : 0);
-        return result;
+    public void update() {
+        version++;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class PairOfThreads {
     /**
      * hashMap own implementation.
      */
-    private NonBlockHashMap nb = new NonBlockHashMap();
+    private NonBlockCache nb = new NonBlockCache();
     /**
      * tasks list.
      */

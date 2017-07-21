@@ -139,11 +139,10 @@ public class Search {
      * @throws InterruptedException ex.
      */
     public void startSearch() throws InterruptedException {
-        boolean b = false;
         ExecutorService e = Executors.newFixedThreadPool(3);
         e.submit(new ProducePaths());
         Thread.sleep(100);
-        while (collect.size() != 0 || b) {
+        while (collect.size() != 0) {
             Thread.sleep(1);
             e.submit(new Costumer());
             if (flag && firstFind) {
