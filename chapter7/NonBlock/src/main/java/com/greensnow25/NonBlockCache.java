@@ -47,18 +47,18 @@ public class NonBlockCache {
      *
      * @param key        of task? which need to update.
      * @param updateTask new task.
-     * @throws Exception ex.
      */
-    public void update(Integer key, Task updateTask) throws Exception {
-        map.computeIfPresent(key, new BiFunction<Integer, Task, Task>() {
+    public void update(Integer key, Task updateTask) {
+        Task task = map.computeIfPresent(key, new BiFunction<Integer, Task, Task>() {
             @Override
             public Task apply(Integer integer, Task task) {
-               if(task.getVersion() == updateTask.getVersion()){
-                   updateTask.update();
-                   return task;
-               }else {
-                   throw new OptimisticException("Versions do not match!");
-               }
+                if (task.getVersion() == updateTask.getVersion()) {
+                    task = updateTask;
+                    task.update();
+                    return task;
+                } else {
+                    throw new OptimisticException("Versions do not match!");
+                }
             }
         });
     }
@@ -69,7 +69,7 @@ public class NonBlockCache {
      * @param key key.
      * @throws InterruptedException ex.
      */
-    public void remove(int key) throws InterruptedException {
+    public void remove(int key) {
         map.computeIfPresent(key, (integer, task) -> null);
     }
 

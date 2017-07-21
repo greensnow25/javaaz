@@ -33,20 +33,7 @@ public class Task {
     public Task(int id, String taskName, int version) {
         this.id = id;
         this.taskName = taskName;
-        this.version = 0;
-    }
-
-    public Task(int id, String taskName) {
-        this.id = id;
-        this.taskName = taskName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTaskName() {
-        return taskName;
+        this.version = version;
     }
 
     public int getVersion() {

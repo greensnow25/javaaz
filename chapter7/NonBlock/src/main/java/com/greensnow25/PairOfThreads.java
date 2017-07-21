@@ -30,7 +30,9 @@ public class PairOfThreads {
      */
     private Lock lock = new ReentrantLock(true);
 
-
+    /**
+     * constructor.
+     */
     public PairOfThreads() {
         this.pool = new CreatePool();
     }
@@ -41,25 +43,22 @@ public class PairOfThreads {
      * @return Thread.
      */
     private Thread createThread() {
-        return new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (lock.tryLock()) {
-                        try {
-                            Runnable task = list.get(0);
-                            task.run();
-                            list.remove(task);
-                        } finally {
-                            lock.unlock();
-                        }
-                    }
-                    if (list.size() == 0) {
-                        break;
+        return new Thread(() -> {
+            while (true) {
+                if (lock.tryLock()) {
+                    try {
+                        Runnable task = list.get(0);
+                        task.run();
+                        list.remove(task);
+                    } finally {
+                        lock.unlock();
                     }
                 }
-                System.out.printf("Thread %s die.%s", Thread.currentThread().getName(), System.getProperty("line.separator"));
+                if (list.size() == 0) {
+                    break;
+                }
             }
+            System.out.printf("Thread %s die.%s", Thread.currentThread().getName(), System.getProperty("line.separator"));
         });
     }
 

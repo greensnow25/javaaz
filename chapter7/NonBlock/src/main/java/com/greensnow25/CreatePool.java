@@ -49,7 +49,6 @@ public class CreatePool {
         }
         ex.shutdown();
         ex.awaitTermination(1, TimeUnit.SECONDS);
-        nb.print();
 
     }
 
@@ -61,13 +60,7 @@ public class CreatePool {
     protected List<Runnable> createTasksList() {
         List<Runnable> tasks = new ArrayList<>();
         for (int i = 0; i != 100; i++) {
-            tasks.add(new Runnable() {
-                @Override
-                public void run() {
-                    nb.add(0, new Task(generateId(), "Tom", 1));
-                    System.out.println(count);
-                }
-            });
+            tasks.add(() -> nb.add(count, new Task(count++, "Tom", 0)));
         }
         return tasks;
     }
@@ -77,7 +70,7 @@ public class CreatePool {
      *
      * @return id.
      */
-    private int generateId() {
+    private synchronized int generateId() {
         return count++;
     }
 
@@ -99,18 +92,6 @@ public class CreatePool {
     public static void main(String[] args) throws Exception {
         CreatePool createPool = new CreatePool();
         createPool.createPool();
-
-/**
- * testing.
- */
-        Thread.sleep(100);
-        createPool.getNb().update(22, new Task(1, "wdsdwsdwdw"));
-        System.out.println(createPool.getNb().getMap().get(22));
-        Thread.sleep(1000);
-        System.out.println(createPool.getNb().getMap().get(22).getTaskName());
-        createPool.getNb().remove(22);
-        System.out.println(createPool.getNb().getMap().get(22));
-        System.out.println("main end");
 
     }
 }
