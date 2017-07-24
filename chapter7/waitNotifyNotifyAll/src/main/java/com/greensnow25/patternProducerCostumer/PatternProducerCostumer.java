@@ -11,7 +11,7 @@ public class PatternProducerCostumer {
     /**
      * class object.
      */
-    private UsefulWork work;
+    private MyBlockigQueue<Integer> work;
     /**
      * Flag indicating that all jobs have been added to the queue.
      */
@@ -21,7 +21,7 @@ public class PatternProducerCostumer {
      * constructor.
      */
     public PatternProducerCostumer() {
-        this.work = new UsefulWork();
+        this.work = new MyBlockigQueue();
     }
 
     /**
@@ -75,7 +75,7 @@ public class PatternProducerCostumer {
         public void costume() {
             new Thread(() -> {
                 try {
-                    while (!loadFactor || work.checkNotNull() > 0) {
+                    while (!loadFactor) {
                         work.get();
                     }
                 } catch (InterruptedException e) {
