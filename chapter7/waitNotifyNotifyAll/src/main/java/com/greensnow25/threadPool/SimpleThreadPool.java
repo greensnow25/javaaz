@@ -15,39 +15,31 @@ public class SimpleThreadPool {
      * Thread pool.
      */
     private final Thread[] pool;
-    /**
-     * Number of cores in the system.
-     */
-    private final int coreCount;
+
     /**
      * Task queue for execution.
      */
-    private final ArrayBlockingQueue<Runnable> queue;
-    /**
-     * Thread position.
-     */
-    private int index = 0;
+    private final Queue<Runnable> queue;
 
     /**
      * Constructor.
      */
-    public SimpleThreadPool() {
-        this.coreCount = Runtime.getRuntime().availableProcessors();
-        this.queue = new ArrayBlockingQueue(10);
-        this.pool = new Thread[coreCount];
+    public SimpleThreadPool(int capacity) {
+        this.queue = new ArrayBlockingQueue(capacity);
+        this.pool = new Thread[Runtime.getRuntime().availableProcessors()];
     }
 
     /**
      * Method create ThreadPool equal to the number of processors in the system.
      */
     public void makePool() {
-        for (int i = 0; i != coreCount; i++) {
+        for (int i = 0; i != pool.length; i++) {
             Thread q = new Thread(() -> {
                 while (!Thread.currentThread().isInterrupted()) {
                     synchronized (queue) {
                         try {
                             Thread.sleep(10);
-                            Runnable runnable = queue.poll(1, TimeUnit.SECONDS);
+                            Runnable runnable = queue.poll();
                             if (runnable != null) {
                                 runnable.run();
                             }
@@ -57,7 +49,7 @@ public class SimpleThreadPool {
                     }
                 }
             });
-            pool[index++] = q;
+            pool[i] = q;
             q.start();
         }
     }
@@ -81,13 +73,9 @@ public class SimpleThreadPool {
     /**
      * make a work.
      */
-    public void makeAWork() {
+    private void makeAWork() {
         for (int i = 0; i != 100; i++) {
-            try {
-                queue.put(new Work(i));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            queue.add(new Work(i));
         }
         System.out.println("All work is done.");
     }
@@ -98,11 +86,10 @@ public class SimpleThreadPool {
      * @para args args.
      */
     public static void main(String[] args) {
-        SimpleThreadPool stp = new SimpleThreadPool();
+        SimpleThreadPool stp = new SimpleThreadPool(100);
         stp.makePool();
         stp.makeAWork();
         stp.destroyPool();
-
     }
 
     /**
