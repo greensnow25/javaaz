@@ -21,7 +21,7 @@ public class PatternProducerCostumer {
      * constructor.
      */
     public PatternProducerCostumer() {
-        this.work = new MyBlockigQueue();
+        this.work = new MyBlockigQueue(10);
     }
 
     /**

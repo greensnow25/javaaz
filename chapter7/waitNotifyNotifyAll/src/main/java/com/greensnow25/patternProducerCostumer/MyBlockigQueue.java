@@ -21,13 +21,14 @@ public class MyBlockigQueue<E> {
     /**
      * Queue capacity.
      */
-    private static final int CAPACITY = 10;
+    private int capacity;
 
     /**
      * constructor.
      */
-    public MyBlockigQueue() {
-        this.queue = new ArrayList(CAPACITY);
+    public MyBlockigQueue(int capacity) {
+        this.capacity = capacity;
+        this.queue = new ArrayList(capacity);
     }
 
     /**
@@ -38,7 +39,7 @@ public class MyBlockigQueue<E> {
      */
     public void put(E e) throws InterruptedException {
         synchronized (queue) {
-            while (queue.size() == CAPACITY) {
+            while (queue.size() == this.capacity) {
                 queue.wait();
             }
             queue.add(e);
