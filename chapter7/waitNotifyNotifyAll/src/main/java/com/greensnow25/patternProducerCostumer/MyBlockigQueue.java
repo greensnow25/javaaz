@@ -63,18 +63,4 @@ public class MyBlockigQueue<E> {
         }
     }
 
-//    /**
-//     * Checks the values ​​on not null.
-//     *
-//     * @return the number of non null objects.
-//     */
-//    public int checkNotNull() {
-//        int count = 0;
-//        for (Integer i : queue) {
-//            if (i != null) {
-//                count++;
-//            } else break;
-//        }
-//        return count;
-//    }
 }
