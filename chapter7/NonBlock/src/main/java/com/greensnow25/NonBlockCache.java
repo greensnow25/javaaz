@@ -49,7 +49,7 @@ public class NonBlockCache {
      * @param updateTask new task.
      */
     public void update(Integer key, Task updateTask) {
-        Task task = map.computeIfPresent(key, new BiFunction<Integer, Task, Task>() {
+        map.computeIfPresent(key, new BiFunction<Integer, Task, Task>() {
             @Override
             public Task apply(Integer integer, Task task) {
                 if (task.getVersion() == updateTask.getVersion()) {
