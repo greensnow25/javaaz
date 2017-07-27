@@ -88,41 +88,41 @@ public class Board {
         lock.unlock();
     }
 
-    /**
-     * The method checks whether it is worth it in the way of the barrier.
-     *
-     * @param possibleMoves move.
-     * @return result.
-     */
-    private boolean checkValidateMoves(Cell possibleMoves) {
-        boolean res = false;
-        try {
-            if (board[possibleMoves.getAxisX()][possibleMoves.getAxisY()].getEntity() == null) {
-                res = true;
-            } else if (board[possibleMoves.getAxisX()][possibleMoves.getAxisY()].getEntity() instanceof Player) {
-                res = true;
-            }
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            //NON*?
-        } finally {
-            return res;
-        }
-    }
-
-    /**
-     * method check does the entity go beyond the field.
-     *
-     * @param possibleMoves position.
-     * @return result.
-     */
-    private boolean checkOutTheBoard(Cell possibleMoves) {
-        boolean res = true;
-        if (possibleMoves.getAxisX() > this.size || possibleMoves.getAxisY() > this.size
-                || possibleMoves.getAxisX() < 0 || possibleMoves.getAxisY() < 0) {
-            res = false;
-        }
-        return res;
-    }
+//    /**
+//     * The method checks whether it is worth it in the way of the barrier.
+//     *
+//     * @param possibleMoves move.
+//     * @return result.
+//     */
+//    private boolean checkValidateMoves(Cell possibleMoves) {
+//        boolean res = false;
+//        try {
+//            if (board[possibleMoves.getAxisX()][possibleMoves.getAxisY()].getEntity() == null) {
+//                res = true;
+//            } else if (board[possibleMoves.getAxisX()][possibleMoves.getAxisY()].getEntity() instanceof Player) {
+//                res = true;
+//            }
+//        } catch (ArrayIndexOutOfBoundsException ex) {
+//            //NON*?
+//        } finally {
+//            return res;
+//        }
+//    }
+//
+//    /**
+//     * method check does the entity go beyond the field.
+//     *
+//     * @param possibleMoves position.
+//     * @return result.
+//     */
+//    private boolean checkOutTheBoard(Cell possibleMoves) {
+//        boolean res = true;
+//        if (possibleMoves.getAxisX() > this.size || possibleMoves.getAxisY() > this.size
+//                || possibleMoves.getAxisX() < 0 || possibleMoves.getAxisY() < 0) {
+//            res = false;
+//        }
+//        return res;
+//    }
 
     /**
      * print playing field.
@@ -150,55 +150,48 @@ public class Board {
         this.bordCreate = true;
     }
 
-    /**
-     * method generate once entity.
-     *
-     * @param entity for game.
-     * @return position.
-     */
-    private Cell generateEntity(Entity entity) {
-        while (true) {
-            int x = this.generateRandomNumber();
-            int y = this.generateRandomNumber();
-            if (board[x][y].getEntity() == null) {
-                board[x][y].setEntity(entity);
-                if (entity instanceof Monster) {
-                    monstersStorage[count++] = board[x][y];
-                }
-                return board[x][y];
-            }
-        }
-    }
+//    /**
+//     * method generate once entity.
+//     *
+//     * @param entity for game.
+//     * @return position.
+//     */
+//    private Cell generateEntity(Entity entity) {
+//        while (true) {
+//            int x = this.generateRandomNumber();
+//            int y = this.generateRandomNumber();
+//            if (board[x][y].getEntity() == null) {
+//                board[x][y].setEntity(entity);
+//                if (entity instanceof Monster) {
+//                    monstersStorage[count++] = board[x][y];
+//                }
+//                return board[x][y];
+//            }
+//        }
+//    }
 
-    /**
-     * method generate random number from the specified range.
-     *
-     * @return random number.
-     */
-    private int generateRandomNumber() {
-        return (int) (Math.random() * this.size-1);
-    }
 
-    /**
-     * method create all entity on the playing field.
-     */
-    private void generateEntitys() {
-        int count = 0;
-        while (count != monstersStorage.length) {
-            Monster monster = new Monster(String.valueOf(count));
-            generateEntity(monster);
-            count++;
-        }
-
-        int barriers = size;
-        while (barriers != 0) {
-            generateEntity(new Barrier());
-            barriers--;
-        }
-
-        this.player = generateEntity(new Player(this));
-
-    }
+//
+//    /**
+//     * method create all entity on the playing field.
+//     */
+//    private void generateEntitys() {
+//        int count = 0;
+//        while (count != monstersStorage.length) {
+//            Monster monster = new Monster(String.valueOf(count));
+//            generateEntity(monster);
+//            count++;
+//        }
+//
+//        int barriers = size;
+//        while (barriers != 0) {
+//            generateEntity(new Barrier());
+//            barriers--;
+//        }
+//
+//        this.player = generateEntity(new Player(this));
+//
+//    }
 
     /**
      * prepare field for game.

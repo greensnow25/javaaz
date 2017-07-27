@@ -2,6 +2,9 @@ package com.greensnow25.modules;
 
 import com.greensnow25.entity.Entity;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Public class Cell.
  *
@@ -9,9 +12,10 @@ import com.greensnow25.entity.Entity;
  * @version 1.
  * @since 19.07.2017.
  */
-public class Cell {
+public class Cell extends ReentrantLock {
     private int axisX;
     private int axisY;
+
 
     private Entity entity;
 

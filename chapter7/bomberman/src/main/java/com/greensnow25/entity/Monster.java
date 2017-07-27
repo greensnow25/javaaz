@@ -1,5 +1,6 @@
 package com.greensnow25.entity;
 
+import com.greensnow25.modules.Board;
 import com.greensnow25.modules.Cell;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
@@ -11,7 +12,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * @since 19.07.2017.
  */
 @Immutable
-public class Monster implements Entity {
+public class Monster extends Entity implements Runnable {
     /**
      * name.
      */
@@ -20,26 +21,39 @@ public class Monster implements Entity {
     /**
      * constructor.
      *
-     * @param name monster name.
+     * @param board board.
      */
-    public Monster(String name) {
+    public Monster(Board board, String name) {
+        super(board);
         this.name = name;
     }
 
+
     /**
      * method generates all possibles moves.
-     * @param currentPosition monster.
+     *
      * @return array, with all possibles moves.
      */
     @Override
-    public Cell[] move(Cell currentPosition) {
+    public Cell[] move() {
         Cell[] moves = new Cell[4];
         int count = 0;
-        moves[count++] = new Cell(currentPosition.getAxisX(),currentPosition.getAxisY()+1);
-        moves[count++] = new Cell(currentPosition.getAxisX(),currentPosition.getAxisY()-1);
-        moves[count++] = new Cell(currentPosition.getAxisX()+1,currentPosition.getAxisY());
-        moves[count++] = new Cell(currentPosition.getAxisX()-1,currentPosition.getAxisY());
+        super.generateEntity(this);
+        Cell current = super.getCurrentCell();
+        moves[count++] = new Cell(current.getAxisX(), current.getAxisY() + 1);
+        moves[count++] = new Cell(current.getAxisX(), current.getAxisY() - 1);
+        moves[count++] = new Cell(current.getAxisX() + 1, current.getAxisY());
+        moves[count++] = new Cell(current.getAxisX() - 1, current.getAxisY());
 
         return moves;
     }
+
+    @Override
+    public void run() {
+        while (!Thread.currentThread().isInterrupted()) {
+            Cell[] cells = this.move();
+        }
+    }
+
+
 }
