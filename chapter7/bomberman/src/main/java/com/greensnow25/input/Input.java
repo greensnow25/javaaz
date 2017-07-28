@@ -1,35 +1,22 @@
 package com.greensnow25.input;
 
-import java.util.Scanner;
+import com.greensnow25.modules.Cell;
+
+import java.util.List;
 
 /**
  * Public class Input.
  *
  * @author greensnow25.
  * @version 1.
- * @since 19.07.2017.
+ * @since 28.07.2017.
  */
-public class Input {
+public interface Input {
     /**
-     * object of class scanner, use for reading from the keyboard.
-     */
-    private final Scanner sc;
-
-    /**
-     * constructor.
-     */
-    public Input() {
-        sc = new Scanner(System.in);
-    }
-
-    /**
-     * method displays question and read answer from the keyboard.
+     * Answer.
      *
      * @param question question.
      * @return answer.
      */
-    public String answer(String question) {
-        System.out.println(question);
-        return sc.next();
-    }
+    Cell inputCell(String question, List<Cell> cellList);
 }

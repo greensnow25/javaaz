@@ -24,14 +24,6 @@ public class Cell extends ReentrantLock {
         this.axisY = axisY;
     }
 
-    public void addNewEntity(Entity entity) {
-        if (entity == null) {
-            this.entity = entity;
-        } else {
-            System.out.println("This cell already busy");
-        }
-
-    }
 
     public int getAxisX() {
         return axisX;
