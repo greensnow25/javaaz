@@ -27,7 +27,7 @@ public class ValidateData {
                 res = false;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            //NON*?
+            res = false;
         } finally {
             return res;
         }
