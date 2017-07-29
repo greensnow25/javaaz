@@ -25,17 +25,16 @@ public class Board {
      */
     private boolean bordCreate = false;
 
+    private CyclicBarrier barrier;
+
     /**
      * constructor.
      *
-     * @param size          size of playing field.
-     * @param countMonsters count of monsters.
+     * @param size size of playing field.
      */
-    public Board(int size, int countMonsters) {
-        this.size = size;
-        this.lock = new ReentrantLock(true);
-        monstersStorage = new Cell[countMonsters];
+    public Board(int size, CyclicBarrier barrier) {
         this.board = new Cell[size][size];
+        this.barrier = barrier;
     }
 
 
@@ -65,8 +64,17 @@ public class Board {
         this.bordCreate = true;
     }
 
+    public void setOnTheBoard(Cell futureCell, Entity entity, Cell oldCell ) {
+        board[oldCell.getAxisX()][oldCell.getAxisY()].setEntity(null);
+        board[futureCell.getAxisX()][futureCell.getAxisY()].setEntity(entity);
+
+    }
+
     public Cell[][] getBoard() {
         return board;
     }
 
+    public CyclicBarrier getBarrier() {
+        return barrier;
+    }
 }
