@@ -69,14 +69,10 @@ public abstract class Entity implements Runnable {
     public Cell[] getPossiblesMoves() {
         Cell[] moves = new Cell[4];
         int count = 0;
-        try {
             moves[count++] = new Cell(currentCell.getAxisX(), currentCell.getAxisY() + 1);
             moves[count++] = new Cell(currentCell.getAxisX(), currentCell.getAxisY() - 1);
             moves[count++] = new Cell(currentCell.getAxisX() + 1, currentCell.getAxisY());
             moves[count++] = new Cell(currentCell.getAxisX() - 1, currentCell.getAxisY());
-        } catch (ArrayIndexOutOfBoundsException ex) {
-
-        }
         return moves;
     }
 
