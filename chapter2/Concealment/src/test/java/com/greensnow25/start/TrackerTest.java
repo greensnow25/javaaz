@@ -1,7 +1,7 @@
 package com.greensnow25.start;
 
-import com.greensnow25.modules.Item;
-import com.greensnow25.modules.Task;
+import com.greensnow25.board.Item;
+import com.greensnow25.board.Task;
 import org.junit.Before;
 import org.junit.Test;
 

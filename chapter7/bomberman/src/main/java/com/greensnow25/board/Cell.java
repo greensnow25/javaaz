@@ -1,8 +1,7 @@
-package com.greensnow25.modules;
+package com.greensnow25.board;
 
-import com.greensnow25.entity.Entity;
+import com.greensnow25.units.Unit;
 
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -24,7 +23,7 @@ public class Cell extends ReentrantLock {
     /**
      * Unit on the current position.
      */
-    private Entity entity;
+    private Unit Unit;
 
     /**
      * constructor.
@@ -60,17 +59,17 @@ public class Cell extends ReentrantLock {
      *
      * @return unit.
      */
-    public Entity getEntity() {
-        return entity;
+    public Unit getUnit() {
+        return Unit;
     }
 
     /**
      * set unit.
      *
-     * @param entity unit.
+     * @param Unit unit.
      */
-    public void setEntity(Entity entity) {
-        this.entity = entity;
+    public void setUnit(Unit Unit) {
+        this.Unit = Unit;
     }
 
 

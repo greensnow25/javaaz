@@ -1,10 +1,8 @@
 package com.greensnow25.input;
 
-import com.greensnow25.modules.Cell;
-import com.greensnow25.validateData.ValidateData;
+import com.greensnow25.board.Cell;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Public class MonsterInput.
@@ -21,7 +19,7 @@ public class MonsterInput implements Input {
      * @return answer.
      */
     @Override
-    public Cell inputCell(String question, List<Cell> cellList) {
+    public Cell makeAStep(String question, List<Cell> cellList) {
         int i = (int) (Math.random() * cellList.size());
         Cell currentCell = cellList.get(i);
         return currentCell;

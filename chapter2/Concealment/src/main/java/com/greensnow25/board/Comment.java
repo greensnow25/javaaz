@@ -1,4 +1,4 @@
-package com.greensnow25.modules;
+package com.greensnow25.board;
 
 /**
  * public class Comment create comment for Item.

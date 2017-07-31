@@ -7,7 +7,7 @@ import com.greensnow25.firstMove.Computer;
 import com.greensnow25.firstMove.Player;
 import com.greensnow25.firstMove.User;
 import com.greensnow25.genrgateField.GenerateCompMove;
-import com.greensnow25.modules.Figure;
+import com.greensnow25.board.Figure;
 
 import java.util.ArrayList;
 import java.util.List;

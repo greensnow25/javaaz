@@ -2,9 +2,9 @@ package com.greensnow25.game;
 
 import com.greensnow25.Board;
 import com.greensnow25.genrgateField.GenerateCompMove;
-import com.greensnow25.modules.Cross;
-import com.greensnow25.modules.Figure;
-import com.greensnow25.modules.Naught;
+import com.greensnow25.board.Cross;
+import com.greensnow25.board.Figure;
+import com.greensnow25.board.Naught;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 package com.greensnow25.input;
 
-import com.greensnow25.modules.Cell;
+import com.greensnow25.board.Cell;
 
 import java.util.List;
 import java.util.Scanner;
@@ -32,7 +32,7 @@ public class UserInput implements Input {
      * @return answer.
      */
     @Override
-    public Cell inputCell(String question, List<Cell> list) {
+    public Cell makeAStep(String question, List<Cell> list) {
         String sep = System.getProperty("line.separator");
         System.out.printf("%s%s%s%s", question, sep, "Enter axis X;", sep);
         int x = Integer.parseInt(sc.next());

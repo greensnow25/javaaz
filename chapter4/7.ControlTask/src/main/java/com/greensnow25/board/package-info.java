@@ -5,4 +5,4 @@
  * @version 1.
  * @since 05.05.2017.
  */
-package com.greensnow25.modules;
+package com.greensnow25.board;

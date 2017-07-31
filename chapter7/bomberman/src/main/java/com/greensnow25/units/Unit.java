@@ -1,8 +1,8 @@
-package com.greensnow25.entity;
+package com.greensnow25.units;
 
 import com.greensnow25.input.Input;
-import com.greensnow25.modules.Board;
-import com.greensnow25.modules.Cell;
+import com.greensnow25.board.Board;
+import com.greensnow25.board.Cell;
 import com.greensnow25.validateData.ValidateData;
 
 import java.util.Arrays;
@@ -11,13 +11,13 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Public class Entity.
+ * Public class Unit.
  *
  * @author greensnow25.
  * @version 1.
  * @since 19.07.2017.
  */
-public abstract class Entity implements Runnable {
+public abstract class Unit implements Runnable {
     /**
      * playing board.
      */
@@ -37,24 +37,24 @@ public abstract class Entity implements Runnable {
      * @param board board.
      * @param input
      */
-    public Entity(Board board, Input input) {
+    public Unit(Board board, Input input) {
         this.board = board;
         this.input = input;
-        this.generateEntity(this);
+        this.generateUnit(this);
     }
 
     /**
-     * method generate once entity.
+     * method generate once units.
      *
-     * @param entity for game.
+     * @param Unit for game.
      */
-    private void generateEntity(Entity entity) {
+    private void generateUnit(Unit Unit) {
         while (true) {
             int x = (int) (Math.random() * this.board.getBoard().length - 1);
             int y = (int) (Math.random() * this.board.getBoard().length - 1);
-            if (board.getBoard()[x][y].getEntity() == null) {
+            if (board.getBoard()[x][y].getUnit() == null) {
                 this.currentCell = board.getBoard()[x][y];
-                this.currentCell.setEntity(entity);
+                this.currentCell.setUnit(Unit);
                 break;
             }
         }
@@ -84,12 +84,12 @@ public abstract class Entity implements Runnable {
         currentCell.lock();
         while (!Thread.currentThread().isInterrupted()) {
             List<Cell> cells = Arrays.asList(this.getPossiblesMoves());
-            this.waitAndPrint();
+            this.printBoard();
             Cell futureCell = null;
             boolean blockCell = false;
             try {
                 while (!blockCell) {
-                    futureCell = input.inputCell("Enter new cell for your unit ", cells);
+                    futureCell = input.makeAStep("Enter new cell for your unit ", cells);
                     if (ValidateData.checkValidateMove(this.getBoard(), futureCell)) {
                         try {
                             blockCell = futureCell.tryLock(500, TimeUnit.MILLISECONDS);
@@ -117,14 +117,14 @@ public abstract class Entity implements Runnable {
     /**
      * print board. The delay is made for the monsters to make a move.
      */
-    private void waitAndPrint() {
+    private void printBoard() {
         if (this instanceof Player) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            board.createAndPrintBoard();
+            board.createOrPrintBoard();
         }
     }
     /**

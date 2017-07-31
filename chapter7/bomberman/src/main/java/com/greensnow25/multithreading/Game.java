@@ -1,13 +1,14 @@
 package com.greensnow25.multithreading;
 
 
-import com.greensnow25.entity.Barrier;
-import com.greensnow25.entity.Monster;
-import com.greensnow25.entity.Player;
+import com.greensnow25.units.Barrier;
+import com.greensnow25.units.Monster;
+import com.greensnow25.units.Player;
 import com.greensnow25.input.MonsterInput;
 import com.greensnow25.input.UserInput;
-import com.greensnow25.modules.Board;
+import com.greensnow25.board.Board;
 
+import javax.xml.bind.annotation.XmlType;
 import java.util.concurrent.*;
 
 /**
@@ -29,7 +30,22 @@ public class Game {
     /**
      * cycle barrier.
      */
-    private  CyclicBarrier cyclicBarrier;
+    private CyclicBarrier cyclicBarrier;
+    /**
+     * Default size of the board.
+     */
+    private final static int DEFAULT_BOARD_FIELD_SIZE = 5;
+    /**
+     * Number of default monsters.
+     */
+    private final static int NUMBER_OF_DEFAULT_MONSTERS = 3;
+
+    /**
+     * Default constructor.
+     */
+    public Game() {
+        this(DEFAULT_BOARD_FIELD_SIZE, NUMBER_OF_DEFAULT_MONSTERS);
+    }
 
     /**
      * constructor.
@@ -39,7 +55,7 @@ public class Game {
      */
     public Game(int size, int countMonsters) {
         this.countMonsters = countMonsters;
-        this.cyclicBarrier = new CyclicBarrier(this.countMonsters+1);
+        this.cyclicBarrier = new CyclicBarrier(this.countMonsters + 1);
 
         this.board = new Board(size, this.cyclicBarrier);
 
@@ -51,8 +67,8 @@ public class Game {
      * @throws InterruptedException
      */
     public void createUnits() throws InterruptedException {
-        for (int i = 0; i!= countMonsters; i++){
-            new Thread(new Monster(this.board,new MonsterInput())).start();
+        for (int i = 0; i != countMonsters; i++) {
+            new Thread(new Monster(this.board, new MonsterInput())).start();
             new Thread(new Barrier(this.board, new MonsterInput())).start();
         }
         new Thread(new Player(this.board, new UserInput())).start();
@@ -64,7 +80,7 @@ public class Game {
      * @throws InterruptedException ex.
      */
     public void run() throws InterruptedException {
-        board.createAndPrintBoard();
+        board.createOrPrintBoard();
         createUnits();
     }
 

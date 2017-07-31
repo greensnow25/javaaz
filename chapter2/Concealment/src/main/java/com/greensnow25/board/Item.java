@@ -1,4 +1,4 @@
-package com.greensnow25.modules;
+package com.greensnow25.board;
 
 /**
  * public class Item contain fields of item.

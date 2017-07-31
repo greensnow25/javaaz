@@ -1,7 +1,7 @@
 package com.greensnow25.genrgateField;
 
 import com.greensnow25.Board;
-import com.greensnow25.modules.Figure;
+import com.greensnow25.board.Figure;
 
 /**
  * public class GenerateCompMove.

@@ -3,7 +3,7 @@ package com.greensnow25.firstMove;
 import com.greensnow25.Board;
 import com.greensnow25.Input.Input;
 import com.greensnow25.genrgateField.GenerateCompMove;
-import com.greensnow25.modules.Figure;
+import com.greensnow25.board.Figure;
 
 /**
  * public class FirstMove.

@@ -1,8 +1,7 @@
-package com.greensnow25.entity;
+package com.greensnow25.units;
 
 import com.greensnow25.input.Input;
-import com.greensnow25.modules.Board;
-import com.greensnow25.modules.Cell;
+import com.greensnow25.board.Board;
 
 /**
  * Public class Barrier.
@@ -11,7 +10,7 @@ import com.greensnow25.modules.Cell;
  * @version 1.
  * @since 19.07.2017.
  */
-public class Barrier extends Entity {
+public class Barrier extends Unit {
     /**
      * constructor.
      *

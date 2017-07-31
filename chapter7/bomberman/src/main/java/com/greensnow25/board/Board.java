@@ -1,11 +1,8 @@
-package com.greensnow25.modules;
+package com.greensnow25.board;
 
-import com.greensnow25.entity.*;
+import com.greensnow25.units.*;
 
-import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Public class Board.
@@ -43,17 +40,17 @@ public class Board {
     /**
      * print playing field.
      */
-    public void createAndPrintBoard() {
+    public void createOrPrintBoard() {
         for (int i = 0; i != board.length; i++) {
             for (int j = 0; j != board[i].length; j++) {
                 if (!this.bordCreate) {
                     board[i][j] = new Cell(i, j);
                 } else {
-                    if (board[i][j].getEntity() == null) {
+                    if (board[i][j].getUnit() == null) {
                         System.out.print(" * ");
-                    } else if (board[i][j].getEntity() instanceof Barrier) {
+                    } else if (board[i][j].getUnit() instanceof Barrier) {
                         System.out.print(" B ");
-                    } else if (board[i][j].getEntity() instanceof Monster) {
+                    } else if (board[i][j].getUnit() instanceof Monster) {
                         System.out.print(" M ");
                     } else {
                         System.out.print(" P ");
@@ -70,12 +67,12 @@ public class Board {
      * set unit in the cell.
      *
      * @param futureCell future cell.
-     * @param entity     unit.
+     * @param Unit     unit.
      * @param oldCell    old cell.
      */
-    public void setOnTheBoard(Cell futureCell, Entity entity, Cell oldCell) {
-        board[oldCell.getAxisX()][oldCell.getAxisY()].setEntity(null);
-        board[futureCell.getAxisX()][futureCell.getAxisY()].setEntity(entity);
+    public void setOnTheBoard(Cell futureCell, Unit Unit, Cell oldCell) {
+        board[oldCell.getAxisX()][oldCell.getAxisY()].setUnit(null);
+        board[futureCell.getAxisX()][futureCell.getAxisY()].setUnit(Unit);
 
     }
 

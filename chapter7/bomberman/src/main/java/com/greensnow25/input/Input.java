@@ -1,6 +1,6 @@
 package com.greensnow25.input;
 
-import com.greensnow25.modules.Cell;
+import com.greensnow25.board.Cell;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface Input {
      * @param question question.
      * @return answer.
      */
-    Cell inputCell(String question, List<Cell> cellList);
+    Cell makeAStep(String question, List<Cell> cellList);
 }

@@ -3,9 +3,9 @@ package com.greensnow25.firstMove;
 import com.greensnow25.Board;
 import com.greensnow25.Input.Input;
 import com.greensnow25.genrgateField.GenerateCompMove;
-import com.greensnow25.modules.Cross;
-import com.greensnow25.modules.Figure;
-import com.greensnow25.modules.Naught;
+import com.greensnow25.board.Cross;
+import com.greensnow25.board.Figure;
+import com.greensnow25.board.Naught;
 
 /**
  * public class Computer.

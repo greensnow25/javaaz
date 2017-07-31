@@ -1,6 +1,6 @@
 package com.greensnow25.start;
 
-import com.greensnow25.modules.Item;
+import com.greensnow25.board.Item;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.greensnow25.validateData;
 
-import com.greensnow25.modules.Board;
-import com.greensnow25.modules.Cell;
+import com.greensnow25.board.Board;
+import com.greensnow25.board.Cell;
 
 /**
  * Public class validateData.
@@ -19,7 +19,7 @@ public class ValidateData {
     public static boolean checkValidateMove(Board board, Cell potentialMove) {
         boolean res = true;
         try {
-            if (board.getBoard()[potentialMove.getAxisX()][potentialMove.getAxisY()].getEntity() != null) {
+            if (board.getBoard()[potentialMove.getAxisX()][potentialMove.getAxisY()].getUnit() != null) {
                 res = false;
             } else if (potentialMove.getAxisX() >= board.getBoard().length || potentialMove.getAxisY() >= board.getBoard().length
                     || potentialMove.getAxisX() < 0 || potentialMove.getAxisY() < 0) {
