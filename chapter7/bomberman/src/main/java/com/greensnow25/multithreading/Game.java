@@ -2,13 +2,11 @@ package com.greensnow25.multithreading;
 
 
 import com.greensnow25.entity.Barrier;
-import com.greensnow25.entity.Entity;
 import com.greensnow25.entity.Monster;
 import com.greensnow25.entity.Player;
 import com.greensnow25.input.MonsterInput;
 import com.greensnow25.input.UserInput;
 import com.greensnow25.modules.Board;
-import com.greensnow25.modules.Cell;
 
 import java.util.concurrent.*;
 
@@ -28,6 +26,9 @@ public class Game {
      * count monsters.
      */
     private int countMonsters;
+    /**
+     * cycle barrier.
+     */
     private  CyclicBarrier cyclicBarrier;
 
     /**
@@ -44,21 +45,16 @@ public class Game {
 
     }
 
-    public void queueSteps(){
-
-    }
-
     /**
-     * create thread pool.
+     * create Units.
      *
      * @throws InterruptedException
      */
     public void createUnits() throws InterruptedException {
         for (int i = 0; i!= countMonsters; i++){
-            new Thread(new Monster(this.board,String.valueOf(i+1),new MonsterInput())).start();
+            new Thread(new Monster(this.board,new MonsterInput())).start();
             new Thread(new Barrier(this.board, new MonsterInput())).start();
         }
-
         new Thread(new Player(this.board, new UserInput())).start();
     }
 
@@ -79,7 +75,7 @@ public class Game {
      * @throws InterruptedException ex.
      */
     public static void main(String[] args) throws InterruptedException {
-        Game game = new Game(10, 1);
+        Game game = new Game(3, 1);
         game.run();
     }
 

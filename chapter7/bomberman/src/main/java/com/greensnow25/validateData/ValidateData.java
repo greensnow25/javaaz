@@ -1,6 +1,5 @@
 package com.greensnow25.validateData;
 
-import com.greensnow25.entity.Player;
 import com.greensnow25.modules.Board;
 import com.greensnow25.modules.Cell;
 
@@ -32,5 +31,4 @@ public class ValidateData {
             return res;
         }
     }
-
 }

@@ -8,7 +8,6 @@ import com.greensnow25.validateData.ValidateData;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,7 +22,13 @@ public abstract class Entity implements Runnable {
      * playing board.
      */
     private final Board board;
+    /**
+     * current Cell.
+     */
     private Cell currentCell;
+    /**
+     * system input.
+     */
     private final Input input;
 
     /**
@@ -36,9 +41,7 @@ public abstract class Entity implements Runnable {
         this.board = board;
         this.input = input;
         this.generateEntity(this);
-
     }
-
 
     /**
      * method generate once entity.
@@ -67,42 +70,42 @@ public abstract class Entity implements Runnable {
         Cell[] moves = new Cell[4];
         int count = 0;
         try {
-            moves[count++] = board.getBoard()[currentCell.getAxisX()][currentCell.getAxisY() + 1];
-            moves[count++] = board.getBoard()[currentCell.getAxisX()][currentCell.getAxisY() - 1];
-            moves[count++] = board.getBoard()[currentCell.getAxisX() + 1][currentCell.getAxisY()];
-            moves[count++] = board.getBoard()[currentCell.getAxisX() - 1][currentCell.getAxisY()];
+            moves[count++] = new Cell(currentCell.getAxisX(), currentCell.getAxisY() + 1);
+            moves[count++] = new Cell(currentCell.getAxisX(), currentCell.getAxisY() - 1);
+            moves[count++] = new Cell(currentCell.getAxisX() + 1, currentCell.getAxisY());
+            moves[count++] = new Cell(currentCell.getAxisX() - 1, currentCell.getAxisY());
         } catch (ArrayIndexOutOfBoundsException ex) {
 
         }
         return moves;
     }
 
+    /**
+     * run.
+     */
     @Override
     public void run() {
         currentCell.lock();
         while (!Thread.currentThread().isInterrupted()) {
             List<Cell> cells = Arrays.asList(this.getPossiblesMoves());
-            int i;
             waitAndPrint();
             Cell futureCell = null;
             boolean blockCell = false;
             try {
                 while (!blockCell) {
-                    futureCell = input.inputCell("Enter new cell for your unit: ", cells);
+                    futureCell = input.inputCell("Enter new cell for your unit ", cells);
                     if (ValidateData.checkValidateMove(this.getBoard(), futureCell)) {
                         try {
                             blockCell = futureCell.tryLock(500, TimeUnit.MILLISECONDS);
                         } catch (InterruptedException e) {
+                            blockCell = true;
                             Thread.currentThread().interrupt();
                             e.printStackTrace();
                         }
-                    } else {
-                       // cells.remove(futureCell);
                     }
                 }
             } finally {
                 try {
-
                     board.getBarrier().await();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -116,20 +119,29 @@ public abstract class Entity implements Runnable {
         }
     }
 
+    /**
+     * get current cell.
+     *
+     * @return
+     */
     public Cell getCurrentCell() {
         return currentCell;
     }
 
-    public void setCurrentCell(Cell currentCell) {
-        this.currentCell = currentCell;
-    }
-
+    /**
+     * get board.
+     *
+     * @return board.
+     */
     public Board getBoard() {
         return board;
     }
 
-    public void waitAndPrint(){
-        if(this instanceof Player){
+    /**
+     * print board. The delay is made for the monsters to make a move.
+     */
+    public void waitAndPrint() {
+        if (this instanceof Player) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

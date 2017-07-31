@@ -33,7 +33,8 @@ public class UserInput implements Input {
      */
     @Override
     public Cell inputCell(String question, List<Cell> list) {
-        System.out.println("Enter axis X;");
+        String sep = System.getProperty("line.separator");
+        System.out.printf("%s%s%s%s", question, sep, "Enter axis X;", sep);
         int x = Integer.parseInt(sc.next());
         System.out.println("Enter axis Y;");
         int y = Integer.parseInt(sc.next());

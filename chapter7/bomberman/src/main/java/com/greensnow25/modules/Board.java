@@ -24,7 +24,9 @@ public class Board {
      * flag of boar creating.
      */
     private boolean bordCreate = false;
-
+    /**
+     * cycle barrier.
+     */
     private CyclicBarrier barrier;
 
     /**
@@ -64,16 +66,33 @@ public class Board {
         this.bordCreate = true;
     }
 
-    public void setOnTheBoard(Cell futureCell, Entity entity, Cell oldCell ) {
+    /**
+     * set unit in the cell.
+     *
+     * @param futureCell future cell.
+     * @param entity     unit.
+     * @param oldCell    old cell.
+     */
+    public void setOnTheBoard(Cell futureCell, Entity entity, Cell oldCell) {
         board[oldCell.getAxisX()][oldCell.getAxisY()].setEntity(null);
         board[futureCell.getAxisX()][futureCell.getAxisY()].setEntity(entity);
 
     }
 
+    /**
+     * get Board.
+     *
+     * @return board.
+     */
     public Cell[][] getBoard() {
         return board;
     }
 
+    /**
+     * get CycleBarrier.
+     *
+     * @return barrier.
+     */
     public CyclicBarrier getBarrier() {
         return barrier;
     }

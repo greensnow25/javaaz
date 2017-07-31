@@ -13,11 +13,6 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  */
 @Immutable
 public class Monster extends Entity implements Runnable {
-    /**
-     * name.
-     */
-    private final String name;
-
 
     /**
      * constructor.
@@ -25,14 +20,9 @@ public class Monster extends Entity implements Runnable {
      * @param board board.
      * @param input
      */
-    public Monster(Board board, String name, Input input) {
+    public Monster(Board board, Input input) {
         super(board, input);
-        this.name = name;
-
     }
-
-
-
 
 
 }

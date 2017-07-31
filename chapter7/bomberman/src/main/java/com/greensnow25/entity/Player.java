@@ -21,6 +21,4 @@ public class Player extends Entity {
     public Player(Board board, Input input) {
         super(board, input);
     }
-
-
 }
