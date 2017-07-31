@@ -35,7 +35,7 @@ public abstract class Unit implements Runnable {
      * constructor.
      *
      * @param board board.
-     * @param input
+     * @param input input.
      */
     public Unit(Board board, Input input) {
         this.board = board;
