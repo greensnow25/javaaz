@@ -75,7 +75,7 @@ public class Game {
      * @throws InterruptedException ex.
      */
     public static void main(String[] args) throws InterruptedException {
-        Game game = new Game(3, 1);
+        Game game = new Game(10, 3);
         game.run();
     }
 
