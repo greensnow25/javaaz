@@ -48,7 +48,7 @@ public abstract class Entity implements Runnable {
      *
      * @param entity for game.
      */
-    public void generateEntity(Entity entity) {
+    private void generateEntity(Entity entity) {
         while (true) {
             int x = (int) (Math.random() * this.board.getBoard().length - 1);
             int y = (int) (Math.random() * this.board.getBoard().length - 1);
@@ -66,7 +66,7 @@ public abstract class Entity implements Runnable {
      * @return array, with all possibles moves.
      */
 
-    public Cell[] getPossiblesMoves() {
+    private Cell[] getPossiblesMoves() {
         Cell[] moves = new Cell[4];
         int count = 0;
             moves[count++] = new Cell(currentCell.getAxisX(), currentCell.getAxisY() + 1);
@@ -84,7 +84,7 @@ public abstract class Entity implements Runnable {
         currentCell.lock();
         while (!Thread.currentThread().isInterrupted()) {
             List<Cell> cells = Arrays.asList(this.getPossiblesMoves());
-            waitAndPrint();
+            this.waitAndPrint();
             Cell futureCell = null;
             boolean blockCell = false;
             try {
@@ -114,7 +114,19 @@ public abstract class Entity implements Runnable {
             }
         }
     }
-
+    /**
+     * print board. The delay is made for the monsters to make a move.
+     */
+    private void waitAndPrint() {
+        if (this instanceof Player) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            board.createAndPrintBoard();
+        }
+    }
     /**
      * get current cell.
      *
@@ -133,17 +145,5 @@ public abstract class Entity implements Runnable {
         return board;
     }
 
-    /**
-     * print board. The delay is made for the monsters to make a move.
-     */
-    public void waitAndPrint() {
-        if (this instanceof Player) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            board.createAndPrintBoard();
-        }
-    }
+
 }
