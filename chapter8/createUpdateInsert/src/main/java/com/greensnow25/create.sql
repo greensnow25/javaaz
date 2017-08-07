@@ -13,3 +13,12 @@ CREATE TABLE citys (
   FOREIGN KEY (regions_id) REFERENCES regions (id)
 );
 
+WITH A AS (SELECT  maker, model
+FROM Product
+WHERE type = 'Printer'
+AND maker IN(SELECT P.maker FROM Product P WHERE P.type ='PC' ))
+
+SELECT A.maker AVG(PC.hd) AS PRICE
+FROM A JOIN PC
+ON A.model = PC.model
+GROUP BY A.maker
