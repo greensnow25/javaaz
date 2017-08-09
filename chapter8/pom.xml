@@ -12,7 +12,7 @@
     </parent>
     <modules>
         <module>createUpdateInsert</module>
-
+        <module>query</module>
 
     </modules>
 
