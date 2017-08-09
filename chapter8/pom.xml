@@ -13,6 +13,7 @@
     <modules>
         <module>createUpdateInsert</module>
         <module>query</module>
+        <module>outerJoin</module>
 
     </modules>
 
