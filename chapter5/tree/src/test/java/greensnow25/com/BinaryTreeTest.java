@@ -19,7 +19,7 @@ public class BinaryTreeTest {
     /**
      * class object.
      */
-    BinaryTree<Integer> tree;
+   private BinaryTree<Integer> tree;
 
     /**
      * run before the test.

@@ -2,7 +2,6 @@ package com.greensnow25;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 
@@ -36,7 +35,7 @@ public class XMLCreator {
     private final String URL = "jdbc:postgresql://127.0.0.1:5432/job4j";
     private Connection connection = null;
     private Statement st;
-    Document documentXMLOne;
+    Document documentXMLOne = null;
     //  Handler  handler = new FileHandler();
     Logger l = LoggerFactory.getLogger(XMLCreator.class);
 
@@ -75,14 +74,15 @@ public class XMLCreator {
         //dbCreator();
         this.documentXMLOne = createEmptyDoc(dbf);
         try {
-            this.fromDBToXML(documentXMLOne);
+            documentXMLOne =this.fromDBToXML(documentXMLOne);
+
         } catch (TransformerException e) {
             e.printStackTrace();
         }
     }
 
 
-    private boolean fromDBToXML(Document doc) throws TransformerException {
+    private Document fromDBToXML(Document doc) throws TransformerException {
         boolean res = false;
         try {
             Element root = doc.createElement("Enumeration");
@@ -100,19 +100,19 @@ public class XMLCreator {
                     Element el = doc.createElement(columnName);
                     el.appendChild(doc.createTextNode(value.toString()));
                     num.appendChild(el);
-
                 }
             }
-         //   TransformerFactory tf = TransformerFactory.newInstance();
-//            Transformer transformer = tf.newTransformer();
-//            DOMSource source = new DOMSource(doc);
-//            StreamResult result = new StreamResult(new File("E:\\base.xml"));
-//            transformer.transform(source, result);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("E:\\base.xml"));
+            transformer.transform(source, result);
+
             res = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return res;
+        return doc;
     }
 
     private void buildNumbersXML(ResultSet resultSet) {
@@ -136,8 +136,12 @@ public class XMLCreator {
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document xslt = db.parse("E:\\progectsJava\\javaaz\\chapter8\\jdbc\\src\\main\\java\\com\\greensnow25\\Schema.xsl");
         System.out.println(xslt);
+        System.out.println(creator.documentXMLOne);
         Document XML2 = transformXML(creator.documentXMLOne, xslt);
         System.out.println(XML2);
+
+
+
     }
 
 
@@ -146,25 +150,14 @@ public class XMLCreator {
         Source xmlSource = new DOMSource(xml);
         Source xsltSource = new DOMSource(xslt);
 
-        DOMResult result = new DOMResult();
-//
-//        String xmlFile = "/Path/to/Original/XML/file.xml";
-//        String xslFile = "/Path/to/XSL/file.xml";
-//
-//        TransformerFactory factory = TransformerFactory.newInstance();
-//        Source xslt = new StreamSource(new File(xslFile));
-//        Transformer transformer = factory.newTransformer(xslt);
-//
-//        Source text = new StreamSource(new File(xmlFile));
-//        transformer.transform(text, new StreamResult(new File("/Path/to/Output/XML/file.xml")));
-        // the factory pattern supports different XSLT processors
+
         TransformerFactory transFact
                 = TransformerFactory.newInstance();
         Transformer trans = transFact.newTransformer(xsltSource);
-
+        StreamResult result = new StreamResult(new File("E:\\base1.xml"));
         trans.transform(xmlSource, result);
 
-        Document resultDoc = (Document) result.getNode();
+        Document resultDoc =null;
 
         return resultDoc;
     }

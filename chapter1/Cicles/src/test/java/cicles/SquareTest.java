@@ -3,7 +3,7 @@ package cicles;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import  org.apache.commons.io.output.ByteArrayOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 public class SquareTest {
 

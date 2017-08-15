@@ -30,9 +30,8 @@ public class Square {
 //method shows the value of the function in the interval from step
     void show(int step){
         System.out.println("Значение фунции в промежутке от  "+ 5 + "  до  "+ 10 +"  с шагом  " + 1);
-        for (5 = 5; 5 < 10; 5 = 5 + 1) {
-           int x = 5;
-            this.calculate(x);
+        for (int i= 0; i < 10; i++) {
+            this.calculate(i);
            }
 
     }
