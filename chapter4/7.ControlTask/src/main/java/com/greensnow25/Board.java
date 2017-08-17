@@ -49,7 +49,7 @@ public class Board {
     }
 
     /**
-     * print board.
+     * print model.
      */
     public void showBoard() {
         for (int i = 0; i != figures.length; i++) {

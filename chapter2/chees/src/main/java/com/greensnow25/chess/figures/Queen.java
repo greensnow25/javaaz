@@ -15,7 +15,7 @@ public class Queen extends Figure {
     /**
      * constructor of class.
      *
-     * @param position figure position on board.
+     * @param position figure position on model.
      */
     public Queen(Cell position) {
         super(position);
@@ -25,7 +25,7 @@ public class Queen extends Figure {
      * method describes a possible path of movement of the figure.
      * on the chessboard, and checks whether the motion is possible.
      *
-     * @param destenation position on board where need to move figure.
+     * @param destenation position on model where need to move figure.
      * @return array of cells that figure should go to the designated path.
      * @throws ImposibleMoveExeption figure do not move that.
      */

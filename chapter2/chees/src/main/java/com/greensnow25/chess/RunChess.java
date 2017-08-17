@@ -29,17 +29,17 @@ Castle castle = new Castle(new Cell (7,5));
 
 
 //        Pawn pawn = new Pawn(new Cell(2, 5), 1);
-//        board.addFigure(pawn);
-//        board.move(pawn.getPosition(), new Cell(2, 6));
-      //  board.move(pawn.getPosition(), new Cell(2, 2));
-        //     board.move(new Cell(2, 5), new Cell(2, 6));
-        //      board.move(new Cell(2,3), new Cell(2,2));
+//        model.addFigure(pawn);
+//        model.move(pawn.getPosition(), new Cell(2, 6));
+      //  model.move(pawn.getPosition(), new Cell(2, 2));
+        //     model.move(new Cell(2, 5), new Cell(2, 6));
+        //      model.move(new Cell(2,3), new Cell(2,2));
         //       Knight bishop = new Knight(new Cell(2, 4));
-        //      board.addFigure(bishop);
+        //      model.addFigure(bishop);
         //    bishop.way(new Cell(3,2));
         // bishop.way(new Cell(2, 7));
-        // board.move(new Cell(2, 4), new Cell(2, 6));
-        //  board.move(new Cell(2,6), new Cell(2,7));
+        // model.move(new Cell(2, 4), new Cell(2, 6));
+        //  model.move(new Cell(2,6), new Cell(2,7));
 
 
     }

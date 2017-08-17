@@ -25,7 +25,7 @@ import static org.junit.Assert.assertThat;
 public class BoardTest {
 
     /**
-     * field board creating the bord.
+     * field model creating the bord.
      */
     private Board board;
 
@@ -93,7 +93,7 @@ public class BoardTest {
     }
 
     /**
-     * method checks whether the figure of a chess board included.
+     * method checks whether the figure of a chess model included.
      *
      * @throws ImposibleMoveExeption   Entrance is not possible, a pawn two cells .
      *                                 forward can move only the first move.

@@ -12,14 +12,14 @@ import com.greensnow25.chess.exeptions.ImposibleMoveExeption;
  */
 public abstract class Figure {
     /**
-     * figure position on the board.
+     * figure position on the model.
      */
     final Cell position;
 
     /**
      * constructor of class.
      *
-     * @param position figure position on board.
+     * @param position figure position on model.
      */
     public Figure(Cell position) {
         this.position = position;
@@ -29,7 +29,7 @@ public abstract class Figure {
      * method describes a possible path of movement of the figure.
      * on the chessboard, and checks whether the motion is possible.
      *
-     * @param destenation position on board where need to move figure.
+     * @param destenation position on model where need to move figure.
      * @return array of cells that figure should go to the designated path.
      * @throws ImposibleMoveExeption figure do not move that.
      */
@@ -39,7 +39,7 @@ public abstract class Figure {
      * method describes a possible path of movement of the figure.
      * on the chessboard, and checks whether the motion is possible.
      *
-     * @param destenation position on board where need to move figure.
+     * @param destenation position on model where need to move figure.
      * @return array of cells that figure should go to the designated path.
      * @throws ImposibleMoveExeption figure do not move that.
      */

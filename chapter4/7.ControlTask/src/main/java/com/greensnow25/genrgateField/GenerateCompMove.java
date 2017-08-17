@@ -14,7 +14,7 @@ public class GenerateCompMove {
     /**
      * generate computer move.
      *
-     * @param board  board.
+     * @param board  model.
      * @param figure figure.
      * @return true if done.
      */

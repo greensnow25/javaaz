@@ -15,7 +15,7 @@ public class Player extends Unit {
     /**
      * constructor.
      *
-     * @param board board.
+     * @param board model.
      */
     public Player(Board board, Input input) {
         super(board, input);

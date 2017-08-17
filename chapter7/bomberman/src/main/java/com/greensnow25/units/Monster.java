@@ -17,7 +17,7 @@ public class Monster extends Unit implements Runnable {
     /**
      * constructor.
      *
-     * @param board board.
+     * @param board model.
      * @param input
      */
     public Monster(Board board, Input input) {

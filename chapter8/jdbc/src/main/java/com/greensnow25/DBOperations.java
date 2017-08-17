@@ -64,7 +64,7 @@ public class DBOperations {
     /**
      * load properties from file.
      */
-    public void loadProperties() {
+    private void loadProperties() {
         try (InputStreamReader reader = new FileReader("chapter8\\jdbc\\src\\main\\resourses\\jdbc.properties")) {
             Properties properties = new Properties();
             properties.load(reader);

@@ -14,7 +14,7 @@ public class Barrier extends Unit {
     /**
      * constructor.
      *
-     * @param board board.
+     * @param board model.
      * @param input
      */
     public Barrier(Board board, Input input) {

@@ -79,7 +79,7 @@ public class Board {
     /**
      * get Board.
      *
-     * @return board.
+     * @return model.
      */
     public Cell[][] getBoard() {
         return board;

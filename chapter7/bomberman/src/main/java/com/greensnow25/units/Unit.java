@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class Unit implements Runnable {
     /**
-     * playing board.
+     * playing model.
      */
     private final Board board;
     /**
@@ -34,7 +34,7 @@ public abstract class Unit implements Runnable {
     /**
      * constructor.
      *
-     * @param board board.
+     * @param board model.
      * @param input input.
      */
     public Unit(Board board, Input input) {
@@ -115,7 +115,7 @@ public abstract class Unit implements Runnable {
         }
     }
     /**
-     * print board. The delay is made for the monsters to make a move.
+     * print model. The delay is made for the monsters to make a move.
      */
     private void printBoard() {
         if (this instanceof Player) {
@@ -137,9 +137,9 @@ public abstract class Unit implements Runnable {
     }
 
     /**
-     * get board.
+     * get model.
      *
-     * @return board.
+     * @return model.
      */
     public Board getBoard() {
         return board;

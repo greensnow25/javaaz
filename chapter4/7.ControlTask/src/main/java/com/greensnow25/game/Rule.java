@@ -24,7 +24,7 @@ public abstract class Rule {
     /**
      * We calculate figures of a certain type necessary for victor.
      *
-     * @param board      board.
+     * @param board      model.
      * @param lastFigure Figure from which begins the calculation of figures.
      * @param directX    Direction of movement along the x axis.
      * @param directY    Direction of movement along the y axis
@@ -54,7 +54,7 @@ public abstract class Rule {
      * @param axisX axis x.
      * @param axisY axis y.
      * @param board boadr.
-     * @return if out of the board then return true.
+     * @return if out of the model then return true.
      */
     private boolean outOfRange(int axisX, int axisY, Board board) {
         boolean result = false;

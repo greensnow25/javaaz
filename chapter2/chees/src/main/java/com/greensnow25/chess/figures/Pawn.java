@@ -25,7 +25,7 @@ public class Pawn extends Figure {
     /**
      * constructor of class.
      *
-     * @param position figure position on board.
+     * @param position figure position on model.
      * @param color    if int color = -1 then move pawn down up. else color =1 up down.
      */
     public Pawn(Cell position, int color) {
@@ -38,7 +38,7 @@ public class Pawn extends Figure {
      * method describes a possible path of movement of the figure.
      * on the chessboard, and checks whether the motion is possible.
      *
-     * @param destenation position on board where need to move figure.
+     * @param destenation position on model where need to move figure.
      * @return array of cells that figure should go to the designated path.
      * @throws ImposibleMoveExeption figure do not move that.
      */

@@ -6,7 +6,7 @@ import com.greensnow25.chess.exeptions.OccupiedWayException;
 import com.greensnow25.chess.figures.Figure;
 
 /**
- * public class Board draw the board and checks the validity of entered data.
+ * public class Board draw the model and checks the validity of entered data.
  * if data true then figure move.
  *
  * @author greensnow 25.
@@ -15,7 +15,7 @@ import com.greensnow25.chess.figures.Figure;
  */
 public class Board {
     /**
-     * figure on the chess board.
+     * figure on the chess model.
      */
     private Figure figure;
     /**
@@ -27,7 +27,7 @@ public class Board {
      */
     private Figure[] figures = new Figure[10];
     /**
-     * chess board size.
+     * chess model size.
      */
     private int size = 8;
 

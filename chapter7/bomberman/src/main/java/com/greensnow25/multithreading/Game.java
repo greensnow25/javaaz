@@ -32,7 +32,7 @@ public class Game {
      */
     private CyclicBarrier cyclicBarrier;
     /**
-     * Default size of the board.
+     * Default size of the model.
      */
     private final static int DEFAULT_BOARD_FIELD_SIZE = 5;
     /**

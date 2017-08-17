@@ -32,7 +32,7 @@ public class Computer extends Player {
     /**
      * generate computer move.
      *
-     * @param board        board.
+     * @param board        model.
      * @param input        system input.
      * @param choiceFigure figure played by computer.
      * @return
