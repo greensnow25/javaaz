@@ -8,17 +8,16 @@ import org.w3c.dom.Document;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.*;
 
-import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -30,64 +29,47 @@ import javax.xml.transform.stream.StreamResult;
  * @since 10.08.2017.
  */
 public class XMLCreator {
-    private final String password = "tcrfylth";
-    private final String userName = "postgres";
-    private final String URL = "jdbc:postgresql://127.0.0.1:5432/job4j";
-    private Connection connection = null;
-    private Statement st;
-    Document documentXMLOne = null;
-    //  Handler  handler = new FileHandler();
-    Logger l = LoggerFactory.getLogger(XMLCreator.class);
+    /**
+     * factory get new instance.
+     */
+    private TransformerFactory tf;
+    /**
+     * Doc build factory.
+     */
+    private DocumentBuilderFactory dbf;
+    /**
+     * class object, perform operations with data base.
+     */
+    private DBOperations dbOperations;
+    /**
+     * logger.
+     */
+    private Logger l = LoggerFactory.getLogger(XMLCreator.class);
 
-    public XMLCreator() {
-        try {
-            this.connection = DriverManager.getConnection(this.URL, this.userName, this.password);
-            this.st = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    /**
+     * constructor.
+     *
+     * @param count of recording in the data base.
+     */
+    public XMLCreator(int count) {
+        dbOperations = new DBOperations(count);
+        this.dbf = DocumentBuilderFactory.newInstance();
+        this.tf = TransformerFactory.newInstance();
     }
 
-    private boolean dbCreator() {
-        boolean res = false;
-        try {
-
-            st.executeUpdate("DROP SCHEMA IF EXISTS num CASCADE ");
-            st.executeUpdate("CREATE SCHEMA num");
-            st.executeUpdate("CREATE TABLE num.numbers(id_key  SERIAL PRIMARY KEY, " +
-                    "number INTEGER NOT NULL UNIQUE )");
-            PreparedStatement sp = connection.prepareStatement("INSERT INTO num.numbers(number)VALUES (?)");
-            for (int i = 0; i != 100; i++) {
-                sp.setInt(1, i);
-                sp.execute();
-            }
-            res = true;
-        } catch (SQLException e) {
-            l.error(e.getMessage(), e);
-        }
-        return res;
-    }
-
-
-    public void run() throws ParserConfigurationException {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        //dbCreator();
-        this.documentXMLOne = createEmptyDoc(dbf);
-        try {
-            documentXMLOne =this.fromDBToXML(documentXMLOne);
-
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-    }
-
-
+    /**
+     * method transform base to xml file.
+     *
+     * @param doc incoming empty document.
+     * @return xml file with all values from data base.
+     * @throws TransformerException ex.
+     */
     private Document fromDBToXML(Document doc) throws TransformerException {
-        boolean res = false;
         try {
+            l.info("start convert");
             Element root = doc.createElement("Enumeration");
             doc.appendChild(root);
-            ResultSet numbers = st.executeQuery("SELECT * FROM num.numbers;");
+            ResultSet numbers = this.dbOperations.selectQuery("SELECT id_key, number  FROM num.numbers;");
             ResultSetMetaData rsmd = numbers.getMetaData();
             int columnCount = rsmd.getColumnCount();
             while (numbers.next()) {
@@ -102,63 +84,97 @@ public class XMLCreator {
                     num.appendChild(el);
                 }
             }
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer transformer = tf.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("E:\\base.xml"));
-            transformer.transform(source, result);
-
-            res = true;
+            l.info("conversion completed successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            l.warn(e.getMessage(), e);
         }
+        Transformer transformer = tf.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File("chapter8\\jdbc\\src\\main\\java\\com\\greensnow25\\baseFirst.xml"));
+        transformer.transform(source, result);
         return doc;
     }
 
-    private void buildNumbersXML(ResultSet resultSet) {
-        DocumentImpl XMLDoc = new DocumentImpl();
-        Element rootElement = XMLDoc.createElement("Enumeration");
-        XMLDoc.appendChild(rootElement);
+    /**
+     * @param xml doc.
+     * @return new mapping doc.
+     * @throws TransformerException         ex.
+     * @throws ParserConfigurationException ex.
+     * @throws IOException                  ex.
+     * @throws SAXException                 ex.
+     */
+    public File frmXMLToXML(Document xml) throws TransformerException, ParserConfigurationException, IOException, SAXException {
+        Source xmlSource = new DOMSource(xml);
+        DocumentBuilder documentBuilder = dbf.newDocumentBuilder();
+        Document xslt = documentBuilder.parse(new File("chapter8\\jdbc\\src\\main\\java\\com\\greensnow25\\Schema.xsl"));
+        Source xsltSource = new DOMSource(xslt);
+        Transformer trans = this.tf.newTransformer(xsltSource);
+        File f = new File("chapter8\\jdbc\\src\\main\\java\\com\\greensnow25\\baseSecond.xml");
+        StreamResult result = new StreamResult(f);
+        trans.transform(xmlSource, result);
+        return f;
     }
 
+    /**
+     * method create empty xml document.
+     *
+     * @param dbf factory.
+     * @return empty xml.
+     * @throws ParserConfigurationException ex.
+     */
     public Document createEmptyDoc(DocumentBuilderFactory dbf) throws ParserConfigurationException {
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.newDocument();
         return doc;
     }
 
-    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, TransformerException {
-        XMLCreator creator = new XMLCreator();
-        creator.run();
+    /**
+     * run application.
+     *
+     * @throws ParserConfigurationException ex.
+     * @throws IOException                  ex.
+     * @throws SAXException                 ex.
+     * @throws XMLStreamException           ex.
+     */
+    public void runApplication() throws ParserConfigurationException, IOException, SAXException, XMLStreamException {
+        Document documentXMLFirst = createEmptyDoc(dbf);
+        try {
+            Document documentXML = this.fromDBToXML(documentXMLFirst);
+            dbf.setNamespaceAware(true);
+            File f = this.frmXMLToXML(documentXML);
+            BigInteger count = new Counter(f.getPath()).parseAndAdd();
+            System.out.printf("%s%d%s", "Sum of all attributes equals:", count, System.getProperty("line.separator"));
+        } catch (TransformerException e) {
+            l.warn(e.getMessage(), e);
+        }
+    }
 
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(true);
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document xslt = db.parse("E:\\progectsJava\\javaaz\\chapter8\\jdbc\\src\\main\\java\\com\\greensnow25\\Schema.xsl");
-        System.out.println(xslt);
-        System.out.println(creator.documentXMLOne);
-        Document XML2 = transformXML(creator.documentXMLOne, xslt);
-        System.out.println(XML2);
+    /**
+     * main.
+     *
+     * @param args args.
+     * @throws IOException                  ex.
+     * @throws ParserConfigurationException ex.
+     * @throws SAXException                 ex.
+     * @throws TransformerException         ex.
+     * @throws XMLStreamException           ex.
+     */
 
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, TransformerException, XMLStreamException {
+
+        long start = System.currentTimeMillis();
+        XMLCreator creator = new XMLCreator(1_000);
+        long finish1 = System.currentTimeMillis();
+        double res1 = (finish1 - start) / 1000;
+        System.out.printf("%s%f%s", "Database creation time : ", res1, System.getProperty("line.separator"));
+
+        creator.runApplication();
+        long finish = System.currentTimeMillis();
+        double res = (finish - start) / 1000;
+        System.out.printf("%s%f%s", "purse and make sum time : ", res, System.getProperty("line.separator"));
 
 
     }
 
 
-    public static Document transformXML(Document xml, Document xslt) throws TransformerException, ParserConfigurationException, FactoryConfigurationError {
-
-        Source xmlSource = new DOMSource(xml);
-        Source xsltSource = new DOMSource(xslt);
-
-
-        TransformerFactory transFact
-                = TransformerFactory.newInstance();
-        Transformer trans = transFact.newTransformer(xsltSource);
-        StreamResult result = new StreamResult(new File("E:\\base1.xml"));
-        trans.transform(xmlSource, result);
-
-        Document resultDoc =null;
-
-        return resultDoc;
-    }
 }

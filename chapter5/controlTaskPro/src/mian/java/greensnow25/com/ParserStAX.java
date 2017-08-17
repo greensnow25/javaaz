@@ -34,9 +34,6 @@ public class ParserStAX {
     public void parse() throws FileNotFoundException, XMLStreamException {
         XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(new FileReader(path));
         while (reader.hasNext()) {
-            int read = reader.next();
-
-
             if (reader.isStartElement()) {
                 String value = reader.getLocalName();
                 if (value.equals("AddOrder")) {
@@ -52,7 +49,6 @@ public class ParserStAX {
                     map.remove(Integer.parseInt(reader.getAttributeValue(1)));
                 }
             }
-
         }
     }
 
