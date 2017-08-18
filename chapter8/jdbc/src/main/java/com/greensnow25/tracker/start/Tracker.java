@@ -16,7 +16,7 @@ import java.util.Random;
 public class Tracker {
 
     /**
-     * sizearray.
+     * size of array.
      */
     private final int sizeArray = 10;
     /**
@@ -33,7 +33,7 @@ public class Tracker {
      * Method add the Item.
      *
      * @param item item.
-     * @return item onposition.
+     * @return item on position.
      */
     public Item add(Item item) {
         item.setId(this.generateId());
@@ -42,10 +42,10 @@ public class Tracker {
     }
 
     /**
-     * Methos search item by id.
+     * Method search item by id.
      *
      * @param id of item.
-     * @return finded item.
+     * @return detected item.
      */
     public Item findById(String id) {
         Item result = null;
@@ -78,7 +78,7 @@ public class Tracker {
     }
 
     /**
-     * Metod search item and update them.
+     * Method search item and update them.
      *
      * @param item you want to find.
      */
@@ -104,15 +104,13 @@ public class Tracker {
                 break;
             }
         }
-
-
     }
 
     /**
      * Method search item by name.
      *
      * @param name - name of item.
-     * @return finded item.
+     * @return detected item.
      */
     public Item findByName(String name) {
         Item res = null;
@@ -124,6 +122,4 @@ public class Tracker {
         }
         return res;
     }
-
-
 }

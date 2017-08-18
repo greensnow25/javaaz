@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class ConsoleInput implements Input {
     /**
-     * Scanner obgect.
+     * Scanner object.
      */
 
     private Scanner scan = new Scanner(System.in);

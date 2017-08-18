@@ -48,7 +48,7 @@ public class MenuTracker {
     }
 
     /**
-     * filling array objects with help inner clases.
+     * filling array objects with help inner classes.
      */
     public void filling() {
         userActions.add(this.new AddItem("Add the item.", 0));
@@ -61,7 +61,7 @@ public class MenuTracker {
     }
 
     /**
-     * method perfom actions with items.
+     * method perform actions with items.
      *
      * @param key action number.
      */
@@ -81,7 +81,7 @@ public class MenuTracker {
     }
 
     /**
-     * method collect informstiom from inner classes.
+     * method collect information from inner classes.
      */
     public void show() {
         for (UserAction useractions : userActions) {
@@ -101,8 +101,8 @@ public class MenuTracker {
         /**
          * constructor of class.
          *
-         * @param name Information about what the class can do.
-         * @param keyAction keyaction.
+         * @param name      Information about what the class can do.
+         * @param keyAction keyAction.
          */
         AddItem(String name, int keyAction) {
             super(name, keyAction);
@@ -113,8 +113,8 @@ public class MenuTracker {
 
             try {
                 Item item = tracker.add(new Task(input.ask("name"), input.ask("desk")));
-                item.getComments().addComent(input.ask("Enter new comment:"));
-                System.out.println("operation sucsesfull ");
+                item.getComments().addComment(input.ask("Enter new comment:"), item.getName());
+                System.out.println("operation successful ");
 
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("an array of filled application form please delete item");
@@ -131,8 +131,8 @@ public class MenuTracker {
         /**
          * constructor of class.
          *
-         * @param name Information about what the class can do.
-         * @param keyAction keyaction.
+         * @param name      Information about what the class can do.
+         * @param keyAction keyAction.
          */
         FindById(String name, int keyAction) {
             super(name, keyAction);
@@ -142,7 +142,7 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             Item item = tracker.findById(input.ask("enter id"));
             String sep = System.getProperty("line.separator");
-            System.out.format("%s %s", "operation sucsesfull " + sep + "name "
+            System.out.format("%s %s", "operation successful " + sep + "name "
                     + item.getName(), "desk " + item.getDiscription() + sep);
         }
     }
@@ -156,8 +156,8 @@ public class MenuTracker {
         /**
          * constructor of class.
          *
-         * @param name Information about what the class can do.
-         * @param keyAction keyaction.
+         * @param name      Information about what the class can do.
+         * @param keyAction keyAction.
          */
         ShowAll(String name, int keyAction) {
             super(name, keyAction);
@@ -171,9 +171,8 @@ public class MenuTracker {
                 System.out.format("%s  %s  %s  %s", item.getName(), item.getDiscription(),
                         item.getId(), sep);
                 System.out.println("COMMENTS LIST :");
-                for (int index = 0; index != item.getComments().show().length; index++) {
-                    System.out.format("%s  %s", item.getComments().show()[index], sep);
-                }
+                item.getComments().show(item.getName());
+
             }
         }
     }
@@ -186,8 +185,8 @@ public class MenuTracker {
         /**
          * constructor of class.
          *
-         * @param name Information about what the class can do.
-         * @param keyAction keyaction.
+         * @param name      Information about what the class can do.
+         * @param keyAction keyAction.
          */
         UpdateItem(String name, int keyAction) {
             super(name, keyAction);
@@ -201,12 +200,12 @@ public class MenuTracker {
             Task task = new Task(input.ask("new name"), input.ask("new desk"));
             task.setId(item.getId());
             tracker.update(task);
-            System.out.println("operation sucsesfull ");
+            System.out.println("operation successful ");
         }
     }
 
     /**
-     * Inner class DeleteItem/
+     * Inner class DeleteItem.
      * delete the item.
      */
     private class DeleteItem extends BaseAction {
@@ -214,8 +213,8 @@ public class MenuTracker {
         /**
          * constructor of class.
          *
-         * @param name Information about what the class can do.
-         * @param keyAction keyaction.
+         * @param name      Information about what the class can do.
+         * @param keyAction keyAction.
          */
         DeleteItem(String name, int keyAction) {
             super(name, keyAction);
@@ -228,7 +227,7 @@ public class MenuTracker {
                     "Enter item mane whos will be delete: "));
             if (item != null) {
                 tracker.delete(item);
-                System.out.println("operation sucsesfull ");
+                System.out.println("operation successful ");
             } else {
                 System.out.println("Item does not exist.");
             }
@@ -244,8 +243,8 @@ public class MenuTracker {
         /**
          * constructor of class.
          *
-         * @param name Information about what the class can do.
-         * @param keyAction keyaction.
+         * @param name      Information about what the class can do.
+         * @param keyAction keyAction.
          */
         FindByName(String name, int keyAction) {
             super(name, keyAction);
@@ -256,7 +255,7 @@ public class MenuTracker {
 
             Item item = tracker.findByName(input.ask("enter the name : "));
             String sep = System.getProperty("line.separator");
-            System.out.format("%s %s %s %s %s %s %s", "operation sucsesfull", sep,
+            System.out.format("%s %s %s %s %s %s %s", "operation successful", sep,
                     "name ", item.getName(), "desk ", item.getDiscription(), sep);
         }
     }
@@ -270,8 +269,8 @@ public class MenuTracker {
         /**
          * constructor of class.
          *
-         * @param name Information about what the class can do.
-         * @param keyAction keyaction.
+         * @param name      Information about what the class can do.
+         * @param keyAction keyAction.
          */
         AddComment(String name, int keyAction) {
             super(name, keyAction);
@@ -280,9 +279,8 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             Item item = tracker.findByName(input.ask("name"));
-            item.getComments().addComent(input.ask("enter new comment"));
+            item.getComments().addComment(input.ask("enter new comment"), item.getName());
         }
-
     }
 
     /**

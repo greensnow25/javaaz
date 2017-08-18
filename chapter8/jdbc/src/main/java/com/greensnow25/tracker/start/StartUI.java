@@ -1,5 +1,6 @@
 package com.greensnow25.tracker.start;
 
+import com.greensnow25.tracker.database.MyBase;
 import com.greensnow25.tracker.execepion.MenuOutExeption;
 import com.greensnow25.tracker.input.Input;
 import com.greensnow25.tracker.validData.ValidateInput;
@@ -69,7 +70,7 @@ public class StartUI {
      * @param args string array.
      */
     public static void main(String[] args) {
-        Tracker tracker = new Tracker();
+        Tracker tracker = new MyBase();
         Input input = new ValidateInput();
         new StartUI(input, tracker).choise();
     }

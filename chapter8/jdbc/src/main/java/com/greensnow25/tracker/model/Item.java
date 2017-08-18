@@ -1,16 +1,19 @@
 package com.greensnow25.tracker.model;
 
+import com.greensnow25.tracker.database.MyCommentBase;
+
 /**
  * public class Item contain fields of item.
+ *
  * @author greensnow25.
- * @since 27.12.16.
  * @version 1.0.
+ * @since 27.12.16.
  */
-public class Item  {
+public class Item {
     /**
      * field of class.
      */
-    private Comment comments;
+    private InterfaceComment comments;
     /**
      * item id.
      */
@@ -20,47 +23,49 @@ public class Item  {
      */
     private String name;
     /**
-     * item discription.
+     * item description.
      */
     private String discription;
     /**
      * item create date.
      */
     private long create;
-    /**
-     * public constructor of class Item.
-     * @param name item name.
-     * @param discription description of Item.
-     * @param create creating time.
-     */
-
-  public Item(String name, String discription, long create) {
-      this.name = name;
-      this.discription = discription;
-      this.create = create;
-  }
 
     /**
      * public constructor of class Item.
-     * @param name item name.
-     * @param discription description of Item.
+     *
+     * @param name        item name.
+     * @param description description of Item.
+     * @param create      creating time.
      */
-    public Item(String name, String discription) {
-        this.comments = new Comment();
+
+    public Item(String name, String description, long create) {
         this.name = name;
-        this.discription = discription;
+        this.discription = description;
+        this.create = create;
+    }
+
+    /**
+     * public constructor of class Item.
+     *
+     * @param name        item name.
+     * @param description description of Item.
+     */
+    public Item(String name, String description) {
+        this.comments = new MyCommentBase();
+        this.name = name;
+        this.discription = description;
     }
 
     /**
      * default constructor of class.
      */
     public Item() {
-
-
     }
 
     /**
      * getName.
+     *
      * @return name.
      */
     public String getName() {
@@ -69,6 +74,7 @@ public class Item  {
 
     /**
      * getDiscription.
+     *
      * @return discription.
      */
     public String getDiscription() {
@@ -77,16 +83,8 @@ public class Item  {
     }
 
     /**
-     * getCreate.
-     * @return create.
-     */
-    public long getCreate() {
-
-        return this.create;
-    }
-
-    /**
      * getId.
+     *
      * @return Id.
      */
     public String getId() {
@@ -96,6 +94,7 @@ public class Item  {
 
     /**
      * setID.
+     *
      * @param id string.
      */
     public void setId(String id) {
@@ -104,6 +103,7 @@ public class Item  {
 
     /**
      * set name.
+     *
      * @param name string.
      */
     public void setName(String name) {
@@ -111,21 +111,29 @@ public class Item  {
     }
 
     /**
-     * set discription.
-     * @param discription string.
+     * get.
+     *
+     * @return comment realization.
      */
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public InterfaceComment getComments() {
+        return comments;
     }
 
     /**
-     * getComments.
-     * @return fields of class.
+     * toString.
+     *
+     * @return String.
      */
-    public Comment getComments() {
-        return this.comments;
+    @Override
+    public String toString() {
+        return "Item{" +
+                "comments=" + comments +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", discription='" + discription + '\'' +
+                ", create=" + create +
+                '}';
     }
-
 }
 
 
