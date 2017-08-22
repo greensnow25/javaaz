@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -57,27 +58,33 @@ public class DBOperations {
     }
 
     private void loadPropertiesFromJDBC() {
-        try (FileInputStream inputStream = new FileInputStream("chapter8\\controlTask\\src\\main\\resourses\\jdbc.properties");) {
+        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties")) {
             Properties properties = new Properties();
             properties.load(inputStream);
             this.URL = properties.getProperty("URL");
             this.password = properties.getProperty("password");
             this.userName = properties.getProperty("userName");
         } catch (IOException e) {
-            l.warn(e.getMessage(),e);
+            l.warn(e.getMessage(), e);
         }
     }
 
-    public void createDB(){
+    /**
+     *
+     */
+    public void createDB() {
         try {
             Statement statement = connection.createStatement();
             statement.execute("DROP SCHEMA IF EXISTS javaJob");
             statement.execute("CREATE SCHEMA javaJob");
-            statement.execute("CREATE TABLE jobList id_job ")
+            statement.execute("CREATE TABLE jobList id_job ( id SERIAL PRIMARY KEY," +
+                    "address VARCHAR (100), " +
+                    "link_name VARCHAR (100)) ");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) throws SQLException {
         DBOperations DB = new DBOperations();
     }
