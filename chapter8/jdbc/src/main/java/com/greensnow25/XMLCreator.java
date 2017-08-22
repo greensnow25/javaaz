@@ -163,7 +163,7 @@ public class XMLCreator {
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, TransformerException, XMLStreamException {
 
         long start = System.currentTimeMillis();
-        XMLCreator creator = new XMLCreator(1_000);
+        XMLCreator creator = new XMLCreator(1_000_000);
         long finish1 = System.currentTimeMillis();
         double res1 = (finish1 - start) / 1000;
         System.out.printf("%s%f%s", "Database creation time : ", res1, System.getProperty("line.separator"));

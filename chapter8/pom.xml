@@ -15,6 +15,7 @@
         <module>query</module>
         <module>outerJoin</module>
         <module>jdbc</module>
+        <module>controlTask</module>
     </modules>
 
     <dependencies>

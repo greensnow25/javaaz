@@ -88,7 +88,10 @@ public class DBOperations {
     private boolean dbCreate() {
         l.info("create Db");
         boolean res = false;
+        int batchSize = 1000;
+        int count = 0;
         try {
+            connection.setAutoCommit(false);
             st.executeUpdate("DROP SCHEMA IF EXISTS num CASCADE ");
             st.executeUpdate("CREATE SCHEMA num");
             st.executeUpdate("CREATE TABLE num.numbers(id_key  SERIAL PRIMARY KEY, " +
@@ -96,12 +99,22 @@ public class DBOperations {
             PreparedStatement sp = connection.prepareStatement("INSERT INTO num.numbers(number)VALUES (?)");
             for (int i = 0; i != this.countOfRecords; i++) {
                 sp.setInt(1, i);
-                sp.execute();
+                sp.addBatch();
+                if (++count % batchSize == 0) {
+                    sp.executeBatch();
+                }
             }
+            sp.executeBatch();
             res = true;
+            connection.commit();
             l.info("base create successful");
         } catch (SQLException e) {
             l.error(e.getMessage(), e);
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         }
         return res;
     }
