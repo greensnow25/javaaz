@@ -3,10 +3,7 @@ package com.greensnow25.tracker.database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -58,7 +55,7 @@ public class ConnectionToMyBase {
      * load properties from file.
      */
     private void loadProperties() {
-        try (InputStreamReader reader = new FileReader("chapter8\\jdbc\\src\\main\\resourses\\jdbc.properties")) {
+        try (InputStream reader = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties")) {
             Properties properties = new Properties();
             properties.load(reader);
             this.password = properties.getProperty("password");

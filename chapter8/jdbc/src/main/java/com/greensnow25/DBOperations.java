@@ -3,10 +3,7 @@ package com.greensnow25;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.*;
 import java.util.Properties;
 
@@ -65,8 +62,8 @@ public class DBOperations {
      * load properties from file.
      */
     private void loadProperties() {
-        try (InputStreamReader reader = new FileReader("chapter8\\jdbc\\src\\main\\resourses\\jdbc.properties")) {
-            Properties properties = new Properties();
+        Properties properties = new Properties();
+        try (InputStream reader = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties")) {
             properties.load(reader);
             l.info("load properties");
             this.password = properties.getProperty("password");
@@ -90,7 +87,7 @@ public class DBOperations {
         boolean res = false;
         int batchSize = 1000;
         int count = 0;
-        try {
+        try (Statement st = connection.createStatement()) {
             connection.setAutoCommit(false);
             st.executeUpdate("DROP SCHEMA IF EXISTS num CASCADE ");
             st.executeUpdate("CREATE SCHEMA num");

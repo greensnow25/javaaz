@@ -23,14 +23,7 @@ public class MyBase extends Tracker {
      * connection.
      */
     private Connection connection = null;
-    /**
-     * statement.
-     */
-    private PreparedStatement st = null;
-    /**
-     * statement.
-     */
-    Statement statement = null;
+
     /**
      * logger.
      */
@@ -55,13 +48,13 @@ public class MyBase extends Tracker {
      * @throws SQLException ex.
      */
     public void createTable() throws SQLException {
-        this.statement = connection.createStatement();
-        statement.executeUpdate("DROP SCHEMA IF EXISTS tracker CASCADE ");
-        statement.executeUpdate("CREATE SCHEMA tracker");
-        statement.executeUpdate("CREATE TABLE tracker.items (id_user SERIAL PRIMARY KEY , user_name VARCHAR (20)UNIQUE ,time_create TIMESTAMP without time zone DEFAULT now(), descriptios TEXT )");
-        statement.executeUpdate("CREATE TABLE tracker.comments( id_comment SERIAL PRIMARY KEY, comment TEXT," +
-                " id_user INTEGER , FOREIGN KEY (id_user) REFERENCES tracker.items)");
-
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("DROP SCHEMA IF EXISTS tracker CASCADE ");
+            statement.executeUpdate("CREATE SCHEMA tracker");
+            statement.executeUpdate("CREATE TABLE tracker.items (id_user SERIAL PRIMARY KEY , user_name VARCHAR (20)UNIQUE ,time_create TIMESTAMP without time zone DEFAULT now(), descriptios TEXT )");
+            statement.executeUpdate("CREATE TABLE tracker.comments( id_comment SERIAL PRIMARY KEY, comment TEXT," +
+                    " id_user INTEGER , FOREIGN KEY (id_user) REFERENCES tracker.items)");
+        }
     }
 
     /**
@@ -72,8 +65,7 @@ public class MyBase extends Tracker {
      */
     @Override
     public Item add(Item item) {
-        try {
-            st = this.connection.prepareStatement("INSERT INTO tracker.items(user_name, descriptios)VALUES(?,?) ");
+        try (PreparedStatement st = this.connection.prepareStatement("INSERT INTO tracker.items(user_name, descriptios)VALUES(?,?) ")) {
             st.setString(1, item.getName());
             st.setString(2, item.getDiscription());
             st.execute();
@@ -91,8 +83,8 @@ public class MyBase extends Tracker {
      */
     @Override
     public void update(Item item) {
-        try {
-            st = connection.prepareStatement("UPDATE tracker.items SET user_name = ? WHERE id_user = ? ");
+
+        try (PreparedStatement st = connection.prepareStatement("UPDATE tracker.items SET user_name = ? WHERE id_user = ? ")) {
             st.setString(1, item.getName());
             st.setInt(2, 1);
             st.executeUpdate();
@@ -110,8 +102,8 @@ public class MyBase extends Tracker {
     @Override
     public Item findByName(String name) {
         Item item = null;
-        try {
-            st = connection.prepareStatement("SELECT user_name , descriptios FROM tracker.items AS A WHERE A.user_name = ?");
+
+        try (PreparedStatement st = connection.prepareStatement("SELECT user_name , descriptios FROM tracker.items AS A WHERE A.user_name = ?")) {
 
             st.setString(1, name);
             ResultSet resultSet = st.executeQuery();
@@ -135,8 +127,7 @@ public class MyBase extends Tracker {
     @Override
     public Item findById(String id) {
         Item item = null;
-        try {
-            st = connection.prepareStatement("SELECT descriptios, user_name FROM tracker.items AS A WHERE A.id_user = ?");
+        try (PreparedStatement st = connection.prepareStatement("SELECT descriptios, user_name FROM tracker.items AS A WHERE A.id_user = ?")) {
 
             st.setInt(1, Integer.parseInt(id));
             ResultSet resultSet = st.executeQuery();
@@ -159,8 +150,8 @@ public class MyBase extends Tracker {
     @Override
     public void delete(Item item) {
 
-        try {
-            st = connection.prepareStatement("DELETE FROM tracker.items AS A WHERE A.user_name = ?");
+
+        try (PreparedStatement st = connection.prepareStatement("DELETE FROM tracker.items AS A WHERE A.user_name = ?")) {
             st.setString(1, item.getName());
             st.executeUpdate();
         } catch (SQLException e) {
@@ -177,8 +168,7 @@ public class MyBase extends Tracker {
     public List<Item> getAll() {
         List<Item> list = new ArrayList<>();
         Item item = null;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT*FROM tracker.items");
             while (resultSet.next()) {
                 item = new Item(resultSet.getString("user_name"),
