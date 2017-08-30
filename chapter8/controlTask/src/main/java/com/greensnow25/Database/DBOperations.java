@@ -3,14 +3,9 @@ package com.greensnow25.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -25,10 +20,7 @@ public class DBOperations {
      * Db connection.
      */
     private Connection connection = null;
-    /**
-     * Prepeare statement.
-     */
-    private Statement st = null;
+
     /**
      * logger.
      */
@@ -57,6 +49,9 @@ public class DBOperations {
         l.info(String.valueOf(connection));
     }
 
+    /**
+     * load properties from file.
+     */
     private void loadPropertiesFromJDBC() {
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties")) {
             Properties properties = new Properties();
@@ -70,22 +65,78 @@ public class DBOperations {
     }
 
     /**
-     *
+     * create db.
      */
     public void createDB() {
         try {
             Statement statement = connection.createStatement();
-            statement.execute("DROP SCHEMA IF EXISTS javaJob");
+            statement.execute("DROP SCHEMA IF EXISTS javaJob CASCADE ");
             statement.execute("CREATE SCHEMA javaJob");
-            statement.execute("CREATE TABLE jobList id_job ( id SERIAL PRIMARY KEY," +
-                    "address VARCHAR (100), " +
+            statement.execute("CREATE TABLE javaJob.jobList ( id SERIAL PRIMARY KEY," +
+                    "address VARCHAR (100) UNIQUE , " +
                     "link_name VARCHAR (100)) ");
         } catch (SQLException e) {
-            e.printStackTrace();
+            l.warn(e.getMessage(), e);
         }
     }
 
-    public static void main(String[] args) throws SQLException {
-        DBOperations DB = new DBOperations();
+    /**
+     * add data to the database.
+     *
+     * @param name link name.
+     * @param URL  link address.
+     */
+    public void addData(String name, String URL) {
+        String requestSQL = "INSERT INTO javaJob.jobList (address, link_name) VALUES (?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(requestSQL);
+            ps.setString(1, URL);
+            ps.setString(2, name);
+            ps.execute();
+        } catch (SQLException e) {
+            l.warn(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * select element.
+     *
+     * @param name link .
+     * @param URL  adress.
+     * @return true, if find.
+     * @throws SQLException ex.
+     */
+    public boolean select(String name, String URL) throws SQLException {
+        String request = "SELECT*FROM javajob.joblist AS A WHERE  A.address = ? and A.link_name = ?";
+
+        PreparedStatement statement = connection.prepareStatement(request);
+        statement.setString(1, URL);
+        statement.setString(2, name);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
+    }
+
+    /**
+     * show all records.
+     */
+    public void showAll() {
+        String request = "SELECT*FROM javajob.joblist ";
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute(request);
+        } catch (SQLException e) {
+            l.warn(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * close connection.
+     */
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            l.warn(e.getMessage(), e);
+        }
     }
 }
