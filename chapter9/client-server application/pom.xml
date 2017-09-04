@@ -1,7 +1,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>greensnow25</groupId>
-    <artifactId>client-server application</artifactId>
+    <artifactId>client-server_application</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
 
@@ -19,4 +19,12 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
+        <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+    </plugin>
 </project>
