@@ -1,8 +1,14 @@
 package com.greensnow25.Database;
 
+import org.apache.commons.dbcp2.*;
+import org.apache.commons.pool2.ObjectPool;
+import org.apache.commons.pool2.PooledObjectFactory;
+import org.apache.commons.pool2.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -39,14 +45,54 @@ public class DBOperations {
      * URL.
      */
     private String URL = null;
+    /**
+     * driver.
+     */
+    private String driver = null;
 
     /**
      * constructor.
+     * @throws SQLException
      */
     public DBOperations() throws SQLException {
         this.loadPropertiesFromJDBC();
-        this.connection = DriverManager.getConnection(this.URL, this.userName, this.password);
-        l.info(String.valueOf(connection));
+        try {
+            this.connection = this.setUp().getConnection();
+            l.info(connection.toString());
+        } catch (ClassNotFoundException e) {
+            l.warn(e.getMessage(), e);
+        } catch (IllegalAccessException e) {
+            l.warn(e.getMessage(), e);
+        } catch (InstantiationException e) {
+            l.warn(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * prepare connection.
+     * @return DataSource
+     * @throws ClassNotFoundException ex.
+     * @throws IllegalAccessException ex.
+     * @throws InstantiationException ex.
+     */
+    private DataSource setUp() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        Class.forName(this.driver).newInstance();
+
+        PoolableConnectionFactory factory = new PoolableConnectionFactory(
+                new DriverManagerConnectionFactory(this.URL, this.userName, this.password), null);
+
+        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+        config.setMaxTotal(10);
+        config.setMaxIdle(10);
+        config.setMinIdle(1);
+
+        ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(factory, config);
+
+        factory.setPool(connectionPool);
+
+        DataSource dataSource = new PoolingDataSource<>(connectionPool);
+        l.info(dataSource.toString());
+        return dataSource;
     }
 
     /**
@@ -59,6 +105,7 @@ public class DBOperations {
             this.URL = properties.getProperty("URL");
             this.password = properties.getProperty("password");
             this.userName = properties.getProperty("userName");
+            this.driver = properties.getProperty("driver");
         } catch (IOException e) {
             l.warn(e.getMessage(), e);
         }
@@ -93,6 +140,7 @@ public class DBOperations {
             ps.setString(1, URL);
             ps.setString(2, name);
             ps.execute();
+            l.info("adding", ps);
         } catch (SQLException e) {
             l.warn(e.getMessage(), e);
         }

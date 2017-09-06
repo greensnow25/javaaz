@@ -88,7 +88,7 @@ public class MyTaskTimer extends TimerTask {
      * @throws SQLException ex.
      */
     public static void main(String[] args) throws SQLException {
-        MyTaskTimer taskTimer = new MyTaskTimer(8, 49, 0);
+        MyTaskTimer taskTimer = new MyTaskTimer(3, 29, 0);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(taskTimer, taskTimer.getDateOfStart(), 1000 * 60 * 60 * 24);
     }

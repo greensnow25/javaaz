@@ -139,7 +139,7 @@ public class HTMLParserExample {
         Date second = simpleDateFormat.parse(publishDay);
 
 
-        return first.compareTo(second) <= 0 ? true : false;
+        return first.compareTo(second) <= 0 ;
     }
 
     /**
