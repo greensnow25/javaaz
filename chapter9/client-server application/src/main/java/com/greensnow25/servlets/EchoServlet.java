@@ -1,11 +1,17 @@
 package com.greensnow25.servlets;
 
+import com.greensnow25.servlets.dao.CalculatorDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
+
 
 /**
  * Public class EchoServlet.
@@ -18,7 +24,15 @@ public class EchoServlet extends HttpServlet {
     /**
      * counter.
      */
-    private static int count = 0;
+    private int operCount = 0;
+    /**
+     * constant.
+     */
+    private static final String COUNT = "number";
+    /**
+     * logger.
+     */
+    private Logger l = LoggerFactory.getLogger(getClass());
 
     /**
      * doGEt.
@@ -30,14 +44,29 @@ public class EchoServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setContentType("text/html");
-//        PrintWriter pw = resp.getWriter();
-//        count = (int) req.getAttribute("count");
-//        count++;
-//        pw.print("<h1>count:</h1>" + "wdw");
-//        req.getRequestDispatcher("main.jsp").forward(req,resp);
 
+        l.info("OK");
         PrintWriter p = resp.getWriter();
-        p.print("<h1>HELLO<h1>");
+        CalculatorDAO calc = new CalculatorDAO();
+
+        int first = Integer.parseInt(req.getParameter("first"));
+        int second = Integer.parseInt(req.getParameter("second"));
+        String oper = req.getParameter("oper");
+        int re = calc.doOperation(first, oper, second);
+        String res = first + "+" + second + " = " + re;
+        operCount++;
+        req.getSession().setAttribute("counter", operCount);
+        req.getSession().setAttribute(COUNT + operCount, res);
+
+        Enumeration en = req.getSession().getAttributeNames();
+        while (en.hasMoreElements()) {
+            String str = (String) en.nextElement();
+            if (str.startsWith("number")) {
+                p.print(req.getSession().getAttribute(str));
+                p.print(System.getProperty("line.separator"));
+            }
+        }
+
+
     }
 }
