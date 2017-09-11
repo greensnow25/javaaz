@@ -12,6 +12,7 @@
     </parent>
     <modules>
         <module>client-server application</module>
+        <module>HTTP protocol</module>
     </modules>
     <dependencies><!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>

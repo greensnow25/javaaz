@@ -26,6 +26,10 @@ public class EchoServlet extends HttpServlet {
      */
     private int operCount = 0;
     /**
+     * mutex.
+     */
+    private Object mutex = new Object();
+    /**
      * constant.
      */
     private static final String COUNT = "number";
@@ -54,9 +58,12 @@ public class EchoServlet extends HttpServlet {
         String oper = req.getParameter("oper");
         int re = calc.doOperation(first, oper, second);
         String res = first + "+" + second + " = " + re;
-        operCount++;
-        req.getSession().setAttribute("counter", operCount);
-        req.getSession().setAttribute(COUNT + operCount, res);
+
+        synchronized (this.mutex) {
+            operCount++;
+            req.getSession().setAttribute("counter", operCount);
+            req.getSession().setAttribute(COUNT + operCount, res);
+        }
 
         Enumeration en = req.getSession().getAttributeNames();
         while (en.hasMoreElements()) {
