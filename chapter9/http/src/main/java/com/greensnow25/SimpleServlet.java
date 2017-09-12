@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class SimpleServlet extends HttpServlet {
     /**
      * logger.
      */
-    Logger l = LoggerFactory.getLogger(getClass());
+    private Logger l = LoggerFactory.getLogger(getClass());
 
     /**
      * @param config conf.
@@ -62,8 +63,11 @@ public class SimpleServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.addToBase(req, resp);
-        req.getRequestDispatcher("index1.jsp").forward(req, resp);
+PrintWriter writer = resp.getWriter();
+writer.print("wdwwfwetrtry");
+                this.addToBase(req, resp);
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
+
     }
 
     /**
@@ -75,7 +79,7 @@ public class SimpleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.addToBase(req, resp);
-        req.getRequestDispatcher("index2.jsp").forward(req, resp);
+        req.getRequestDispatcher("insert.jsp").forward(req, resp);
     }
 
     /**
@@ -100,6 +104,12 @@ public class SimpleServlet extends HttpServlet {
         super.doDelete(req, resp);
     }
 
+    /**
+     * efegf.
+     *
+     * @param req  req.
+     * @param resp resp.
+     */
     public void addToBase(HttpServletRequest req, HttpServletResponse resp) {
         String login = req.getParameter("login");
         String eMail = req.getParameter("eMail");
