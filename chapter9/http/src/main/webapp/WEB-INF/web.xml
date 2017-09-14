@@ -12,22 +12,22 @@
         <servlet-name>SimpleServlet</servlet-name>
         <servlet-class>com.greensnow25.SimpleServlet</servlet-class>
 
-        <init-param>
-            <param-name>URL</param-name>
-            <param-value>jdbc:postgresql://127.0.0.1:5432/servlet</param-value>
-        </init-param>
-        <init-param>
-            <param-name>userName</param-name>
-            <param-value>postgres</param-value>
-        </init-param>
-        <init-param>
-            <param-name>password</param-name>
-            <param-value>password</param-value>
-        </init-param>
-        <init-param>
-            <param-name>driver</param-name>
-            <param-value>org.postgresql.Driver</param-value>
-        </init-param>
+        <!--<init-param>-->
+            <!--<param-name>URL</param-name>-->
+            <!--<param-value>jdbc:postgresql://127.0.0.1:5432/servlet</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>userName</param-name>-->
+            <!--<param-value>postgres</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>password</param-name>-->
+            <!--<param-value>password</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>driver</param-name>-->
+            <!--<param-value>org.postgresql.Driver</param-value>-->
+        <!--</init-param>-->
     </servlet>
 
     <servlet-mapping>

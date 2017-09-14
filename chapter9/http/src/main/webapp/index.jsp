@@ -13,38 +13,40 @@
     <title>JSP Test - SubmitTest.jsp</title>
 </head>
 <body>
-<form action="index.jsp">
-    <table border="1">
-        <tr>
-            <td>Select operation:</td>
-            <td><select name="operation">
-                <option value=""></option>
-                <option value="add">add</option>
-                <option value="read">read</option>
-                <option value="update">update</option>
-                <option value="delete">delete</option>
-            </select></td>
+<form action="index1.jsp">
+    <center>
+        <table border="1">
+            <tr>
+                <td>Select operation:</td>
+                <td><select name="operation">
+                    <option value=""></option>
+                    <option value="add">add</option>
+                    <option value="read">read</option>
+                    <option value="update">update</option>
+                    <option value="delete">delete</option>
+                </select></td>
 
-            <td><input type="Submit" value="Click to Submit"></td>
-        </tr>
-    </table>
+                <td><input type="Submit" value="Click to Submit"></td>
+            </tr>
+        </table>
+    </center>
 </form>
 <br>
-<%
-    String myText = request.getParameter("operation");
-    if (myText == null || myText.equals("")) {
-%><b>you enter empty string, make a choice: </b>
-<%} else if (myText.equals("add")) {%>
-<c:redirect url="jsp/add.jsp"></c:redirect>
-<%} else if (myText.equals("insert")) {%>
-<c:redirect url="jsp/insert.jsp"></c:redirect>
-<%} else if (myText.equals("update")) {%>
-<c:redirect url="jsp/update.jsp"></c:redirect>
-<%} else if (myText.equals("delete")) {%>
-<c:redirect url="jsp/delete.jsp"></c:redirect>
-<%
+<%--<%--%>
+    <%--String myText = request.getParameter("operation");--%>
+    <%--if (myText == null || myText.equals("")) {--%>
+<%--%><b>you enter empty string, make a choice: </b>--%>
+<%--<%} else if (myText.equals("add")) {%>--%>
+<%--<c:redirect url="jsp/add.jsp"></c:redirect>--%>
+<%--<%} else if (myText.equals("insert")) {%>--%>
+<%--<c:redirect url="jsp/insert.jsp"></c:redirect>--%>
+<%--<%} else if (myText.equals("update")) {%>--%>
+<%--<c:redirect url="jsp/update.jsp"></c:redirect>--%>
+<%--<%} else if (myText.equals("delete")) {%>--%>
+<%--<c:redirect url="jsp/delete.jsp"></c:redirect>--%>
+<%--<%--%>
 
-    }
-%>
+    <%--}--%>
+<%--%>--%>
 </body>
 </html>

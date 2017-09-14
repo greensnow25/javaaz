@@ -1,22 +1,19 @@
 package com.greensnow25;
 
+import com.greensnow25.db.DBOperations;
+import com.greensnow25.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import java.io.PrintWriter;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.DriverManager;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Public class SympleServlet.
@@ -27,35 +24,29 @@ import java.util.Date;
  */
 public class SimpleServlet extends HttpServlet {
     /**
-     *
-     */
-    private Connection connection = null;
-    /**
      * logger.
      */
     private Logger l = LoggerFactory.getLogger(getClass());
 
     /**
-     * @param config conf.
+     * Db operations.
+     */
+    private DBOperations dbOperations;
+
+    /**
+     * init.
+     *
      * @throws ServletException ex.
      */
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        try {
-            Class.forName(config.getInitParameter("driver"));
-            this.connection = DriverManager.getConnection(config.getInitParameter("URL"),
-                    config.getInitParameter("userName"),
-                    config.getInitParameter("password"));
-            System.out.println(config.getInitParameter("userName"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void init() throws ServletException {
+        this.dbOperations = new DBOperations(Runtime.getRuntime().availableProcessors());
+        super.init();
     }
 
     /**
+     * print table.
+     *
      * @param req  rec.
      * @param resp resp.
      * @throws ServletException ex.
@@ -63,14 +54,20 @@ public class SimpleServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-PrintWriter writer = resp.getWriter();
-writer.print("wdwwfwetrtry");
-                this.addToBase(req, resp);
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        List res = null;
+        try {
+            res = dbOperations.showTable();
+        } catch (SQLException e) {
+            l.warn(e.getMessage(), e);
+        }
+        req.getSession().setAttribute("userList", res);
+        req.getRequestDispatcher("jsp/result/result.jsp").forward(req, resp);
 
     }
 
     /**
+     * The method looks redirects the request for further sorting.
+     *
      * @param req  re.
      * @param resp re.
      * @throws ServletException ex.
@@ -78,11 +75,12 @@ writer.print("wdwwfwetrtry");
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.addToBase(req, resp);
-        req.getRequestDispatcher("insert.jsp").forward(req, resp);
+        this.dispatcher(req, resp);
     }
 
     /**
+     * update.
+     *
      * @param req  re.
      * @param resp re.
      * @throws ServletException ex.
@@ -90,10 +88,17 @@ writer.print("wdwwfwetrtry");
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        Boolean res;
+        String login = req.getParameter("login");
+        String mail = req.getParameter("newMail");
+        res = this.dbOperations.updateMail(login, mail);
+        req.getSession().setAttribute("result", res.toString());
+        req.getRequestDispatcher("jsp/result/result.jsp").forward(req, resp);
     }
 
     /**
+     * delete.
+     *
      * @param req  re.
      * @param resp re.
      * @throws ServletException ex.
@@ -101,29 +106,48 @@ writer.print("wdwwfwetrtry");
      */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        Boolean res;
+        String login = req.getParameter("login");
+        res = this.dbOperations.deleteUser(login);
+        req.getSession().setAttribute("result", res.toString());
+        req.getRequestDispatcher("jsp/result/result.jsp").forward(req, resp);
     }
 
     /**
-     * efegf.
+     * add.
      *
-     * @param req  req.
+     * @param req  rec.
      * @param resp resp.
+     * @throws ServletException ex.
+     * @throws IOException      ex.
      */
-    public void addToBase(HttpServletRequest req, HttpServletResponse resp) {
-        String login = req.getParameter("login");
-        String eMail = req.getParameter("eMail");
-        Date date = new Date();
-        Timestamp time = new Timestamp(date.getTime());
-        String query = "INSERT INTO users (login, e_mail, crete_date) VALUES (?,?,?)";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, login);
-            st.setString(2, eMail);
-            st.setTimestamp(3, time);
-            st.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void myDoPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Boolean res;
+        User user = new User(req.getParameter("login"), req.getParameter("eMail"),
+                new Timestamp(new Date().getTime()));
+        res = dbOperations.addToBase(user);
+        req.getSession().setAttribute("result", res.toString());
+        req.getRequestDispatcher("/jsp/result/result.jsp").forward(req, resp);
+    }
+
+    /**
+     * dispatcher.
+     *
+     * @param req  rec.
+     * @param resp resp.
+     * @throws ServletException ex.
+     * @throws IOException      ex.
+     */
+    public void dispatcher(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getParameter("operation").equals("read")) {
+            this.doGet(req, resp);
+        } else if (req.getParameter("operation").equals("update")) {
+            this.doPut(req, resp);
+        } else if (req.getParameter("operation").equals("delete")) {
+            this.doDelete(req, resp);
+        } else {
+            this.myDoPost(req, resp);
         }
     }
+
 }

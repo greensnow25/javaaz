@@ -12,7 +12,6 @@
     </parent>
     <modules>
         <module>client-server application</module>
-        <module>HTTP protocol</module>
         <module>http</module>
     </modules>
     <dependencies><!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->

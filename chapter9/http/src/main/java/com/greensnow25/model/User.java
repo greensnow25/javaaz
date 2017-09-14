@@ -11,15 +11,15 @@ import java.sql.Timestamp;
  */
 public class User {
     /**
-     *
+     * login.
      */
     private final String login;
     /**
-     *
+     * email.
      */
     private final String eMail;
     /**
-     *
+     * create date.
      */
     private final Timestamp createDate;
 
@@ -32,5 +32,32 @@ public class User {
         this.login = login;
         this.eMail = eMail;
         this.createDate = createDate;
+    }
+
+    /**
+     * login.
+     *
+     * @return login.
+     */
+    public String getLogin() {
+        return login;
+    }
+
+    /**
+     * eMail.
+     *
+     * @return eMail.
+     */
+    public String geteMail() {
+        return eMail;
+    }
+
+    /**
+     * create date.
+     *
+     * @return create date.
+     */
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 }
