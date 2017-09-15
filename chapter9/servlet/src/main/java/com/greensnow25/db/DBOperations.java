@@ -28,7 +28,7 @@ public class DBOperations {
     /**
      * Connections pool.
      */
-    private DataSource dataSource;
+    private CreateConnection connection;
     /**
      * logger.
      */
@@ -37,18 +37,9 @@ public class DBOperations {
     /**
      * constructor.
      *
-     * @param countConnections size of pool.
      */
-    public DBOperations(int countConnections) {
-        try {
-            this.dataSource = this.setUp(countConnections);
-        } catch (ClassNotFoundException e) {
-            l.warn(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
-            l.warn(e.getMessage(), e);
-        } catch (InstantiationException e) {
-            l.warn(e.getMessage(), e);
-        }
+    public DBOperations() {
+        this.connection =new CreateConnection();
     }
 
     /**
@@ -57,51 +48,51 @@ public class DBOperations {
      * @return new connection.
      * @throws SQLException ex.
      */
-    private Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
-    }
-
-    /**
-     * prepare connection.
-     *
-     * @param countConnection size of pool.
-     * @return DataSource
-     * @throws ClassNotFoundException ex.
-     * @throws IllegalAccessException ex.
-     * @throws InstantiationException ex.
-     */
-    private DataSource setUp(int countConnection) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        String address = "";
-        String password = null;
-        String userName = null;
-        String driver = null;
-        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties")) {
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            address = properties.getProperty("URL");
-            password = properties.getProperty("password");
-            userName = properties.getProperty("userName");
-            driver = properties.getProperty("driver");
-        } catch (IOException e) {
-            System.out.println("defwf");
-            l.warn(e.getMessage(), e);
-        }
-
-        Class.forName(driver).newInstance();
-
-        PoolableConnectionFactory factory = new PoolableConnectionFactory(
-                new DriverManagerConnectionFactory(address, userName, password), null);
-
-        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-        config.setMaxTotal(countConnection);
-        config.setMaxIdle(countConnection);
-        config.setMinIdle(1);
-
-        ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(factory, config);
-        factory.setPool(connectionPool);
-        DataSource dataSource = new PoolingDataSource<>(connectionPool);
-        return dataSource;
-    }
+//    private Connection getConnection() throws SQLException {
+//        return dataSource.getConnection();
+//    }
+//
+//    /**
+//     * prepare connection.
+//     *
+//     * @param countConnection size of pool.
+//     * @return DataSource
+//     * @throws ClassNotFoundException ex.
+//     * @throws IllegalAccessException ex.
+//     * @throws InstantiationException ex.
+//     */
+//    private DataSource setUp(int countConnection) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+//        String address = "";
+//        String password = null;
+//        String userName = null;
+//        String driver = null;
+//        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties")) {
+//            Properties properties = new Properties();
+//            properties.load(inputStream);
+//            address = properties.getProperty("URL");
+//            password = properties.getProperty("password");
+//            userName = properties.getProperty("userName");
+//            driver = properties.getProperty("driver");
+//        } catch (IOException e) {
+//            System.out.println("defwf");
+//            l.warn(e.getMessage(), e);
+//        }
+//
+//        Class.forName(driver).newInstance();
+//
+//        PoolableConnectionFactory factory = new PoolableConnectionFactory(
+//                new DriverManagerConnectionFactory(address, userName, password), null);
+//
+//        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+//        config.setMaxTotal(countConnection);
+//        config.setMaxIdle(countConnection);
+//        config.setMinIdle(1);
+//
+//        ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(factory, config);
+//        factory.setPool(connectionPool);
+//        DataSource dataSource = new PoolingDataSource<>(connectionPool);
+//        return dataSource;
+//    }
 
     /**
      * add new user to the base.
@@ -112,15 +103,12 @@ public class DBOperations {
     public boolean addToBase(User user) {
         String query = "INSERT INTO users (login, e_mail, crete_date) VALUES (?,?,?)";
         Boolean res = true;
-        try (PreparedStatement st = this.getConnection().prepareStatement(query)) {
+        try (PreparedStatement st = this.connection.getConnection().prepareStatement(query)) {
             st.setString(1, user.getLogin());
             st.setString(2, user.geteMail());
             st.setTimestamp(3, user.getCreateDate());
             res = st.execute();
-        } catch (
-                SQLException e)
-
-        {
+        } catch (SQLException e) {
             l.warn(e.getMessage(), e);
         }
         return res;
@@ -136,7 +124,7 @@ public class DBOperations {
     public boolean updateMail(String login, String mail) {
         String query = "UPDATE servlet.public.users SET e_mail = ? WHERE login = ?";
         Boolean res = true;
-        try (PreparedStatement ps = getConnection().prepareStatement(query)) {
+        try (PreparedStatement ps = this.connection.getConnection().prepareStatement(query)) {
             ps.setString(1, mail);
             ps.setString(2, login);
             res = ps.execute();
@@ -155,7 +143,7 @@ public class DBOperations {
     public boolean deleteUser(String login) {
         String query = "DELETE FROM servlet.public.users WHERE login = ?";
         Boolean res = true;
-        try (PreparedStatement ps = getConnection().prepareStatement(query)) {
+        try (PreparedStatement ps = this.connection.getConnection().prepareStatement(query)) {
             ps.setString(1, login);
             res = ps.execute();
         } catch (SQLException e) {
@@ -175,7 +163,7 @@ public class DBOperations {
         ResultSet set;
         List<User> list = new ArrayList();
 
-        try (Statement st = getConnection().createStatement()) {
+        try (Statement st = this.connection.getConnection().createStatement()) {
             set = st.executeQuery(query);
             while (set.next()) {
                 String login = set.getString("login");
