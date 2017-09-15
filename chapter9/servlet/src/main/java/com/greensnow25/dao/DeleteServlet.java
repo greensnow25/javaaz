@@ -34,6 +34,6 @@ public class DeleteServlet extends HttpServlet {
         String login = req.getParameter("login");
         Boolean res = this.dbOperations.deleteUser(login);
         req.getSession().setAttribute("result", res.toString());
-        req.getRequestDispatcher("jsp/result/result.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/result/result.jsp").forward(req, resp);
     }
 }

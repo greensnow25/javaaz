@@ -46,7 +46,7 @@ public class ShowTableServlet extends HttpServlet {
             l.warn(e.getMessage(), e);
         }
         req.getSession().setAttribute("userList", res);
-        req.getRequestDispatcher("jsp/result/result.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/result/result.jsp").forward(req, resp);
 
     }
 }

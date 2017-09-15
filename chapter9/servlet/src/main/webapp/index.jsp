@@ -13,7 +13,7 @@
     <title>JSP Test - SubmitTest.jsp</title>
 </head>
 <body>
-<form action="index1.jsp">
+<form action="index1.jsp" method="post">
     <center>
         <table border="1">
             <tr>
@@ -32,21 +32,5 @@
     </center>
 </form>
 <br>
-<%--<%--%>
-    <%--String myText = request.getParameter("operation");--%>
-    <%--if (myText == null || myText.equals("")) {--%>
-<%--%><b>you enter empty string, make a choice: </b>--%>
-<%--<%} else if (myText.equals("add")) {%>--%>
-<%--<c:redirect url="jsp/add.jsp"></c:redirect>--%>
-<%--<%} else if (myText.equals("insert")) {%>--%>
-<%--<c:redirect url="jsp/insert.jsp"></c:redirect>--%>
-<%--<%} else if (myText.equals("update")) {%>--%>
-<%--<c:redirect url="jsp/update.jsp"></c:redirect>--%>
-<%--<%} else if (myText.equals("delete")) {%>--%>
-<%--<c:redirect url="jsp/delete.jsp"></c:redirect>--%>
-<%--<%--%>
-
-    <%--}--%>
-<%--%>--%>
 </body>
 </html>

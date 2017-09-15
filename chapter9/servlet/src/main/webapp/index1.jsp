@@ -29,8 +29,9 @@
     </c:when>
 
     <c:when test="${result.equals('read')}">
-
-        <a href="/userAction">Click if you wont to view the table </a>
+        <center>
+            <a href="/show">Click if you wont to view the table </a>
+        </center>
     </c:when>
 
     <c:when test="${result.equals('update')}">
@@ -38,7 +39,6 @@
             <form action="/update" method="post">
                 Enter user login : <input name="login" type="text">
                 <br>
-                <%--<input type="hidden" name="operation" value="update"/>--%>
                 Enter new user email : <input name="newMail" type="text">
                 <input name="add" type="submit" value="Send">
             </form>
@@ -50,7 +50,7 @@
         <center>
             <form action="/delete" method="post">
                 Enter user login : <input name="login" type="text">
-                ?<input type="hidden" name="operation" value="delete"/>
+                <input type="hidden" name="operation" value="delete"/>
                 <input name="add" type="submit" value="Send">
             </form>
         </center>

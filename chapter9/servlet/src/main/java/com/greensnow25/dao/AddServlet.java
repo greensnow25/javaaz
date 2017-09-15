@@ -39,7 +39,7 @@ public class AddServlet extends HttpServlet {
                 new Timestamp(new Date().getTime()));
         Boolean res = dbOperations.addToBase(user);
         req.getSession().setAttribute("result", res.toString());
-        req.getRequestDispatcher("/jsp/result/result.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/result/result.jsp").forward(req, resp);
     }
 }
 

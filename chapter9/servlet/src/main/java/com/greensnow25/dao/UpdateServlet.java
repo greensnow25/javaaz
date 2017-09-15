@@ -35,7 +35,7 @@ public class UpdateServlet extends HttpServlet {
         String mail = req.getParameter("newMail");
         Boolean res = this.dbOperations.updateMail(login, mail);
         req.getSession().setAttribute("result", res.toString());
-        req.getRequestDispatcher("jsp/result/result.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/result/result.jsp").forward(req, resp);
     }
 }
 
