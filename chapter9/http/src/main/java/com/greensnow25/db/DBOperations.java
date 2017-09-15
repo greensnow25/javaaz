@@ -63,6 +63,7 @@ public class DBOperations {
 
     /**
      * prepare connection.
+     *
      * @param countConnection size of pool.
      * @return DataSource
      * @throws ClassNotFoundException ex.
@@ -111,8 +112,7 @@ public class DBOperations {
     public boolean addToBase(User user) {
         String query = "INSERT INTO users (login, e_mail, crete_date) VALUES (?,?,?)";
         Boolean res = true;
-        try {
-            PreparedStatement st = this.getConnection().prepareStatement(query);
+        try (PreparedStatement st = this.getConnection().prepareStatement(query)) {
             st.setString(1, user.getLogin());
             st.setString(2, user.geteMail());
             st.setTimestamp(3, user.getCreateDate());
@@ -133,8 +133,7 @@ public class DBOperations {
     public boolean updateMail(String login, String mail) {
         String query = "UPDATE servlet.public.users SET e_mail = ? WHERE login = ?";
         Boolean res = true;
-        try {
-            PreparedStatement ps = getConnection().prepareStatement(query);
+        try (PreparedStatement ps = getConnection().prepareStatement(query)) {
             ps.setString(1, mail);
             ps.setString(2, login);
             res = ps.execute();
@@ -153,8 +152,7 @@ public class DBOperations {
     public boolean deleteUser(String login) {
         String query = "DELETE FROM servlet.public.users WHERE login = ?";
         Boolean res = true;
-        try {
-            PreparedStatement ps = getConnection().prepareStatement(query);
+        try (PreparedStatement ps = getConnection().prepareStatement(query)) {
             ps.setString(1, login);
             res = ps.execute();
         } catch (SQLException e) {
@@ -174,18 +172,19 @@ public class DBOperations {
         ResultSet set;
         List<User> list = new ArrayList();
 
-        Statement st = getConnection().createStatement();
-        set = st.executeQuery(query);
-        while (set.next()) {
-            String login = set.getString("login");
-            String eMail = set.getString("e_mail");
-            Timestamp date = set.getTimestamp("crete_date");
+        try (Statement st = getConnection().createStatement()) {
+            set = st.executeQuery(query);
+            while (set.next()) {
+                String login = set.getString("login");
+                String eMail = set.getString("e_mail");
+                Timestamp date = set.getTimestamp("crete_date");
 
-            User user = new User(login, eMail, date);
-            list.add(user);
+                User user = new User(login, eMail, date);
+                list.add(user);
+
+            }
+            return list;
 
         }
-        return list;
-
     }
 }
