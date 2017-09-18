@@ -38,61 +38,9 @@ public class DBOperations {
      * constructor.
      *
      */
-    public DBOperations() {
+    public DBOperations(int countCore) {
         this.connection =new CreateConnection();
     }
-
-    /**
-     * get connection.
-     *
-     * @return new connection.
-     * @throws SQLException ex.
-     */
-//    private Connection getConnection() throws SQLException {
-//        return dataSource.getConnection();
-//    }
-//
-//    /**
-//     * prepare connection.
-//     *
-//     * @param countConnection size of pool.
-//     * @return DataSource
-//     * @throws ClassNotFoundException ex.
-//     * @throws IllegalAccessException ex.
-//     * @throws InstantiationException ex.
-//     */
-//    private DataSource setUp(int countConnection) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-//        String address = "";
-//        String password = null;
-//        String userName = null;
-//        String driver = null;
-//        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties")) {
-//            Properties properties = new Properties();
-//            properties.load(inputStream);
-//            address = properties.getProperty("URL");
-//            password = properties.getProperty("password");
-//            userName = properties.getProperty("userName");
-//            driver = properties.getProperty("driver");
-//        } catch (IOException e) {
-//            System.out.println("defwf");
-//            l.warn(e.getMessage(), e);
-//        }
-//
-//        Class.forName(driver).newInstance();
-//
-//        PoolableConnectionFactory factory = new PoolableConnectionFactory(
-//                new DriverManagerConnectionFactory(address, userName, password), null);
-//
-//        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-//        config.setMaxTotal(countConnection);
-//        config.setMaxIdle(countConnection);
-//        config.setMinIdle(1);
-//
-//        ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(factory, config);
-//        factory.setPool(connectionPool);
-//        DataSource dataSource = new PoolingDataSource<>(connectionPool);
-//        return dataSource;
-//    }
 
     /**
      * add new user to the base.

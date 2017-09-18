@@ -12,11 +12,18 @@
     <title>Title</title>
 </head>
 <body>
+<c:set var="ent" value="${enter}" scope="request">
 
-<form action="/title" method="post" >
-    Enter name:      <input name="user" type="text"><br>
-    Enter password : <input name="password" type="password">
-    <input name="submit" type="submit" value="login">
-</form>
+</c:set>
+<c:if test="${ent == null || ent.equals('')}">
+    <form action="/login" method="post">
+        Enter name: <input name="login" type="text"><br>
+        Enter password : <input name="password" type="password">
+        <input name="submit" type="submit" value="login">
+    </form>
+</c:if>
+<c:if test="${ent.equals(true)}">
+    HI ${cookie.user.value}, login successful!!
+</c:if>
 </body>
 </html>
