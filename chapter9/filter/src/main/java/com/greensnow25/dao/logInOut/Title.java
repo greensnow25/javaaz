@@ -1,14 +1,16 @@
-package com.greensnow25.dao;
+package com.greensnow25.dao.logInOut;
 
 import com.greensnow25.db.ConnectToUsersBase;
 import com.greensnow25.db.CreateConnection;
-import com.sun.xml.internal.bind.v2.TODO;
+import com.greensnow25.model.visitors.RoleBase;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+
 
 /**
  * Public class Title.
@@ -19,12 +21,19 @@ import java.sql.SQLException;
  */
 @WebServlet(urlPatterns = "/login")
 public class Title extends HttpServlet {
-
+    /**
+     * connection.
+     */
     private CreateConnection getConnection;
+    /**
+     * base.
+     */
+    private RoleBase base;
 
     @Override
     public void init() throws ServletException {
         this.getConnection = new CreateConnection();
+        this.base = new RoleBase();
         super.init();
     }
 
@@ -42,13 +51,23 @@ public class Title extends HttpServlet {
             if (connect.login(name, pwd)) {
 
                 HttpSession httpSession = req.getSession();
+                String role = connect.checkUserRole(false, name);
+
+                List l = base.getMap().get(role);
+                httpSession.setAttribute("canDo", l);
+
+
+                httpSession.setAttribute("role", role);
                 httpSession.setAttribute("login", name);
-                req.setAttribute("enter", true);
+                httpSession.setAttribute("enter", true);
                 httpSession.setMaxInactiveInterval(30 * 60);
 
                 Cookie cookie = new Cookie("user", name);
+                Cookie cookieRole = new Cookie(role, role);
+                cookieRole.setMaxAge(30 * 60);
                 cookie.setMaxAge(30 * 60);
                 resp.addCookie(cookie);
+                resp.addCookie(cookieRole);
 
                 req.getRequestDispatcher("WEB-INF/login/login.jsp").forward(req, resp);
 

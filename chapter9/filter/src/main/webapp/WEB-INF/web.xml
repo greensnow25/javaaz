@@ -5,15 +5,8 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
     <welcome-file-list>
-        <welcome-file>com.greensnow25.Dispatcher</welcome-file>
+        <welcome-file>com.greensnow25.dao.logInOut.Title</welcome-file>
     </welcome-file-list>
 
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.greensnow25.Dispatcher</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/action</url-pattern>
-    </servlet-mapping>
+
 </web-app>

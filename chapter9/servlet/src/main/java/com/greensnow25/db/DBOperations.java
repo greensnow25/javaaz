@@ -1,19 +1,9 @@
 package com.greensnow25.db;
 
 import com.greensnow25.model.User;
-import org.apache.commons.dbcp2.DriverManagerConnectionFactory;
-import org.apache.commons.dbcp2.PoolableConnection;
-import org.apache.commons.dbcp2.PoolableConnectionFactory;
-import org.apache.commons.dbcp2.PoolingDataSource;
-import org.apache.commons.pool2.ObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
@@ -36,10 +26,9 @@ public class DBOperations {
 
     /**
      * constructor.
-     *
      */
     public DBOperations(int countCore) {
-        this.connection =new CreateConnection();
+        this.connection = new CreateConnection();
     }
 
     /**

@@ -7,14 +7,26 @@ package com.greensnow25.model.visitors;
  * @version 1.
  * @since 18.09.2017.
  */
-public enum AdminActions {
+public enum AdminActions implements Actions {
 
-
+    /**
+     *
+     */
     EDIT_HIMSELF(true),
-    EDIT_OTHER_USERS(true),
-    EDIT_ROLE(true);
 
+    /**
+     *
+     */
+    EDIT_OTHER_USERS(true),
+    /**
+     *
+     */
+    EDIT_ROLE(true);
+    /**
+     *
+     */
     private boolean capability;
+
 
     AdminActions(boolean b) {
         this.capability = b;
@@ -22,5 +34,9 @@ public enum AdminActions {
 
     public boolean isCapability() {
         return capability;
+    }
+
+    public AdminActions[] val() {
+        return values();
     }
 }

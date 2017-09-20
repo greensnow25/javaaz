@@ -14,6 +14,7 @@
         <module>client-server application</module>
         <module>http</module>
         <module>servlet</module>
+        <module>filter</module>
     </modules>
     <dependencies><!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>

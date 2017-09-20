@@ -3,7 +3,6 @@ package com.greensnow25.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 /**
  * Public class ConnectToUrersBase.
  *
@@ -12,12 +11,27 @@ import java.sql.SQLException;
  * @since 15.09.2017.
  */
 public class ConnectToUsersBase {
+    /**
+     * create connection.
+     */
     private CreateConnection connection;
 
+    /**
+     * constructor.
+     *
+     * @param connection connection.
+     */
     public ConnectToUsersBase(CreateConnection connection) {
         this.connection = connection;
     }
 
+    /**
+     * check if exist login.
+     *
+     * @param name login name.
+     * @return true if exist.
+     * @throws SQLException ex.
+     */
     public boolean checkUser(String name) throws SQLException {
         int i = 1;
         String query = "SELECT* FROM servlet.public.visitors as V WHERE V.login = ?";
@@ -30,9 +44,16 @@ public class ConnectToUsersBase {
             }
             return i == 0;
         }
-
     }
 
+    /**
+     * authorization.
+     *
+     * @param name login.
+     * @param psw  password.
+     * @return true if correct.
+     * @throws SQLException ex.
+     */
     public boolean login(String name, String psw) throws SQLException {
         int i = 1;
         String query = "SELECT* FROM servlet.public.visitors as V WHERE V.login = ? AND V.password = ?;";
@@ -49,14 +70,21 @@ public class ConnectToUsersBase {
 
     }
 
+    /**
+     * display user role.
+     *
+     * @param enter empty..
+     * @param login login.
+     * @return role.
+     */
     public String checkUserRole(boolean enter, String login) {
         String i = null;
-        String query = "SELECT W.role\n" +
-                "FROM (((SELECT *\n" +
-                "        FROM servlet.public.visitors AS A\n" +
-                "        WHERE login = ?) AS A\n" +
-                "  INNER JOIN servlet.public.rolebase AS RO ON RO.rolebase_role_id = A.id) AS V\n" +
-                "  INNER JOIN servlet.public.role AS D ON D.id = V.rolebase_role_id) AS W;";
+        String query = "SELECT W.role\n"
+                + "FROM (((SELECT *\n"
+                + "        FROM servlet.public.visitors AS A\n"
+                + "        WHERE login = ?) AS A\n"
+                + "  INNER JOIN servlet.public.rolebase AS RO ON RO.rolebase_role_id = A.id) AS V\n"
+                + "  INNER JOIN servlet.public.role AS D ON D.id = V.rolebase_role_id) AS W;";
         try (PreparedStatement st = connection.getConnection().prepareStatement(query)) {
             st.setString(1, login);
             ResultSet res = st.executeQuery();

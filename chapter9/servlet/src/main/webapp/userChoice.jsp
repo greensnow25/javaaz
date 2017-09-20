@@ -13,7 +13,7 @@
     <title>JSP Test - SubmitTest.jsp</title>
 </head>
 <body>
-<form action="/" method="post">
+<form action="action" method="post">
     <center>
         <table border="1">
             <tr>

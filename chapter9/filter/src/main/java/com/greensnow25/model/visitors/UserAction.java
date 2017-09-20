@@ -8,11 +8,21 @@ package com.greensnow25.model.visitors;
  * @since 18.09.2017.
  */
 public enum UserAction {
-
+    /**
+     *
+     */
     EDIT_HIMSELF(true),
+    /**
+     *
+     */
     EDIT_OTHER_USERS(false),
+    /**
+     *
+     */
     EDIT_ROLE(false);
-
+    /**
+     *
+     */
     private boolean capability;
 
     UserAction(boolean b) {
@@ -21,5 +31,9 @@ public enum UserAction {
 
     public boolean isCapability() {
         return capability;
+    }
+
+    public UserAction[] val() {
+        return values();
     }
 }

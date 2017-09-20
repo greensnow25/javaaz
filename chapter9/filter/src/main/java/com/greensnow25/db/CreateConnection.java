@@ -28,6 +28,9 @@ public class CreateConnection {
      */
     private DataSource dataSource;
 
+    /**
+     * constructor.
+     */
     public CreateConnection() {
         try {
             this.dataSource = this.setUp(4);

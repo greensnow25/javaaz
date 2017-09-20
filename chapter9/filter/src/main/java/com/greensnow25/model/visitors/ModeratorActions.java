@@ -8,11 +8,21 @@ package com.greensnow25.model.visitors;
  * @since 18.09.2017.
  */
 public enum ModeratorActions {
-
+    /**
+     *
+     */
     EDIT_HIMSELF(true),
+    /**
+     *
+     */
     EDIT_OTHER_USERS(true),
+    /**
+     *
+     */
     EDIT_ROLE(false);
-
+    /**
+     *
+     */
     private boolean capability;
 
     ModeratorActions(boolean b) {
@@ -21,5 +31,9 @@ public enum ModeratorActions {
 
     public boolean isCapability() {
         return capability;
+    }
+
+    public ModeratorActions[] val() {
+        return values();
     }
 }
