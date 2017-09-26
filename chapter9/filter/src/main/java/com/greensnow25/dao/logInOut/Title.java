@@ -29,11 +29,19 @@ public class Title extends HttpServlet {
      * base.
      */
     private RoleBase base;
+    private ConnectToUsersBase connect;
 
     @Override
     public void init() throws ServletException {
-        this.getConnection = new CreateConnection();
-        this.base = new RoleBase();
+        if (this.getConnection == null) {
+            this.getConnection = new CreateConnection();
+        }
+        if (connect == null) {
+            this.connect = new ConnectToUsersBase(this.getConnection);
+        }
+        if (this.base == null) {
+            this.base = new RoleBase();
+        }
         super.init();
     }
 
@@ -44,7 +52,7 @@ public class Title extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ConnectToUsersBase connect = new ConnectToUsersBase(this.getConnection);
+
         String name = req.getParameter("login");
         String pwd = req.getParameter("password");
         try {
@@ -78,5 +86,17 @@ public class Title extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setGetConnection(CreateConnection getConnection) {
+        this.getConnection = getConnection;
+    }
+
+    public void setBase(RoleBase base) {
+        this.base = base;
+    }
+
+    public void setConnect(ConnectToUsersBase connect) {
+        this.connect = connect;
     }
 }

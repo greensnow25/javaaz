@@ -19,11 +19,17 @@ public class LogOut extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         HttpSession session = req.getSession(false);
-        Cookie cookie = new Cookie("user", null);
-        cookie.setMaxAge(0);
-        resp.addCookie(cookie);
-        session.invalidate();
-
+        for (Cookie c : req.getCookies()) {
+            if (c != null && c.getName().equals("user")) {
+                Cookie cookie = new Cookie("user", null);
+                cookie.setMaxAge(0);
+                resp.addCookie(cookie);
+                session.invalidate();
+                break;
+            }
+        }
         req.getRequestDispatcher("WEB-INF/login/login.jsp").forward(req, resp);
+
+
     }
 }

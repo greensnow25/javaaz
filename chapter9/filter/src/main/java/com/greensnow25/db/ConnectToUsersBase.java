@@ -3,6 +3,7 @@ package com.greensnow25.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 /**
  * Public class ConnectToUrersBase.
  *
@@ -57,17 +58,17 @@ public class ConnectToUsersBase {
     public boolean login(String name, String psw) throws SQLException {
         int i = 1;
         String query = "SELECT* FROM servlet.public.visitors as V WHERE V.login = ? AND V.password = ?;";
-        try (PreparedStatement st = connection.getConnection().prepareStatement(query)) {
-            st.setString(1, name);
-            st.setString(2, psw);
-            ResultSet res = st.executeQuery();
+            try (PreparedStatement st = connection.getConnection().prepareStatement(query)) {
+                st.setString(1, name);
+                st.setString(2, psw);
+                ResultSet res = st.executeQuery();
 
-            while (res.next()) {
-                i--;
+                while (res.next()) {
+                    i--;
+                }
             }
-            return i == 0;
-        }
 
+        return i == 0;
     }
 
     /**
