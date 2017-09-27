@@ -58,7 +58,6 @@ public class LogOutTest {
         Cookie[] cookies = new Cookie[1];
         cookies[0] = cookie;
         when(request.getCookies()).thenReturn(cookies);
-        // RequestDispatcher rd = request.getRequestDispatcher(captor.capture());
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         when(request.getRequestDispatcher(captor.capture())).thenReturn(dispatcher);
         when(request.getSession(false)).thenReturn(session);

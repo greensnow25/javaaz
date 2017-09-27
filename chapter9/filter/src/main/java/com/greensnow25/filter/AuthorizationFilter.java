@@ -25,7 +25,6 @@ public class AuthorizationFilter extends HttpFilter {
         boolean res = false;
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
-                String string = cookie.getName();
                 if (request.getSession().isNew()) {
                     res = true;
                 }

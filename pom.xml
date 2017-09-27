@@ -84,19 +84,19 @@
             <version>2.1.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <version>1.7.0</version>
-            <scope>test</scope>
-        </dependency>
-        <!--from git-->
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito-common</artifactId>
-            <version>1.6.5</version>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.powermock</groupId>-->
+            <!--<artifactId>powermock-module-junit4</artifactId>-->
+            <!--<version>1.7.0</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;from git&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.powermock</groupId>-->
+            <!--<artifactId>powermock-api-mockito-common</artifactId>-->
+            <!--<version>1.6.5</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
             <!--<groupId>org.powermock</groupId>-->
