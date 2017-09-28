@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://js.cx/test/libs.js"></script>
+    <script src="test.js"></script>
+</head>
+<body>
+<script>
+    "use strict";
+    var menu = {
+        width: 200,
+        height: 300,
+        title: "My menu"
+    };
+    function multiply(obj) {
+        var newObj = {};
+        for (var a in obj) {
+            if (isNumeric(obj[a])) {
+                obj[a] = obj[a]*2;
+            }
+        }
+        return this;
+    }
+    function isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n)
+    }
+function q() {
+    for (var i = 0; i < 10; i++) {
+
+        if (i % 2 == 0) continue;
+
+        alert(i);
+    }
+}
+q();
+    //... ваш код выведет 650
+</script>
+
+
+</body>
+</html>
