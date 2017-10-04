@@ -7,25 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html>
 <head>
     <title>Title</title>
-    <%--<link rel="stylesheet" href="../../css/style.css">--%>
-
-    <script src="../../js/sripts.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-<div id="formResult" style=" color: red"></div>
 <c:set var="ent" value="${enter}" scope="session">
 
 </c:set>
 <c:if test="${ent == null || ent.equals('')}">
     <div class="center">
-        <form method="post" id="login">
-            <h3>Enter name:</h3> <input name="login" type="text" id="name"><br>
-            <h3>Enter password :</h3> <input name="password" type="password" id="password">
-            <input name="submit" type="submit" id="send" value="login" onclick="dosmt()">
+        <form action="/login" method="post">
+            <h3>Enter name:</h3> <input name="login" type="text"><br>
+            <h3>Enter password :</h3> <input name="password" type="password">
+            <input name="submit" type="submit" id="send" value="login">
         </form>
     </div>
 </c:if>
@@ -44,7 +40,6 @@
 <c:if test="${ent eq false}">
     <font color=red>Either user name or password is wrong.</font>
 </c:if>
-
-
+<div id="formResult"></div>
 </body>
 </html>

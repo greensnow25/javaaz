@@ -29,6 +29,9 @@ public class Title extends HttpServlet {
      * base.
      */
     private RoleBase base;
+    /**
+     *
+     */
     private ConnectToUsersBase connect;
 
     @Override
