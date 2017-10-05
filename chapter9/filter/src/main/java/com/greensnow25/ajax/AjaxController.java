@@ -24,7 +24,7 @@ public class AjaxController extends HttpServlet {
         resp.setContentType("text/plain");
 
 
-        resp.getWriter().write("sdfvfefgefgehtrbfdewr");
+        resp.getWriter().write("111111111111111111111111111111111111111111111111111");
 
     }
 

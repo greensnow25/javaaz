@@ -1,25 +1,36 @@
-/*body {*/
-    /*background-image: url("../image/mount.jpg");*/
-/*}*/
+body {
+    position: relative;
+    background-image: url("../image/mount.jpg");
+}
 
-/*!*.center {*!*/
-    /*!*text-align: center;*!*/
-    /*!*position: fixed; !* or absolute *!*!*/
-    /*!*top: 30%;*!*/
-    /*!*left: 50%;*!*/
-    /*!*width: 300px;*!*/
-    /*!*height:200px;*!*/
-    /*!*margin: -50px 0 0 -100px;*!*/
-    /*!*background: #f0f0f0;*!*/
-/*!*}*!*/
-/*body form {*/
-    /*text-align: center;*/
-    /*position: fixed; !* or absolute *!*/
-    /*top: 30%;*/
-    /*left: 50%;*/
-    /*width: 300px;*/
-    /*height:200px;*/
-    /*margin: -50px 0 0 -100px;*/
-    /*background: #f0f0f0;*/
-/*}*/
+.center {
+    text-align: center;
+    position: fixed; /* or absolute */
+    top: 30%;
+    left: 50%;
+    width: 300px;
+    height: 200px;
+    margin: -50px 0 0 -100px;
+    background: #f0f0f0;
+}
 
+.login {
+    text-align: center;
+    position: fixed; /* or absolute */
+    top: 30%;
+    left: 50%;
+    /*width: 200px;*/
+    /*height: 200px;*/
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: #fff;
+}
+
+
+
+p {
+    font-size: 13px;
+    color: red;
+
+}
