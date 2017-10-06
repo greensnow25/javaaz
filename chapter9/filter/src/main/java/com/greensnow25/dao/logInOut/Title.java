@@ -1,8 +1,10 @@
 package com.greensnow25.dao.logInOut;
 
+import com.google.gson.Gson;
 import com.greensnow25.db.ConnectToUsersBase;
 import com.greensnow25.db.CreateConnection;
 import com.greensnow25.model.visitors.RoleBase;
+import com.sun.istack.internal.NotNull;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,13 +81,13 @@ public class Title extends HttpServlet {
                 cookie.setMaxAge(30 * 60);
                 resp.addCookie(cookie);
                 resp.addCookie(cookieRole);
+                resp.setContentType("text/plain");
+                String jSon = new Gson().toJson(l);
 
-                req.getRequestDispatcher("WEB-INF/login/login.jsp").forward(req, resp);
+                resp.getWriter().write(jSon);
 
-
-            } else {
-                req.getRequestDispatcher("WEB-INF/login/login.jsp").forward(req, resp);
             }
+            //       req.getRequestDispatcher("WEB-INF/login/login.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }

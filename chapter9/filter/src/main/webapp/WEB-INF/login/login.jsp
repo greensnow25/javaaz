@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../../css/style.css">
 
     <script src="../../js/sripts.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../js/ajax.js"></script>
     <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>--%>
     <%--<script--%>
     <%--src="http://maps.googleapis.com/maps/api/js?key=YOUR_APIKEY&sensor=false">--%>
@@ -30,12 +31,12 @@
         <form action="/login" onsubmit="return validate()" method="post" id="login">
             <h3>Enter name:</h3> <input name="login" type="text" id="name"><br>
             <h3>Enter password :</h3> <input name="password" type="password" id="password">
-            <input name="submit" type="submit" id="send" value="login">
+            <input name="submit" type="submit" id="send" onclick="login1()">
         </form>
     </div>
 </c:if>
 <c:if test="${ent.equals(true)}">
-    <div class="login">
+    <div class="login" id="successful">
         <p> HI ${cookie.get('user').value}, login successful!!</p>
         <br>
 
