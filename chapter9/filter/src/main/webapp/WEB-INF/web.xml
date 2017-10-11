@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
     <welcome-file-list>
-        <welcome-file>com.greensnow25.dao.logInOut.Title</welcome-file>
+        <welcome-file>com.greensnow25.daoImpl.logInOut.Title</welcome-file>
     </welcome-file-list>
 
 
