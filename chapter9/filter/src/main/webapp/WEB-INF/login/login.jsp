@@ -14,45 +14,20 @@
     <link rel="stylesheet" href="../../css/style.css">
 
     <script src="../../js/sripts.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../../js/ajax.js"></script>
-    <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>--%>
-    <%--<script--%>
-    <%--src="http://maps.googleapis.com/maps/api/js?key=YOUR_APIKEY&sensor=false">--%>
-    <%--</script>--%>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"
+            type="text/javascript"></script>
 
 </head>
+
 <body>
-<div id="formResult" class="login"></div>
-<c:set var="ent" value="${enter}" scope="session">
-
-</c:set>
-<c:if test="${ent == null || ent.equals('')}">
-    <div class="login">
-        <form action="/login" onsubmit="return validate()" method="post" id="login">
-            <h3>Enter name:</h3> <input name="login" type="text" id="name"><br>
-            <h3>Enter password :</h3> <input name="password" type="password" id="password">
-            <input name="submit" type="submit" id="send" onclick="login1()">
-        </form>
-    </div>
-</c:if>
-<c:if test="${ent.equals(true)}">
-    <div class="login" id="successful">
-        <p> HI ${cookie.get('user').value}, login successful!!</p>
-        <br>
-
-        <form name="resume" method="post" action="actions">
-            <input type="submit" name="resume" value="resume">
-        </form>
-
-        <form name="logOut" action="logout" method="post">
-            <input type="submit" name="logOut" value="logOut">
-        </form>
-    </div>
-</c:if>
-<c:if test="${ent eq false}">
-    <font color=red>Either user name or password is wrong.</font>
-</c:if>
-
+<div id="formResult"></div>
+<div id="bossForm" class="login">
+    <h3>Enter name:</h3> <input name="name" type="text" id="name"><br>
+    <h3>Enter password :</h3> <input name="password" type="password" id="password">
+    <input name="send" type="submit" id="send" onclick="login1()">
+</div>
 
 </body>
 </html>

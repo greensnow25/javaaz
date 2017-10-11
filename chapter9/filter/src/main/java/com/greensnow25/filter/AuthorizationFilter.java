@@ -17,7 +17,7 @@ import java.io.IOException;
  * @version 1.
  * @since 19.09.2017.
  */
-//@WebFilter(urlPatterns = "/login/*")
+@WebFilter(urlPatterns = "/login/*")
 public class AuthorizationFilter extends HttpFilter {
 
     @Override

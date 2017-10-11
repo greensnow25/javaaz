@@ -23,6 +23,7 @@ import java.util.List;
  */
 @WebServlet(urlPatterns = "/login")
 public class Title extends HttpServlet {
+
     /**
      * connection.
      */
@@ -58,36 +59,22 @@ public class Title extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("login");
+        String name = req.getParameter("name");
         String pwd = req.getParameter("password");
         try {
-            if (connect.login(name, pwd)) {
+            Boolean access = connect.login(name, pwd);
 
-                HttpSession httpSession = req.getSession();
-                String role = connect.checkUserRole(false, name);
-
-                List l = base.getMap().get(role);
-                httpSession.setAttribute("canDo", l);
-
-
-                httpSession.setAttribute("role", role);
-                httpSession.setAttribute("login", name);
-                httpSession.setAttribute("enter", true);
-                httpSession.setMaxInactiveInterval(30 * 60);
-
-                Cookie cookie = new Cookie("user", name);
-                Cookie cookieRole = new Cookie(role, role);
-                cookieRole.setMaxAge(30 * 60);
-                cookie.setMaxAge(30 * 60);
-                resp.addCookie(cookie);
-                resp.addCookie(cookieRole);
+            if (access) {
                 resp.setContentType("text/plain");
-                String jSon = new Gson().toJson(l);
+                HttpSession httpSession = req.getSession();
 
-                resp.getWriter().write(jSon);
-
+                if (httpSession.getAttribute("enter") == null) {
+                    String html = new Gson().toJson("Hi " + name + ", login successful!!!");
+                    httpSession.setAttribute("login", name);
+                    httpSession.setAttribute("enter", true);
+                    resp.getWriter().write(html);
+                }
             }
-            //       req.getRequestDispatcher("WEB-INF/login/login.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }

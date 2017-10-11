@@ -18,7 +18,7 @@ import java.io.IOException;
 public class AjaxController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
+        String login = req.getParameter("name");
         String password = req.getParameter("password");
 
         resp.setContentType("text/plain");

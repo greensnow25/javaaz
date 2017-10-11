@@ -24,6 +24,7 @@ public class LogOut extends HttpServlet {
                 Cookie cookie = new Cookie("user", null);
                 cookie.setMaxAge(0);
                 resp.addCookie(cookie);
+                req.removeAttribute("enter");
                 session.invalidate();
                 break;
             }

@@ -1,16 +1,14 @@
 body {
-    /*position: relative;*/
     background-image: url("../image/mount.jpg");
     text-align: center;
     position: fixed; /* or absolute */
     top: 30%;
     left: 50%;
-    /*width: 200px;*/
-    /*height: 200px;*/
+    width: 200px;
+    height: 200px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    background: #fff;
 }
 
 .center {
@@ -24,22 +22,7 @@ body {
     background: #f0f0f0;
 }
 
-/*.login {*/
-    /*text-align: center;*/
-    /*position: fixed; !* or absolute *!*/
-    /*top: 30%;*/
-    /*left: 50%;*/
-    /*!*width: 200px;*!*/
-    /*!*height: 200px;*!*/
-    /*-webkit-border-radius: 5px;*/
-    /*-moz-border-radius: 5px;*/
-    /*border-radius: 5px;*/
-    /*background: #fff;*/
-/*}*/
-
-
-
-p {
+div {
     font-size: 13px;
     color: red;
 
