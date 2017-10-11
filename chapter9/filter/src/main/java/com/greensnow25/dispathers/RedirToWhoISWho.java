@@ -57,11 +57,8 @@ public class RedirToWhoISWho extends HttpServlet {
 
         List l = base.getMap().get(role);
         httpSession.setAttribute("canDo", l);
-
-
         httpSession.setAttribute("role", role);
         httpSession.setAttribute("login", name);
-
         httpSession.setMaxInactiveInterval(30 * 60);
 
         Cookie cookie = new Cookie("user", name);
@@ -70,11 +67,7 @@ public class RedirToWhoISWho extends HttpServlet {
         cookie.setMaxAge(30 * 60);
         resp.addCookie(cookie);
         resp.addCookie(cookieRole);
-
-
         String jSon = new Gson().toJson(l);
-
         resp.getWriter().write(jSon);
-      //  req.getRequestDispatcher("WEB-INF/jsp/whoIsWho.jsp").forward(req, resp);
     }
 }
