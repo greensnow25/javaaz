@@ -9,9 +9,11 @@ package com.greensnow25.entity;
  */
 public class Role {
     private String role;
+    private int id;
 
-    public Role(String role) {
+    public Role(String role, int id) {
         this.role = role;
+        this.id = id;
     }
 
     public String getRole() {
@@ -20,5 +22,13 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

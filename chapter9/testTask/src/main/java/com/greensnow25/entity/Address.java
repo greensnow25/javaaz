@@ -10,10 +10,12 @@ package com.greensnow25.entity;
 public class Address {
     private String country;
     private String city;
+    private int id;
 
-    public Address(String country, String city) {
+    public Address(String country, String city, int id) {
         this.country = country;
         this.city = city;
+        this.id = id;
     }
 
     public String getCountry() {
@@ -30,5 +32,13 @@ public class Address {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

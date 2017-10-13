@@ -9,9 +9,11 @@ package com.greensnow25.entity;
  */
 public class MusicType {
     private String type;
+    private int id;
 
-    public MusicType(String type) {
+    public MusicType(String type, int id) {
         this.type = type;
+        this.id = id;
     }
 
     public String getType() {
@@ -20,5 +22,13 @@ public class MusicType {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

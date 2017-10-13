@@ -14,9 +14,9 @@ public interface Dao<E> {
 
     E getByID(int id);
 
-    void create(E entity);
+    boolean create(E entity);
 
-    void update(E entity);
+    boolean update(E entity);
 
-    void delete(E entity);
+    boolean delete(E entity);
 }
