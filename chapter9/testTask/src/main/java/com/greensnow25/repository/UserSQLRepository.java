@@ -1,7 +1,14 @@
 package com.greensnow25.repository;
 
+import com.greensnow25.entity.Address;
+import com.greensnow25.entity.MusicType;
+import com.greensnow25.entity.Role;
 import com.greensnow25.entity.User;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,64 +21,43 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 12.10.2017.
  */
 public class UserSQLRepository implements Repository<User> {
-    ConcurrentHashMap<String, Repository> map;
 
-    private UserSQLRepository() {
+    private Connection connection;
+    private final String QUERY = String.format("%s%s%s%s%s%s", "SELECT U.name, A.country, A.city, R.role, M.type",
+            "FROM servlet.controltask.user AS U",
+            "  INNER JOIN servlet.controltask.address AS A ON U.id_user = A.id_address",
+            "  INNER JOIN servlet.controltask.role AS R ON U.user_role = R.id_role",
+            "  INNER JOIN servlet.controltask.user_musictype AS UM ON U.id_user = UM.id_user",
+            "  INNER JOIN servlet.controltask.musictype AS M ON UM.id_musictype = M.id_musictype");
 
-    }
-
-    private static class Holder {
-        private static final UserSQLRepository INSTANCE = new UserSQLRepository();
-    }
-
-    public static UserSQLRepository getInstance() {
-        return Holder.INSTANCE;
-    }
-
-    @Override
-    public void add(User item) {
-
-    }
-
-    @Override
-    public void add(Iterable<User> items) {
-
-    }
-
-    @Override
-    public void update(User item) {
-
-    }
-
-    @Override
-    public void remove(User item) {
-
-    }
-
-    @Override
-    public void add(Specification specification) {
-
-    }
-
-    @Override
-    public void remove(Specification specification) {
-
+    public UserSQLRepository(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
     public List<User> query(Specification specification) {
         SqlSpecification sqlSpecification = (SqlSpecification) specification;
-        //may be need create connection
-        SQLiteDatabase database = openHelper.getReadableDatabase();
-        List<User> users = new ArrayList<>();
+        List<User> list = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(String.format("%s%s", QUERY, sqlSpecification.toSQLQuery()));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id_user");
+                String name = resultSet.getString("name");
+                String country = resultSet.getString("country");
+                String city = resultSet.getString("city");
+                String role = resultSet.getString("role");
+                String type = resultSet.getString("type");
+                list.add(new User(name, new Address(country, city, id), new MusicType(type, id), new Role(role, id), id));
 
-        Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery());
+            }
 
-        for (int i = 0, size = cursor.getCount(); i < size; i++) {
-            cursor.moveToPosition(i);
-            newses.add(toNewsMapper.map(cursor));
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        cursor.close();
-        return newses;
+
+        return list;
     }
 }

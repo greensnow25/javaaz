@@ -20,10 +20,8 @@ public class UserByIdSQLSpecification implements SqlSpecification {
     @Override
     public String toSQLQuery() {
         return String.format(
-                "SELECT * FROM %1$s WHERE `%2$s` = %3$d';",
-                TableNames.user,
-                TableNames.UserFields.id,
-                id
+                "WHERE U.id_user = %1$d';",
+                this.id
         );
     }
 
