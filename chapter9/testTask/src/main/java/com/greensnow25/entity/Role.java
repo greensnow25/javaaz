@@ -8,7 +8,13 @@ package com.greensnow25.entity;
  * @since 11.10.2017.
  */
 public class Role {
+    /**
+     * role.
+     */
     private String role;
+    /**
+     * primari key , id.
+     */
     private int id;
 
     public Role(String role, int id) {
@@ -30,23 +36,5 @@ public class Role {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Role role1 = (Role) o;
-
-        if (id != role1.id) return false;
-        return role != null ? role.equals(role1.role) : role1.role == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = role != null ? role.hashCode() : 0;
-        result = 31 * result + id;
-        return result;
     }
 }

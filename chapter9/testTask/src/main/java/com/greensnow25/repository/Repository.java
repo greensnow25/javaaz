@@ -7,6 +7,7 @@ import java.util.List;
  *
  * @author greensnow25.
  * @version 1.
+ * @param <T> entity.
  * @since 12.10.2017.
  */
 public interface Repository<T> {

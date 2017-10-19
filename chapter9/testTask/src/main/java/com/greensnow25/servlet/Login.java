@@ -25,6 +25,9 @@ import java.util.List;
  */
 //@WebServlet(urlPatterns = "/login")
 public class Login extends HttpServlet {
+    /**
+     * connection pool.
+     */
     private CreateConnection connection;
 
 
@@ -32,11 +35,6 @@ public class Login extends HttpServlet {
     public void init() throws ServletException {
         this.connection = new CreateConnection();
         super.init();
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //  req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 
     @Override

@@ -8,6 +8,9 @@ package com.greensnow25.repository;
  * @since 17.10.2017.
  */
 public class UserByMusicTypeSQLSpecification implements SqlSpecification {
+    /**
+     * music type.
+     */
     private final String type;
 
     public UserByMusicTypeSQLSpecification(String type) {

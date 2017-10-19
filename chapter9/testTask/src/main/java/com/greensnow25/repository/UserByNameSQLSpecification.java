@@ -8,6 +8,9 @@ package com.greensnow25.repository;
  * @since 18.10.2017.
  */
 public class UserByNameSQLSpecification implements SqlSpecification {
+    /**
+     * user name.
+     */
     private final String name;
 
     public UserByNameSQLSpecification(String name) {

@@ -8,8 +8,13 @@ package com.greensnow25.repository;
  * @since 13.10.2017.
  */
 public class UserByAddressSQLSpecification implements SqlSpecification {
-
+    /**
+     * country.
+     */
     private final String country;
+    /**
+     * city.
+     */
     private final String city;
 
     public UserByAddressSQLSpecification(String country, String city) {

@@ -15,11 +15,25 @@ function choiceAction() {
             '<input type="submit" value="Submit">' +
             '</form>'
     } else if (action == 'editHimself') {
-
+        resultForm = '<form action="editHimself" method="post">' +
+            '<input name="newName" type="text" value="newName">' +
+            '<input type="submit" value="Submit">' +
+            '</form>'
     } else if (action == 'editOtherUser') {
-
+        resultForm = '<form action="editOtherUser" method="post">' +
+            '<input name="userOldName" type="text" value="userOldName"><br>' +
+            '<input name="newName" type="text" value="newName">' +
+            '<input type="submit" value="Submit">' +
+            '</form>'
     } else if (action == 'deleteUser') {
-
+        resultForm = '<form action="deleteUser" method="post">' +
+            '<input name="deleteUser" type="text" value="deleteName"><br>' +
+            '<input type="submit" value="Submit">' +
+            '</form>'
+    }else if (action == 'showTable'){
+        resultForm = '<form action="showTable" method="get">' +
+            '<input type="submit" value="show table">' +
+            '</form>'
     }
     //document.querySelector("#div1").style.display = "none";
     document.querySelector("#div2").style.display = "";
@@ -38,7 +52,7 @@ function login() {
         if (request.status == 200 && request.readyState == 4) {
             var json = request.responseText;
             var arr = JSON.parse(json);
-            var qqq = '<form >';//action="/actions" method="post"
+            var qqq = '<form >';
             qqq += "<select name='userAction' id='userAction'>"
             for (var i = 0; i < arr.length; i++) {
                 qqq += '<option>' + arr[i] + '</option>'

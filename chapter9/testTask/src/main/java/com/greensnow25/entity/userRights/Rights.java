@@ -1,10 +1,5 @@
 package com.greensnow25.entity.userRights;
 
-import com.greensnow25.dao.Dao;
-import com.greensnow25.dao.UserDAOImpl;
-
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,21 +12,27 @@ import java.util.List;
  */
 public enum Rights {
 
-
+    /**
+     * role.
+     */
     ADMIN() {
         @Override
         public List<String> getRights() {
-            return Arrays.asList("addNewUser", "deleteUser", "editHimself", "editOtherUser");
+            return Arrays.asList("addNewUser", "deleteUser", "editHimself", "editOtherUser", "showTable");
         }
     },
-
+    /**
+     * role.
+     */
     MODERATOR() {
         @Override
         public List<String> getRights() {
             return Arrays.asList("addNewUser", "editHimself", "editOtherUser");
         }
     },
-
+    /**
+     * role.
+     */
     USER() {
         @Override
         public List<String> getRights() {
@@ -40,8 +41,4 @@ public enum Rights {
     };
 
     public abstract List<String> getRights();
-
-    Rights() {
-    }
-
 }

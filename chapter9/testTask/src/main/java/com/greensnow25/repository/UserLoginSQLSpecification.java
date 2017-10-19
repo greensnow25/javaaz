@@ -8,7 +8,13 @@ package com.greensnow25.repository;
  * @since 17.10.2017.
  */
 public class UserLoginSQLSpecification implements SqlSpecification {
+    /**
+     * user name.
+     */
     private final String name;
+    /**
+     * password.
+     */
     private final String pwd;
 
     public UserLoginSQLSpecification(String name, String pwd) {

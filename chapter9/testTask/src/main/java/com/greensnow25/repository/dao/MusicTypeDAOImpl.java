@@ -1,4 +1,4 @@
-package com.greensnow25.dao;
+package com.greensnow25.repository.dao;
 
 import com.greensnow25.entity.MusicType;
 
@@ -14,6 +14,9 @@ import java.util.List;
  * @since 12.10.2017.
  */
 public class MusicTypeDAOImpl implements Dao<MusicType> {
+    /**
+     * connection.
+     */
     private Connection connection;
 
     public MusicTypeDAOImpl(Connection connection) {

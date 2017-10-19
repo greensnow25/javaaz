@@ -8,6 +8,9 @@ package com.greensnow25.repository;
  * @since 12.10.2017.
  */
 public class UserByIdSQLSpecification implements SqlSpecification {
+    /**
+     * user id.
+     */
     private int id;
 
     public UserByIdSQLSpecification(final int id) {

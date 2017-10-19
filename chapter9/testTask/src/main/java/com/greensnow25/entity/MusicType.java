@@ -8,7 +8,13 @@ package com.greensnow25.entity;
  * @since 11.10.2017.
  */
 public class MusicType {
+    /**
+     * music type.
+     */
     private String type;
+    /**
+     * id.
+     */
     private int id;
 
     public MusicType(String type, int id) {

@@ -12,10 +12,25 @@ public class User {
      * name.
      */
     private String name;
+    /**
+     * class object.
+     */
     private Address address;
+    /**
+     * class object.
+     */
     private MusicType type;
+    /**
+     * class object.
+     */
     private Role role;
+    /**
+     * user id.
+     */
     private int id;
+    /**
+     * password.
+     */
     private String password;
 
     public User(String name, String password, int id) {

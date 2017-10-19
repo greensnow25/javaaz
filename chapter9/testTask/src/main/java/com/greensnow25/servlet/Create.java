@@ -1,25 +1,18 @@
 package com.greensnow25.servlet;
 
-import com.greensnow25.dao.AddressDAOImpl;
-import com.greensnow25.dao.MusicTypeDAOImpl;
-import com.greensnow25.dao.RoleDAOImpl;
-import com.greensnow25.dao.UserDAOImpl;
+import com.greensnow25.repository.dao.AddressDAOImpl;
+import com.greensnow25.repository.dao.UserDAOImpl;
 import com.greensnow25.dataBase.CreateConnection;
 import com.greensnow25.entity.Address;
-import com.greensnow25.entity.MusicType;
 import com.greensnow25.entity.User;
-import com.greensnow25.repository.UserByNameSQLSpecification;
-import com.greensnow25.repository.UserSQLRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Public class Create.
@@ -29,6 +22,9 @@ import java.util.List;
  * @since 18.10.2017.
  */
 public class Create extends HttpServlet {
+    /**
+     * connection pool.
+     */
     private CreateConnection connection;
 
     @Override
@@ -53,7 +49,7 @@ public class Create extends HttpServlet {
             int id = userDAO.getOneByName(newName).getId();
             addressDAO.create(new Address(country, city, id));
             connection.commit();
-
+            req.getRequestDispatcher("/showTable").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }

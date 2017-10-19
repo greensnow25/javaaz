@@ -5,7 +5,6 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.io.IOException;
  * @version 1.
  * @since 19.09.2017.
  */
-//@WebFilter(urlPatterns = "/*")
 public class AuthorizationFilter extends HttpFilter {
 
     @Override

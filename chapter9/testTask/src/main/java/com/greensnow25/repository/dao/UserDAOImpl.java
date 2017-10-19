@@ -1,4 +1,4 @@
-package com.greensnow25.dao;
+package com.greensnow25.repository.dao;
 
 import com.greensnow25.entity.User;
 
@@ -14,6 +14,9 @@ import java.util.List;
  * @since 11.10.2017.
  */
 public class UserDAOImpl implements Dao<User> {
+    /**
+     * connection.
+     */
     private Connection connection;
 
     public UserDAOImpl(Connection connection) {
@@ -103,7 +106,7 @@ public class UserDAOImpl implements Dao<User> {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(2, entity.getId());
             statement.setString(1, entity.getName());
-            res = statement.execute(query);
+            res = statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,7 +120,7 @@ public class UserDAOImpl implements Dao<User> {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, entity.getName());
-            res = statement.execute(query);
+            res = statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

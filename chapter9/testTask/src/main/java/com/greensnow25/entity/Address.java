@@ -8,8 +8,17 @@ package com.greensnow25.entity;
  * @since 11.10.2017.
  */
 public class Address {
+    /**
+     * user country.
+     */
     private String country;
+    /**
+     * user city.
+     */
     private String city;
+    /**
+     * user id.
+     */
     private int id;
 
     public Address(String country, String city, int id) {

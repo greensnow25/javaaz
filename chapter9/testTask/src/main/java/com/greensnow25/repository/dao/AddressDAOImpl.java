@@ -1,6 +1,5 @@
-package com.greensnow25.dao;
+package com.greensnow25.repository.dao;
 
-import com.greensnow25.repository.Repository;
 import com.greensnow25.entity.Address;
 
 import java.sql.*;
@@ -15,8 +14,9 @@ import java.util.List;
  * @since 12.10.2017.
  */
 public class AddressDAOImpl implements Dao<Address> {
-    private Repository<Address> repository;
-
+    /**
+     * connection.
+     */
     private Connection connection;
 
 
@@ -106,7 +106,7 @@ public class AddressDAOImpl implements Dao<Address> {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, entity.getId());
-            res = statement.execute(query);
+            res = statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

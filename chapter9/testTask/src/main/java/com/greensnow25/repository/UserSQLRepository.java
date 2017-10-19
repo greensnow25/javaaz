@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Public class User.
@@ -21,9 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 12.10.2017.
  */
 public class UserSQLRepository implements Repository<User> {
-
+    /**
+     * connection.
+     */
     private Connection connection;
-    private final String QUERY = String.format("%s%s%s%s%s%s", "SELECT U.id_user, U.name, U.password, A.country, A.city, R.role, M.type ",
+    /**
+     * query.
+     */
+    private static final String QUERY = String.format("%s%s%s%s%s%s", "SELECT U.id_user, U.name, U.password, A.country, A.city, R.role, M.type ",
             "FROM servlet.controltask.user AS U",
             "  INNER JOIN servlet.controltask.address AS A ON U.id_user = A.id_address",
             "  INNER JOIN servlet.controltask.role AS R ON U.user_role = R.id_role",

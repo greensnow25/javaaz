@@ -1,4 +1,4 @@
-package com.greensnow25.dao;
+package com.greensnow25.repository.dao;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import java.util.List;
  *
  * @author greensnow25.
  * @version 1.
+ * @param <E> entity.
  * @since 11.10.2017.
  */
 public interface Dao<E> {
