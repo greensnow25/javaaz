@@ -16,14 +16,17 @@ public class User {
     private MusicType type;
     private Role role;
     private int id;
+    private String password;
 
-    public User(String name, int id) {
+    public User(String name, String password, int id) {
         this.name = name;
+        this.password = password;
         this.id = id;
     }
 
-    public User(String name, Address address, MusicType type, Role role, int id) {
+    public User(String name, String password, Address address, MusicType type, Role role, int id) {
         this.name = name;
+        this.password = password;
         this.address = address;
         this.type = type;
         this.role = role;
@@ -44,5 +47,37 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public MusicType getType() {
+        return type;
+    }
+
+    public void setType(MusicType type) {
+        this.type = type;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

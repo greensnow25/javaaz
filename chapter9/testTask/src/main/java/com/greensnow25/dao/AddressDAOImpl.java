@@ -1,6 +1,5 @@
-package com.greensnow25.daoImpl.dao;
+package com.greensnow25.dao;
 
-import com.greensnow25.daoImpl.dao.daoParent.Dao;
 import com.greensnow25.repository.Repository;
 import com.greensnow25.entity.Address;
 
@@ -45,6 +44,11 @@ public class AddressDAOImpl implements Dao<Address> {
     }
 
     @Override
+    public Address getOneByName(String string) {
+        return null;
+    }
+
+    @Override
     public Address getByID(int id) {
         String query = "SELECT * FROM servlet.controltask.address AS A WHERE A.id_address = ?";
         String country = null;
@@ -72,7 +76,7 @@ public class AddressDAOImpl implements Dao<Address> {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, entity.getCountry());
             statement.setString(2, entity.getCity());
-            res = statement.execute(query);
+           res = statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

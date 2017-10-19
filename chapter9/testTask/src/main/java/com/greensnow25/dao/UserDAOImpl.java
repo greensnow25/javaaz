@@ -1,6 +1,5 @@
-package com.greensnow25.daoImpl.dao;
+package com.greensnow25.dao;
 
-import com.greensnow25.daoImpl.dao.daoParent.Dao;
 import com.greensnow25.entity.User;
 
 import java.sql.*;
@@ -25,13 +24,13 @@ public class UserDAOImpl implements Dao<User> {
     public List<User> getAllEntity() {
         String query = "SELECT * FROM servlet.controltask.user";
         List<User> list = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int role = resultSet.getInt("user_role");
-                list.add(new User(name, role));
+                String pwd = resultSet.getString("password");
+                list.add(new User(name, pwd, role));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,10 +39,32 @@ public class UserDAOImpl implements Dao<User> {
     }
 
     @Override
+    public User getOneByName(String string) {
+        String query = "SELECT*FROM servlet.controltask.user WHERE name = ?";
+        User user = null;
+        try {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, string);
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    user = new User(resultSet.getString("name"),
+                            resultSet.getString("password"),
+                            resultSet.getInt("id_user"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
     public User getByID(int id) {
         String query = "SELECT * FROM servlet.controltask.user AS A WHERE A.id_user = ?";
         String name = null;
         int role = 0;
+        String pwd = null;
         try {
 
             PreparedStatement statement = connection.prepareStatement(query);
@@ -52,11 +73,12 @@ public class UserDAOImpl implements Dao<User> {
             while (resultSet.next()) {
                 name = resultSet.getString("name");
                 role = resultSet.getInt("user_role");
+                pwd = resultSet.getString("password");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new User(name, role);
+        return new User(name, pwd, role);
     }
 
     @Override
@@ -66,7 +88,7 @@ public class UserDAOImpl implements Dao<User> {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, entity.getName());
-            res = statement.execute(query);
+            res = statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,17 +97,17 @@ public class UserDAOImpl implements Dao<User> {
 
     @Override
     public boolean update(User entity) {
-            String query = "UPDATE servlet.controltask.user SET name = ? WHERE id_user = ?;";
-            boolean res = false;
-            try {
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setInt(2, entity.getId());
-                statement.setString(1, entity.getName());
-                res = statement.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return res;
+        String query = "UPDATE servlet.controltask.user SET name = ? WHERE id_user = ?;";
+        boolean res = false;
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(2, entity.getId());
+            statement.setString(1, entity.getName());
+            res = statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     @Override

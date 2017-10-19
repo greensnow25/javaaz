@@ -52,10 +52,7 @@ function login1() {
 
 function resume() {
     var request = getXMLHTTPObject();
-
     request.open('POST', 'actions', true);
-
-
     request.onreadystatechange = function () {
         if (request.readyState == 4) {
             if (request.status == 200) {

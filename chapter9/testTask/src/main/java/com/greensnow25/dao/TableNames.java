@@ -1,4 +1,4 @@
-package com.greensnow25.daoImpl.dao.tableNames;
+package com.greensnow25.dao;
 
 /**
  * Public class TabelNames.

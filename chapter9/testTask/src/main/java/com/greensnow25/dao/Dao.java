@@ -1,4 +1,4 @@
-package com.greensnow25.daoImpl.dao.daoParent;
+package com.greensnow25.dao;
 
 import java.util.List;
 
@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface Dao<E> {
     List<E> getAllEntity();
+
+    E getOneByName(String string);
 
     E getByID(int id);
 

@@ -1,7 +1,4 @@
-package com.greensnow25.daoImpl.dao.daoParent;
-
-import com.greensnow25.daoImpl.dao.tableNames.TableNames;
-import com.greensnow25.repository.SqlSpecification;
+package com.greensnow25.repository;
 
 /**
  * Public class SQLSpecificationImpl.
@@ -20,7 +17,7 @@ public class UserByIdSQLSpecification implements SqlSpecification {
     @Override
     public String toSQLQuery() {
         return String.format(
-                "WHERE U.id_user = %1$d';",
+                "WHERE U.id_user = \'%s\'",
                 this.id
         );
     }

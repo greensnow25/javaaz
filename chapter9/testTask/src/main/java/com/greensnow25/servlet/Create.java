@@ -1,0 +1,62 @@
+package com.greensnow25.servlet;
+
+import com.greensnow25.dao.AddressDAOImpl;
+import com.greensnow25.dao.MusicTypeDAOImpl;
+import com.greensnow25.dao.RoleDAOImpl;
+import com.greensnow25.dao.UserDAOImpl;
+import com.greensnow25.dataBase.CreateConnection;
+import com.greensnow25.entity.Address;
+import com.greensnow25.entity.MusicType;
+import com.greensnow25.entity.User;
+import com.greensnow25.repository.UserByNameSQLSpecification;
+import com.greensnow25.repository.UserSQLRepository;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * Public class Create.
+ *
+ * @author greensnow25.
+ * @version 1.
+ * @since 18.10.2017.
+ */
+public class Create extends HttpServlet {
+    private CreateConnection connection;
+
+    @Override
+    public void init() throws ServletException {
+        this.connection = new CreateConnection();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String newName = req.getParameter("newName");
+        String newPassword = req.getParameter("newPassword");
+
+        String country = req.getParameter("newCountry");
+        String city = req.getParameter("newCity");
+
+        try (Connection connection = this.connection.getConnection()) {
+            connection.setAutoCommit(false);
+            UserDAOImpl userDAO = new UserDAOImpl(connection);
+            AddressDAOImpl addressDAO = new AddressDAOImpl(connection);
+            userDAO.create(new User(newName, newPassword, 0));
+            connection.commit();
+            int id = userDAO.getOneByName(newName).getId();
+            addressDAO.create(new Address(country, city, id));
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+}

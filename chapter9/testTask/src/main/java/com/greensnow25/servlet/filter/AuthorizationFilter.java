@@ -1,4 +1,4 @@
-package com.greensnow25.filter;
+package com.greensnow25.servlet.filter;
 
 import org.apache.catalina.servlet4preview.http.HttpFilter;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import java.io.IOException;
  * @version 1.
  * @since 19.09.2017.
  */
-@WebFilter(urlPatterns = "*")
+//@WebFilter(urlPatterns = "/*")
 public class AuthorizationFilter extends HttpFilter {
 
     @Override
@@ -28,7 +28,7 @@ public class AuthorizationFilter extends HttpFilter {
                 if (request.getSession().isNew()) {
                     res = true;
                 }
-                if (cookie.getName().equals("userName")) {
+                if (cookie.getName().equals("userNAme")) {
 
                     res = true;
                 }

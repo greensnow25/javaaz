@@ -7,6 +7,6 @@ package com.greensnow25.repository;
  * @version 1.
  * @since 12.10.2017.
  */
-public interface SqlSpecification {
+public interface SqlSpecification extends Specification {
     String toSQLQuery();
 }

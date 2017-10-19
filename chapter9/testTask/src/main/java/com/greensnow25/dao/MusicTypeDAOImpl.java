@@ -1,37 +1,36 @@
-package com.greensnow25.daoImpl.dao;
+package com.greensnow25.dao;
 
-import com.greensnow25.daoImpl.dao.daoParent.Dao;
-import com.greensnow25.entity.Role;
+import com.greensnow25.entity.MusicType;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Public class RoleDAOImpl.
+ * Public class MusicTypeDAOImpl.
  *
  * @author greensnow25.
  * @version 1.
  * @since 12.10.2017.
  */
-public class RoleDAOImpl implements Dao<Role> {
+public class MusicTypeDAOImpl implements Dao<MusicType> {
     private Connection connection;
 
-    public RoleDAOImpl(Connection connection) {
+    public MusicTypeDAOImpl(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public List<Role> getAllEntity() {
-        String query = "SELECT * FROM servlet.controltask.role";
-        List<Role> list = new ArrayList<>();
+    public List<MusicType> getAllEntity() {
+        String query = "SELECT * FROM servlet.controltask.musictype";
+        List<MusicType> list = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                String role = resultSet.getString("role");
-                int id = resultSet.getInt("id_role");
-                list.add(new Role(role, id));
+                String type = resultSet.getString("type");
+                int id = resultSet.getInt("id_musictype");
+                list.add(new MusicType(type, id));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,31 +39,34 @@ public class RoleDAOImpl implements Dao<Role> {
     }
 
     @Override
-    public Role getByID(int id) {
-        String query = "SELECT * FROM servlet.controltask.role AS A WHERE A.id_role = ?";
-        String name = null;
+    public MusicType getOneByName(String string) {
+        return null;
+    }
 
+    @Override
+    public MusicType getByID(int id) {
+        String query = "SELECT * FROM servlet.controltask.musictype AS A WHERE A.id_address = ?";
+        String type = null;
         try {
-
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                name = resultSet.getString("name");
+                type = resultSet.getString("type");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new Role(name, id);
+        return new MusicType(type, id);
     }
 
     @Override
-    public boolean create(Role entity) {
-        String query = "INSERT INTO controlTask.role (role) VALUES (?)";
+    public boolean create(MusicType entity) {
+        String query = "INSERT INTO controlTask.musictype (type) VALUES (?)";
         boolean res = false;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, entity.getRole());
+            statement.setString(1, entity.getType());
             res = statement.execute(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,13 +75,13 @@ public class RoleDAOImpl implements Dao<Role> {
     }
 
     @Override
-    public boolean update(Role entity) {
-        String query = "UPDATE servlet.controltask.role SET role = ? WHERE id_role = ?;";
+    public boolean update(MusicType entity) {
+        String query = "UPDATE servlet.controltask.musictype SET type = ? WHERE id_musictype = ?;";
         boolean res = false;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(2, entity.getId());
-            statement.setString(1, entity.getRole());
+            statement.setString(1, entity.getType());
             res = statement.execute(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,12 +90,12 @@ public class RoleDAOImpl implements Dao<Role> {
     }
 
     @Override
-    public boolean delete(Role entity) {
-        String query = "DELETE FROM servlet.controltask.role WHERE role = ?";
+    public boolean delete(MusicType entity) {
+        String query = "DELETE FROM servlet.controltask.musictype WHERE id_musictype = ?";
         boolean res = false;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, entity.getRole());
+            statement.setInt(1, entity.getId());
             res = statement.execute(query);
         } catch (SQLException e) {
             e.printStackTrace();
