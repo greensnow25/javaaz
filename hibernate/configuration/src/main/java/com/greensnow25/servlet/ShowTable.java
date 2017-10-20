@@ -22,7 +22,6 @@ public class ShowTable extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateUtil<Item> hibernateUtil = new HibernateUtil<>();
-        Gson gson = new Gson();
         List list = hibernateUtil.getAllItems();
         String json = new Gson().toJson(list);
         resp.getWriter().write(json);
