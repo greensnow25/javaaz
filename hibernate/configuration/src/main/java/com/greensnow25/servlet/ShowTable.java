@@ -24,6 +24,7 @@ public class ShowTable extends HttpServlet {
         HibernateUtil<Item> hibernateUtil = new HibernateUtil<>();
         Gson gson = new Gson();
         List list = hibernateUtil.getAllItems();
-        resp.getWriter().write(gson.toJson(list));
+        String json = new Gson().toJson(list);
+        resp.getWriter().write(json);
     }
 }

@@ -27,3 +27,33 @@ function callback() {
 
     request.send();
 }
+function show() {
+    let request = new XMLHttpRequest();
+    request.open('POST', 'show', true);
+    request.onreadystatechange = function () {
+        let result;
+        if (request.status == 200 && request.readyState == 4) {
+            let resp = request.responseText;
+            let json = JSON.parse(resp);
+            result = '<table border="1"><tr>' +
+                ' <td>id</td>' +
+                ' <td>description</td> ' +
+                '<td>created</td> ' +
+                '<td>done</td> ' +
+                '</tr>';
+
+            for (let i = 0; i < json.length; i++) {
+                result += '<tr>' +
+                    '<td>' + json[i].id + '</td>' +
+                    '<td>' + json[i].desc + '</td>' +
+                    '<td>' + json[i].created + '</td>' +
+                    '<td>' + json[i].done + '</td>' +
+                    '</tr>'
+            }
+            result += '</table>'
+        }
+        document.querySelector("#div2").innerHTML = "";
+        document.querySelector("#div2").innerHTML = result;
+    };
+    request.send(null);
+}
