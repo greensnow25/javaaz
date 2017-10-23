@@ -1,0 +1,17 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.greensnow25.model.Transmission" table="item">
+        <id name="id" type="int" column="id_car_transmit">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name_transmition" type="string"/>
+
+        <set name="cars" inverse="true">
+            <key column="transmition_id"></key>
+            <one-to-many class="com.greensnow25.model.Car"
+        </set>
+    </class>
+</hibernate-mapping>

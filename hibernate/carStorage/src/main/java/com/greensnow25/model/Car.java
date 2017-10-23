@@ -1,4 +1,4 @@
-package com.greensnow25.modules;
+package com.greensnow25.model;
 
 /**
  * Public class Car.

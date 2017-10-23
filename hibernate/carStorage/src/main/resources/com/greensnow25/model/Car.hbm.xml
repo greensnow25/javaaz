@@ -1,0 +1,17 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.greensnow25.model.Car" table="item">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="car_name" type="string"/>
+        <property name="body" column="body_id"/>
+        <property name="engine" column="engine_id"/>
+        <property name="user" column="user_id"/>
+        <property name="transmission" column="transmission_id"/>
+
+    </class>
+</hibernate-mapping>

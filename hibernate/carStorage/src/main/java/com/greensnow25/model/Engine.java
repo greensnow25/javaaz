@@ -1,13 +1,15 @@
-package com.greensnow25.modules;
+package com.greensnow25.model;
+
+import java.util.Set;
 
 /**
- * Public class Transmission.
+ * Public class Engine.
  *
- * @author com.greensnow25.
+ * @author greensnow25.
  * @version 1.
  * @since 23.10.2017.
  */
-public class Transmission {
+public class Engine {
     /**
      * id
      */
@@ -21,14 +23,14 @@ public class Transmission {
     /**
      * car
      */
-    private Car car;
+    private Set<Car> cars;
 
-    public Transmission() {
+    public Engine() {
     }
 
-    public Transmission(String name, Car car) {
+    public Engine(String name, Set<Car> cars) {
         this.name = name;
-        this.car = car;
+        this.cars = cars;
     }
 
     public int getId() {
@@ -47,11 +49,11 @@ public class Transmission {
         this.name = name;
     }
 
-    public Car getCar() {
-        return car;
+    public Set<Car> getCars() {
+        return cars;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
     }
 }

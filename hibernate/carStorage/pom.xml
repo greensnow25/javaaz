@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>configuration</artifactId>
+    <artifactId>carStorage</artifactId>
     <groupId>greensnow25</groupId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <parent>
         <artifactId>hibernate</artifactId>
         <groupId>greensnow25</groupId>

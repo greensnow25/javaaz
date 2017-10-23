@@ -1,13 +1,15 @@
-package com.greensnow25.modules;
+package com.greensnow25.model;
+
+import java.util.Set;
 
 /**
- * Public class User.
+ * Public class Body.
  *
  * @author com.greensnow25.
  * @version 1.
  * @since 23.10.2017.
  */
-public class User {
+public class Body {
     /**
      * id
      */
@@ -21,20 +23,12 @@ public class User {
     /**
      * car
      */
-    private Car car;
+    private Set<Car> cars;
 
-    public User() {
+    public Body() {
     }
 
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public User(String name) {
+    public Body(String name) {
         this.name = name;
     }
 
@@ -52,5 +46,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
     }
 }
