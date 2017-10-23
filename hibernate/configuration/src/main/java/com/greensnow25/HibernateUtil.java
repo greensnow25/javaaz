@@ -24,19 +24,11 @@ public class HibernateUtil<E> {
      */
     private SessionFactory sessionFactory;
 
-    //    private Session session;
     public HibernateUtil() {
         Configuration cnf = new Configuration();
         cnf.configure("com/greensnow25/hibernate.cfg.xml");
         cnf.addResource("com/greensnow25/model/Item.hbm.xml");
-        //      cnf.addClass(Item.class);
         sessionFactory = cnf.buildSessionFactory();
-//        this.sessionFactory = new Configuration()
-//                .configure("com/greensnow25/hibernate.cfg.xml")
-//                .addResource("com/greensnow25/model/Item.hbm.xml")
-//                .buildSessionFactory();
-        System.out.println(sessionFactory.isClosed());
-
     }
 
     public Integer addItem(String desc, boolean done) {
@@ -70,10 +62,5 @@ public class HibernateUtil<E> {
             sessionFactory.close();
         }
         return list;
-    }
-
-    public static void main(String[] args) {
-        HibernateUtil hibernateUtil = new HibernateUtil();
-        hibernateUtil.addItem("jonatan", true);
     }
 }
