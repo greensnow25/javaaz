@@ -28,9 +28,8 @@ public class Engine {
     public Engine() {
     }
 
-    public Engine(String name, Set<Car> cars) {
+    public Engine(String name) {
         this.name = name;
-        this.cars = cars;
     }
 
     public int getId() {

@@ -28,9 +28,8 @@ public class Transmission {
     public Transmission() {
     }
 
-    public Transmission(String name, Set<Car> cars) {
+    public Transmission(String name) {
         this.name = name;
-        this.cars = cars;
     }
 
     public int getId() {

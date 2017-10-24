@@ -28,10 +28,6 @@ public class User {
     public User() {
     }
 
-    public User(String name, Set<Car> cars) {
-        this.name = name;
-        this.cars = cars;
-    }
 
     public User(String name) {
         this.name = name;

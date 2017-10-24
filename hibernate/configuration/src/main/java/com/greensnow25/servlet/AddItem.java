@@ -1,6 +1,6 @@
 package com.greensnow25.servlet;
 
-import com.greensnow25.HibernateUtil;
+import com.greensnow25.hibernate.HibernateUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +21,6 @@ public class AddItem extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String description = req.getParameter("desc");
-        String q = req.getParameter("done");
         boolean done = req.getParameter("done") != null;
         HibernateUtil hibernateUtil = new HibernateUtil();
         int i = hibernateUtil.addItem(description, done);

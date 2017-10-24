@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.greensnow25.model.Transmission" table="item">
+    <class name="com.greensnow25.model.Transmission" table="transmission">
         <id name="id" type="int" column="id_car_transmit">
             <generator class="native"/>
         </id>
@@ -11,7 +11,7 @@
 
         <set name="cars" inverse="true">
             <key column="transmition_id"></key>
-            <one-to-many class="com.greensnow25.model.Car"
+            <one-to-many class="com.greensnow25.model.Car"/>
         </set>
     </class>
 </hibernate-mapping>

@@ -1,5 +1,10 @@
-package com.greensnow25;
+package com.greensnow25.hibernate;
 
+import com.greensnow25.hibernate.SingletonFactory;
+import com.greensnow25.hibernate.commad.Begin;
+import com.greensnow25.hibernate.commad.Commit;
+import com.greensnow25.hibernate.commad.Rollback;
+import com.greensnow25.hibernate.commad.TransactionActions;
 import com.greensnow25.model.Item;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -25,27 +30,24 @@ public class HibernateUtil<E> {
     private SessionFactory sessionFactory;
 
     public HibernateUtil() {
-        Configuration cnf = new Configuration();
-        cnf.configure("com/greensnow25/hibernate.cfg.xml");
-        cnf.addResource("com/greensnow25/model/Item.hbm.xml");
-        sessionFactory = cnf.buildSessionFactory();
+        this.sessionFactory = SingletonFactory.getSingleton();
     }
 
     public Integer addItem(String desc, boolean done) {
         Transaction transaction = null;
         Integer id = null;
-        try (Session session = sessionFactory.openSession();) {
-            transaction = session.beginTransaction();
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.getTransaction();
+            new Begin(new TransactionActions(transaction)).execute();
             Item item = new Item(desc, new Timestamp(System.currentTimeMillis()), done);
             id = (Integer) session.save(item);
-            transaction.commit();
+            new Commit(new TransactionActions(transaction)).execute();
         } catch (HibernateException e) {
             if (transaction != null) {
-                transaction.rollback();
+                new Rollback(new TransactionActions(transaction)).execute();
+                sessionFactory.close();
             }
             e.printStackTrace();
-        } finally {
-            sessionFactory.close();
         }
         return id;
     }
@@ -55,11 +57,9 @@ public class HibernateUtil<E> {
         List<E> list = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.getTransaction();
-            transaction.begin();
+            new Begin(new TransactionActions(transaction)).execute();
             list = session.createQuery("FROM com.greensnow25.model.Item").list();
-            transaction.commit();
-        } finally {
-            sessionFactory.close();
+            new Commit(new TransactionActions(transaction)).execute();
         }
         return list;
     }

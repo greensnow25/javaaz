@@ -1,7 +1,7 @@
 package com.greensnow25.servlet;
 
 import com.google.gson.Gson;
-import com.greensnow25.HibernateUtil;
+import com.greensnow25.hibernate.HibernateUtil;
 import com.greensnow25.model.Item;
 
 import javax.servlet.ServletException;
