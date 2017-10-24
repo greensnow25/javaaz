@@ -22,7 +22,7 @@ public class BodyTest {
         this.factory = SingletonSessionFactory.getInstance();
     }
 
-   // @Before
+    // @Before
     public void beforeTheTest() {
         prepareFactory();
     }
@@ -31,9 +31,9 @@ public class BodyTest {
     public void whenThen() {
         prepareFactory();
         Add add = new Add(factory);
-        Car car = new Car("1", new Body("track"), new Transmission("auto"), new Engine("V8"), new User("alex"));
+         Car car = new Car("1", new Body("track"), new Transmission("auto"), new Engine("V8"), new User("alex"));
+         // Car car = new Car();
         add.execute(car);
-        System.out.println(car);
     }
 
 
