@@ -1,5 +1,6 @@
 package com.greensnow25.model;
 
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -9,21 +10,27 @@ import java.util.Set;
  * @version 1.
  * @since 23.10.2017.
  */
+@Entity
+@Table (schema = "car_storage", name = "user")
 public class User {
     /**
      * id
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     /**
      * name.
      */
+    @Column(name = "user_name")
     private String name;
 
     /**
      * car
      */
-    private Set<Car> cars;
+//    private Set<Car> cars;
 
     public User() {
     }
@@ -49,11 +56,11 @@ public class User {
         this.name = name;
     }
 
-    public Set<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(Set<Car> cars) {
-        this.cars = cars;
-    }
+//    public Set<Car> getCars() {
+//        return cars;
+//    }
+//
+//    public void setCars(Set<Car> cars) {
+//        this.cars = cars;
+//    }
 }

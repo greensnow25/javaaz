@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function () {
+        $('#image').on('click', '#upload', function () {
+            let fileData = $('#image');//.prop('files')[0];
+            $.ajax('addImage', {
+                dataType: script,
+                type: 'POST',
+                data: fileData,
+                success: function () {
+                    alert('ok')
+                }
+
+            })
+        })
+    });
+</script>
+<form>
+    <div>                                
+         <input type="file" name="image" id="image"/>  
+         
+        <button id="ubload" value="upload">upload</button>
+        <div id="upload" style="display:none;">Uploading..</div>
+    </div>
+</form>
+
+</body>
+</html>

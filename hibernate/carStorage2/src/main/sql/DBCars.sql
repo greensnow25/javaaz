@@ -30,6 +30,7 @@ CREATE TABLE car_storage.car (
   car_name       VARCHAR(100),
   body_id        INTEGER,
   engine_id      INTEGER,
+  price          INTEGER NOT NULL DEFAULT 1000,
   transmition_id INTEGER,
   PRIMARY KEY (user_id, car_name, engine_id, body_id, transmition_id),
   FOREIGN KEY (body_id) REFERENCES car_storage.body_car,
@@ -37,3 +38,11 @@ CREATE TABLE car_storage.car (
   FOREIGN KEY (transmition_id) REFERENCES car_storage.transmission,
   FOREIGN KEY (user_id) REFERENCES car_storage.user
 );
+
+                                                                                                        =
+                                                                                                        'Robot transmission'));
+ CREATE TABLE car_storage.image (
+   id    SERIAL PRIMARY KEY,
+   name  VARCHAR(100) NOT NULL,
+   image BYTEA        NOT NULL
+ )

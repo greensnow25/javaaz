@@ -11,6 +11,16 @@
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
         <property name="show_sql">true</property>
+        <!--<property name="hbm2ddl.auto">create</property>-->
+
+        <!--<property name="hibernate.jdbc.use_streams_for_binary">true</property>-->
+
+        <mapping class="com.greensnow25.model.Body"/>
+        <mapping class="com.greensnow25.model.User"/>
+        <mapping class="com.greensnow25.model.Engine"/>
+        <mapping class="com.greensnow25.model.Transmission"/>
+        <mapping class="com.greensnow25.model.Car"/>
+        <mapping class="com.greensnow25.model.Image"/>
         <!--<mapping resource="com.greensnow25ow25/moBody.hbm.xml.xml"></mapping>-->
     </session-factory>
 </hibernate-configuration>

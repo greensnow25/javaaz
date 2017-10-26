@@ -37,4 +37,13 @@
         <module>carStorage</module>
         <module>carStorage2</module>
     </modules>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+    </dependencies>
 </project>
