@@ -1,6 +1,9 @@
 package com.greensnow25.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * Public class Car.
@@ -11,7 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(schema = "car_storage", name = "car")
-public class Car {
+public class Car implements Serializable {
     /**
      * id
      */
@@ -25,6 +28,10 @@ public class Car {
      */
     @Column(name = "car_name")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brands;
 
     /**
      * car body.
@@ -51,9 +58,9 @@ public class Car {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "immage_id")
-    private Image image;
+//    @ManyToOne
+//    @JoinColumn(name = "immage_id")
+//    private Image image;
     ;
     /**
      * price.
@@ -63,23 +70,22 @@ public class Car {
     public Car() {
     }
 
-    public Car(String name, Body body, Transmission transmission, Engine engine, User user, Image image, int price) {
+    public Car(String name, Brand brand, Body body, Transmission transmission, Engine engine, User user, int price) {
         this.name = name;
+        this.brands = brand;
         this.body = body;
         this.transmission = transmission;
         this.engine = engine;
         this.user = user;
-        this.image = image;
         this.price = price;
     }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
+//    public Image getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(Image image) {
+//        this.image = image;
+//    }
 
     public int getId() {
         return id;
@@ -135,5 +141,13 @@ public class Car {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public Brand getBrand() {
+        return brands;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brands = brand;
     }
 }

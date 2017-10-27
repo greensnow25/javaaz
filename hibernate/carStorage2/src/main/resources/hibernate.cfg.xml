@@ -20,7 +20,8 @@
         <mapping class="com.greensnow25.model.Engine"/>
         <mapping class="com.greensnow25.model.Transmission"/>
         <mapping class="com.greensnow25.model.Car"/>
-        <mapping class="com.greensnow25.model.Image"/>
+        <!--<mapping class="com.greensnow25.model.Image"/>-->
+        <mapping class="com.greensnow25.model.Brand"/>
         <!--<mapping resource="com.greensnow25ow25/moBody.hbm.xml.xml"></mapping>-->
     </session-factory>
 </hibernate-configuration>

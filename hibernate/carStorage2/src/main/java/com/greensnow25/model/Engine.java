@@ -30,7 +30,8 @@ public class Engine {
     /**
      * car
      */
-//    private Set<Car> cars;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "engine")
+    private transient Set<Car> cars;
 
     public Engine() {
     }
@@ -55,11 +56,11 @@ public class Engine {
         this.name = name;
     }
 
-//    public Set<Car> getCars() {
-//        return cars;
-//    }
-//
-//    public void setCars(Set<Car> cars) {
-//        this.cars = cars;
-//    }
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
+    }
 }

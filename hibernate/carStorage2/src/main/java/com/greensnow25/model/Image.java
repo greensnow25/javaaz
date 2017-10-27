@@ -10,7 +10,7 @@ import javax.persistence.*;
  * @since 25.10.2017.
  */
 @Entity
-@Table(schema = "car_storage", name = "images")
+@Table(schema = "car_storage", name = "image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Image {
     @Column(name = "name")
     private String name;
 
-    @Lob
+    //@Lob
     @Column(name = "image")
     private byte[] image;
 

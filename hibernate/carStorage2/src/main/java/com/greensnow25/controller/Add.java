@@ -43,7 +43,7 @@ public class Add implements Action {
             User u = new User("qqq");
             //u.getCars().add(car1);
             //u.setId(1);
-            Car car1 = new Car("22", body, transmission, engine, u,new Image(),233 );
+          //  Car car1 = new Car("22", body, transmission, engine, u,233 );
 
 //            Set<Car> carSet = new HashSet<>();
 //            carSet.add(car);
@@ -57,7 +57,7 @@ public class Add implements Action {
             session.save(transmission);
             session.save(engine);
             session.save(u);
-            session.save(car1);
+           // session.save(car1);
             transaction.commit();
 
         } catch (HibernateException e) {

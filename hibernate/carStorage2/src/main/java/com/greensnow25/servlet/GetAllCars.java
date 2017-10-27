@@ -2,6 +2,7 @@ package com.greensnow25.servlet;
 
 import com.google.gson.Gson;
 import com.greensnow25.hibernate.SingletonSessionFactory;
+import com.greensnow25.model.Car;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,9 +31,9 @@ public class GetAllCars extends HttpServlet {
         try (Session session = factory.openSession();) {
             transaction = session.getTransaction();
             transaction.begin();
-            Query query = session.createQuery("from com.greensnow25.model.Car");
+            Query query = session.createQuery("from com.greensnow25.model.Car as C");
             query.setReadOnly(true);
-            List list = query.list();
+            List<Car> list = query.list();
             String json = new Gson().toJson(list);
             resp.getWriter().write(json);
             transaction.commit();

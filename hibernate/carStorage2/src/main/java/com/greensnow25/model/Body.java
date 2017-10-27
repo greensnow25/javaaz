@@ -11,7 +11,7 @@ import java.util.Set;
  * @since 23.10.2017.
  */
 @Entity
-@Table(schema = "car_storage",name = "body_car")
+@Table(schema = "car_storage", name = "body_car")
 public class Body {
     /**
      * id
@@ -30,7 +30,9 @@ public class Body {
     /**
      * car
      */
-//    private Set<Car> cars;
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "body")
+     private transient Set<Car> cars;
 
     public Body() {
     }
@@ -55,11 +57,11 @@ public class Body {
         this.name = name;
     }
 
-//    public Set<Car> getCars() {
-//        return cars;
-//    }
-//
-//    public void setCars(Set<Car> cars) {
-//        this.cars = cars;
-//    }
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
+    }
 }
