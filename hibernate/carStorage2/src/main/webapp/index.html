@@ -8,49 +8,18 @@
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body style="text-align: center">
+<h1 >car sale site</h1>
 <script>
-
-    function ready() {
-        getAllModels();
+    function load() {
+        ready('getAllCars');
         selectBrand();
-//            alert('DOM готов');
-        var request = new XMLHttpRequest();
-        request.open('POST', 'getAllCars', true);
-        request.send(null);
-        request.onreadystatechange = function () {
-            if (request.status == 200 && request.readyState == 4) {
-                let response = request.responseText;
-                let json = JSON.parse(response);
-                let resultTable = '<table border="1">' +
-                    '<tr> <td> image</td> <td>description</td></tr> '
-                for (let i = 0; i < json.length; i++) {
-                    resultTable += '<tr>' +
-                        '<td id="img">' + '<img src= "' + json[i].image + '"></img>' + json[i].image + '</td>' +
-                        '<td> model : ' + json[i].name +
-                        '   type of body :' + json[i].body.name +
-                        '   type of transmission: ' + json[i].transmission.name +
-                        '   type of engine : ' + json[i].engine.name +
-                        '   price' + json[i].price +
-                        '  </td></tr>';
-
-                }
-                resultTable += '</table>';
-                resultTable += '<div id="div11">' +
-                    '<button id="btn_reg">Register</button>' +
-                    '<button id="btn_create_acc">Create new account</button>' +
-                    '</div>';
-//                resultTable += ''
-//                document.querySelector("#div2").innerHTML = "";
-                document.querySelector("#div1").innerHTML = resultTable;
-                document.querySelector('#btn1').style.display = 'block';
-                document.querySelector('#div11').style.display = 'block';
-            }
-
-        }
+        selectModels();
     }
 
-    document.addEventListener("DOMContentLoaded", ready);
+
+    document.addEventListener("DOMContentLoaded", load);
+
     $(document).ready(function () {
         $('#btn1').click(function () {
             $.ajax
@@ -135,47 +104,63 @@
     function hexToBase64(str) {
         return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
     }
+
+
+    function selectModels() {
+        $('#selectBrand').on('change', function () {
+
+            let brand = $('selectBrand');
+            if (brand != null || brand != undefined) {
+                let optionSelected = $("option:selected", this);
+                let valueSelected = this.value;
+                selectModel(valueSelected);
+            }
+        });
+    }
 </script>
 
 <div id="div1">
 
 </div> <!-- show car table-->
 <div id="div2"></div>
-<div id="test"></div>
-
-<table border="1">
-    <tr>FIND A CAR</tr>
-    <tr>
-        <td>
-            <select id="selectBrand">
-            </select>
-        </td>
-        <td>
-            <select id="selectModel">
-            </select>
-        </td>
-        <td>
-            <select id="selectEngine">
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <select id="selectBody">
-            </select>
-        </td>
-        <td>
-            <select id="selectTransmission">
-            </select>
-        </td>
-        <td>
-            <button id="btnSearch"> Find</button>
-        </td>
-    </tr>
-
-</table>
 
 
+
+<div id="findCars">
+    <form action="findCar" method="post">
+        <table border="1">
+            <tr>FIND A CAR</tr>
+            <tr>
+                <td><span>Brand:</span>
+                    <select id="selectBrand" name="brand">
+                    </select>
+                </td>
+                <td><span>Model:</span>
+                    <select id="selectModel" name="model">
+                    </select>
+                </td>
+                <td><span>Engine:</span>
+                    <select id="selectEngine" name="engine">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><span>Body:</span>
+                    <select id="selectBody" name="body">
+                    </select>
+                </td>
+                <td><span>BTransmission:</span>
+                    <select id="selectTransmission" name="transmission">
+                    </select>
+                </td>
+                <td>
+                    <button id="btnSearch" type="submit"> Find</button>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</div>
 <button hidden id="btn1">push</button>
 
 

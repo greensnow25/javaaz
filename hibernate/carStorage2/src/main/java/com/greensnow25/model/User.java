@@ -11,7 +11,7 @@ import java.util.Set;
  * @since 23.10.2017.
  */
 @Entity
-@Table (schema = "car_storage", name = "user")
+@Table(schema = "car_storage", name = "user")
 public class User {
     /**
      * id
@@ -28,6 +28,11 @@ public class User {
     private String name;
 
     /**
+     * password.
+     */
+    @Column(name = "password")
+    private String password;
+    /**
      * car
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -37,8 +42,17 @@ public class User {
     }
 
 
-    public User(String name) {
+    public User(String name, String password) {
         this.name = name;
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getId() {

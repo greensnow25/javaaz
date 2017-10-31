@@ -52,6 +52,12 @@ public class Car implements Serializable {
     @JoinColumn(name = "engine_id")
     private Engine engine;
     /**
+     * model.
+     */
+    @ManyToOne
+    @JoinColumn(name = "model_id")
+    private Model model;
+    /**
      * owner user.
      */
     @ManyToOne
@@ -70,15 +76,17 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(String name, Brand brand, Body body, Transmission transmission, Engine engine, User user, int price) {
+    public Car(String name, Brand brands, Body body, Transmission transmission, Engine engine, Model model, User user, int price) {
         this.name = name;
-        this.brands = brand;
+        this.brands = brands;
         this.body = body;
         this.transmission = transmission;
         this.engine = engine;
+        this.model = model;
         this.user = user;
         this.price = price;
     }
+
 //    public Image getImage() {
 //        return image;
 //    }
@@ -149,5 +157,21 @@ public class Car implements Serializable {
 
     public void setBrand(Brand brand) {
         this.brands = brand;
+    }
+
+    public Brand getBrands() {
+        return brands;
+    }
+
+    public void setBrands(Brand brands) {
+        this.brands = brands;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
     }
 }

@@ -2,7 +2,8 @@ CREATE SCHEMA IF NOT EXISTS car_storage;
 --create user.
 CREATE TABLE IF NOT EXISTS car_storage.user (
   id        SERIAL PRIMARY KEY,
-  user_name VARCHAR(50)
+  user_name VARCHAR(50),
+  password
 );
 
 --create table body_car.
@@ -42,11 +43,15 @@ CREATE TABLE IF NOT EXISTS car_storage.car (
   engine_id      INTEGER,
   price          INTEGER NOT NULL DEFAULT 1000,
   transmition_id INTEGER,
+  brand_id       INTEGER,
+  model_id       INTEGER,
   PRIMARY KEY (user_id, car_name, engine_id, body_id, transmition_id),
   FOREIGN KEY (body_id) REFERENCES car_storage.body_car,
   FOREIGN KEY (engine_id) REFERENCES car_storage.engine,
   FOREIGN KEY (transmition_id) REFERENCES car_storage.transmission,
-  FOREIGN KEY (user_id) REFERENCES car_storage.user
+  FOREIGN KEY (user_id) REFERENCES car_storage.user,
+  FOREIGN KEY (brand_id) REFERENCES car_storage.brand,
+  FOREIGN KEY (model_id) REFERENCES car_storage.model
 );
 CREATE TABLE IF NOT EXISTS car_storage.order (
   order_id   SERIAL PRIMARY KEY,
@@ -64,3 +69,11 @@ CREATE TABLE IF NOT EXISTS car_storage.order_image (
 
 )
 
+
+
+CREATE TABLE IF NOT EXISTS car_storage.model (
+  model_id SERIAL PRIMARY KEY ,
+  brand_name VARCHAR(20),
+  model_name VARCHAR(30),
+  UNIQUE (brand_name,model_name)
+)

@@ -22,6 +22,7 @@
         <mapping class="com.greensnow25.model.Car"/>
         <!--<mapping class="com.greensnow25.model.Image"/>-->
         <mapping class="com.greensnow25.model.Brand"/>
+        <mapping class="com.greensnow25.model.Model"/>
         <!--<mapping resource="com.greensnow25ow25/moBody.hbm.xml.xml"></mapping>-->
     </session-factory>
 </hibernate-configuration>

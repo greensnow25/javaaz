@@ -92,15 +92,22 @@ INSERT INTO hibernate.car_storage.car (price, car_name, body_id, engine_id, tran
                                                                                                        'Robot transmission'));
 
 
-CREATE TABLE car_storage.images (
-  id    SERIAL PRIMARY KEY,
-  name  VARCHAR(100) NOT NULL,
-  image BYTEA        NOT NULL
-)
 
-CREATE TABLE car_storage.image (
-  id    SERIAL PRIMARY KEY,
-  name  VARCHAR(100) NOT NULL,
-  image OID          NOT NULL
-)
 
+
+
+
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('AUDI', '80');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('AUDI', '100');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('AUDI', 'Q5');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('AUDI', 'Q7');
+
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('BMW', 'X1');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('BMW', 'X5');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('BMW', 'X6');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('BMW', 'I8');
+
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('CHEVROLET', 'AVEO');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('CHEVROLET', 'LACHETTI');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('CHEVROLET', 'CAMARO');
+INSERT INTO car_storage.model (brand_name, model_name) VALUES ('CHEVROLET', 'IMPALA');
