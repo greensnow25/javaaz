@@ -1,6 +1,7 @@
 package com.greensnow25.servlet.filter;
 
 import com.greensnow25.hibernate.SingletonSessionFactory;
+import com.greensnow25.model.User;
 import org.apache.catalina.servlet4preview.http.HttpFilter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,9 +12,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,32 +27,34 @@ import java.util.List;
  * @version 1.
  * @since 31.10.2017.
  */
+//@WebFilter(urlPatterns = "/*")
 public class Authorization extends HttpFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        SessionFactory factory = SingletonSessionFactory.getInstance();
-        Transaction tr = null;
-        try (Session session = factory.openSession()) {
-            tr = session.beginTransaction();
-            Query query = session.createQuery("from User where User.name=:param1 and User.password =:param2");
-            query.setParameter("param1", login);
-            query.setParameter("param2", password);
-            List l = query.list();
-            if (l.size() == 1) {
-                req.getSession().setAttribute("enter", true);
-            } else {
-                request.getRequestDispatcher("login.html").forward(req, resp);
-            }
+        String uri = req.getRequestURI();
 
+        HttpSession session = req.getSession(false);
+        String user = null;
+        if (session != null) {
+            user = session.getAttribute("user").toString();
+        }
 
+        if ((uri.endsWith("login.html") || uri.endsWith("login") || uri.endsWith("jsp")
+                || uri.endsWith("js") || uri.endsWith(".css")||(uri.endsWith("addUser"))|| uri.endsWith("selectModel"))) {
+            chain.doFilter(req, resp);
+
+        } else if (user != null) {
+            chain.doFilter(req, resp);
+            //            resp.getWriter().write("Bad login or password !!!");
+//            req.getRequestDispatcher("/login").forward(req, resp);
+        } else {
+            resp.getWriter().write("Bad login or password !!!");
+            req.getRequestDispatcher("/login").forward(req, resp);
         }
     }
 
-}
 
     @Override
     public void destroy() {

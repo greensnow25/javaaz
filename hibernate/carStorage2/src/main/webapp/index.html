@@ -9,12 +9,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body style="text-align: center">
-<h1 >car sale site</h1>
+<h1>car sale site</h1>
 <script>
     function load() {
         ready('getAllCars');
         selectBrand();
         selectModels();
+        $('#logOut').on('click', function () {
+            logOut();
+        })
     }
 
 
@@ -117,13 +120,13 @@
             }
         });
     }
+
 </script>
 
 <div id="div1">
 
 </div> <!-- show car table-->
 <div id="div2"></div>
-
 
 
 <div id="findCars">
@@ -162,6 +165,7 @@
     </form>
 </div>
 <button hidden id="btn1">push</button>
+<button id="logOut"> LogOut</button>
 
 
 </body>

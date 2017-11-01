@@ -12,34 +12,15 @@
     <!--<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>-->
 </head>
 <body>
-        <!--onload='popListbox(<%=session.getAttribute("objNames")%/>)'>-->
-
-<script>
-    $(document).ready(function () {
-        var userName = "Shekhar Shete";
-
-        '<%Session["car"] = "' + userName + '"; %>';
-        alert('<%=Session["car"] %>');
-    })
 
 
-</script>
-
-
-<!--let resultTable = '<table border="1">' +-->
-<!--'<tr> <td>IMAGE</td> <td>MODEL</td> <td>BODY</td> <td>TRANSMISSION</td> <td>ENGINE</td> <td>PRICE</td></tr> ';-->
-<!--for (let i = 0; i < json.length; i++) {-->
-<!--resultTable += '<tr>' +-->
-<!--'<td id="img">' + '<img src= "' + json[i].image + '"></img>' + json[i].image + '</td>' +-->
-<!--'<td>' + json[i].name + '</td>' +-->
-<!--'<td>' + json[i].body.name + '</td>' +-->
-<!--'<td>' + json[i].transmission.name + '</td>' +-->
-<!--'<td>' + json[i].engine.name + '</td>' +-->
-<!--'<td>' + json[i].price + '</td>' +-->
-<!--'  </td></tr>';-->
-<!--}-->
-<!--resultTable += '</table>';-->
-<div id="div1"></div>
+<table border="3">
+    <tr>
+        <td>asdad</td>
+        <td><img src="../images/car1.png"></td>
+    </tr>
+</table>
+<!--<div id="div1"><img src="../images/car1.jpg"></div>-->
 
 </body>
 </html>

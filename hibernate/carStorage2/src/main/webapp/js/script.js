@@ -7,13 +7,12 @@
 function selectBrand() {
     $.ajax(
         {
-            url: '/selectModel',
+            url: 'selectModel',
             type: 'GET',
             dataType: 'json',
             success: function (data) {
                 $('#selectBrand').append($('<option>-------</option>'));
                 for (let i = 0; i < data.length; i++) {
-                    //  let select = $('#selectModel');
                     $('#selectBrand')
                         .append($("<option></option>")
                             .attr('id', 'brandId')
@@ -27,7 +26,7 @@ function selectBrand() {
 
 function selectModel(brand) {
     $.ajax({
-        url: '/selectModel',
+        url: 'selectModel',
         type: 'POST',
         data: {'brand': brand},
         dataType: 'json',
@@ -113,12 +112,14 @@ function ready(url) {
 
     }
 }
-function welcome() {
+function welcome(destenation) {
+
     $.ajax({
-        url: 'title',
+        url: 'login',
+        type: 'POST',
         data: {
-            'login': $('login'),
-            'paswword': $('password')
+            'login': $('#login').val(),
+            'password': $('#password').val()
         },
         dataType: 'json',
         success: function (data) {
@@ -130,4 +131,22 @@ function welcome() {
         }
 
     })
+
+}
+function logOut() {
+    $.ajax(
+        {
+            url: 'logOut',
+            type: 'POST',
+            success: function () {
+                alert("success");
+                window.location.href = 'login.html'
+            }
+            // error: function () {
+            //     alert("error")
+            // }
+
+        }
+    )
+
 }

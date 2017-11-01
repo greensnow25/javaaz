@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="js/script.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
 </head>
 <body>
+<script>
+    function enter() {
+        $('#btn_enter').on('click', function () {
+            welcome();
+        });
+        $('#btn_create_acc').on('click', function () {
+            addNewUser();
+        })
+    }
+    $(document).ready(function () {
+        enter();
+
+    });
+</script>
 <div id="welcome">
     <span>login :
-        <input type="text" id="login" value=" ">
+        <input type="text" id="login" value="">
     </span>
     <br>
     <span> Password :
@@ -20,5 +37,6 @@
     <br>
     <button id="btn_create_acc">Create new account</button>
 </div>
+<div id="info"></div>
 </body>
 </html>

@@ -1,15 +1,15 @@
 package com.greensnow25.servlet;
 
 import com.greensnow25.hibernate.SingletonSessionFactory;
+import com.greensnow25.model.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,14 +34,33 @@ public class Login extends HttpServlet {
         Transaction tr = null;
         try (Session session = factory.openSession()) {
             tr = session.beginTransaction();
-            Query query = session.createQuery("from User where User.name=:param1 and User.password =:param2");
+            Query query = session.createQuery("from User as U where U.name=:param1 and U.password =:param2");
             query.setParameter("param1", login);
             query.setParameter("param2", password);
-            List l = query.list();
-            if(l.size() ==1){
-                req.getSession().setAttribute("enter", true);
+            List<User> l = query.list();
+            tr.commit();
+
+            User u = l.get(0);
+            System.out.println(u);
+            if (u.getName().equals(login) && u.getPassword().equals(password)) {
+                HttpSession httpSession = req.getSession();
+                httpSession.setAttribute("user", login);
+                httpSession.setMaxInactiveInterval(30 * 60);
+                Cookie cookie = new Cookie("user", login);
+                cookie.setMaxAge(30 * 60);
+                resp.addCookie(cookie);
+//                req.getRequestDispatcher("index.html").forward(req, resp);
+               // resp.sendRedirect("/login");
             }
-            req.getRequestDispatcher("index.html").forward(req,resp);
+//            else {
+//                req.getRequestDispatcher("login.html").forward(req, resp);
+//            }
+
+        } catch (HibernateException e) {
+            if (tr != null) {
+                tr.rollback();
+            }
+            e.printStackTrace();
         }
     }
 }

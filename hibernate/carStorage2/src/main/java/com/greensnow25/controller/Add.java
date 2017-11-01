@@ -40,7 +40,7 @@ public class Add implements Action {
             //engine.getCars().add(car1);
             //engine.setId(1);
 
-            User u = new User("qqq");
+           // User u = new User("qqq");
             //u.getCars().add(car1);
             //u.setId(1);
           //  Car car1 = new Car("22", body, transmission, engine, u,233 );
@@ -56,7 +56,7 @@ public class Add implements Action {
             session.save(body);
             session.save(transmission);
             session.save(engine);
-            session.save(u);
+         //   session.save(u);
            // session.save(car1);
             transaction.commit();
 
