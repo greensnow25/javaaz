@@ -1,6 +1,7 @@
 package com.greensnow25.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Public class Image.
@@ -24,7 +25,18 @@ public class Image {
     @Column(name = "image")
     private byte[] image;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "image")
+    private transient Set<OrderImages> orderImages;
+
     public Image() {
+    }
+
+    public Set<OrderImages> getOrderImages() {
+        return orderImages;
+    }
+
+    public void setOrderImages(Set<OrderImages> orderImages) {
+        this.orderImages = orderImages;
     }
 
     public int getId() {

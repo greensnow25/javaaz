@@ -17,39 +17,42 @@
         selectModels();
         $('#logOut').on('click', function () {
             logOut();
+        });
+        $('#btn1').on('click', function () {
+            window.location.href = 'wiev/addImage.html'
         })
     }
 
 
     document.addEventListener("DOMContentLoaded", load);
 
-    $(document).ready(function () {
-        $('#btn1').click(function () {
-            $.ajax
-            ('/getImage',
-                {
-                    data: {'name': 'alex'},
-                    type: 'POST',
-//                    dataType: 'json',
-                    success: function (d) {
-
-                        var json = btoa(d);
-                        var img = document.createElement('img');
-                        img.src = 'data:image/jpeg;base64,' + json;
-                        document.body.appendChild(img);
-
-
-                        //                        var arrayBuffer = d.data;
-//                        var bytes = new Uint8Array(arrayBuffer);
-//                        var image = document.querySelector("t1");
-//                        image.src = encode(bytes);
-                    },
-                    error: function () {
-                        alert('error')
-                    }
-                })
-        })
-    });
+//    $(document).ready(function () {
+//        $('#btn1').click(function () {
+//            $.ajax
+//            ('/getImage',
+//                {
+//                    data: {'name': 'alex'},
+//                    type: 'POST',
+////                    dataType: 'json',
+//                    success: function (d) {
+//
+//                        var json = btoa(d);
+//                        var img = document.createElement('img');
+//                        img.src = 'data:image/jpeg;base64,' + json;
+//                        document.body.appendChild(img);
+//
+//
+//                        //                        var arrayBuffer = d.data;
+////                        var bytes = new Uint8Array(arrayBuffer);
+////                        var image = document.querySelector("t1");
+////                        image.src = encode(bytes);
+//                    },
+//                    error: function () {
+//                        alert('error')
+//                    }
+//                })
+//        })
+//    });
     function encode(input) {
         var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
         var output = "";
@@ -164,7 +167,7 @@
         </table>
     </form>
 </div>
-<button hidden id="btn1">push</button>
+<button hidden id="btn1">Add New Order</button>
 <button id="logOut"> LogOut</button>
 
 

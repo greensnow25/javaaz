@@ -63,9 +63,10 @@ CREATE TABLE IF NOT EXISTS car_storage.order (
 
 
 CREATE TABLE IF NOT EXISTS car_storage.order_image (
-  orer_id  INTEGER,
-  image_id INTEGER,
-  PRIMARY KEY (orer_id, image_id)
+  id       SERIAL PRIMARY KEY,
+  orer_id  INTEGER NOT NULL,
+  image_id INTEGER NOT NULL,
+  UNIQUE (orer_id, image_id)
 
 )
 

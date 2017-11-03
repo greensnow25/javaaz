@@ -8,29 +8,30 @@
 </head>
 <body>
 <script>
-    $(document).ready(function () {
-        $('#image').on('click', '#upload', function () {
-            let fileData = $('#image');//.prop('files')[0];
-            $.ajax('addImage', {
-                dataType: script,
-                type: 'POST',
-                data: fileData,
-                success: function () {
-                    alert('ok')
-                }
-
-            })
-        })
-    });
+//    $(document).ready(function () {
+//        $('#image').on('click', '#upload', function () {
+//            let fileData = $('#image');//.prop('files')[0];
+//            $.ajax('addImage', {
+//                dataType: script,
+//                type: 'POST',
+//                data: fileData,
+//                success: function () {
+//                    alert('ok')
+//                }
+//
+//            })
+//        })
+//    });
 </script>
-<form>
-    <div>                                
-         <input type="file" name="image" id="image"/>  
+<div>
+    <form action="addImage" method="post">        
+        Select file:                  
+         <input type="file" name="image" id="image" enctype = "multipart/form-data"/>  
          
-        <button id="ubload" value="upload">upload</button>
+        <button id="ubload" type="submit" value="upload">upload</button>
         <div id="upload" style="display:none;">Uploading..</div>
-    </div>
-</form>
 
+    </form>
+</div>
 </body>
 </html>

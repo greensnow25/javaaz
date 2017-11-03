@@ -2,6 +2,7 @@ package com.greensnow25.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
 
@@ -63,6 +64,13 @@ public class Car implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    /**
+     * car
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carId")
+    private transient Set<Order> orders;
+
 
 //    @ManyToOne
 //    @JoinColumn(name = "immage_id")
@@ -173,5 +181,13 @@ public class Car implements Serializable {
 
     public void setModel(Model model) {
         this.model = model;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }

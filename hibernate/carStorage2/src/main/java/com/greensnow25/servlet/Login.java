@@ -41,7 +41,6 @@ public class Login extends HttpServlet {
             tr.commit();
 
             User u = l.get(0);
-            System.out.println(u);
             if (u.getName().equals(login) && u.getPassword().equals(password)) {
                 HttpSession httpSession = req.getSession();
                 httpSession.setAttribute("user", login);
